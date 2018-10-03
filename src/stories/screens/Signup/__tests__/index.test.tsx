@@ -4,9 +4,11 @@ import Signup from "../index";
 import renderer from "react-test-renderer";
 
 const onSignup = jest.fn();
+const goToRestore = jest.fn();
+const checkForm = jest.fn();
 const signupForm = React.Component;
 
 it("renders correctly", () => {
-	const tree = renderer.create(<Signup onSignup={onSignup} signupForm={signupForm} />).toJSON();
+	const tree = renderer.create(<Signup onSignup={onSignup} checkForm={checkForm} signupForm={signupForm} goToRestore={goToRestore} />).toJSON();
 	expect(tree).toMatchSnapshot();
 });

@@ -9,6 +9,8 @@ const { formErrors } = language
 
 import Signup from 'stories/screens/Signup'
 
+let submitted = false
+
 export interface Props {
 	navigation: any
 	signupForm: any
@@ -24,17 +26,26 @@ export default class SignupContainer extends React.Component<Props, State> {
 		super(props)
 
 		this.signup = this.signup.bind(this)
+		this.goToRestore = this.goToRestore.bind(this)
 		this.checkFormValidity = this.checkFormValidity.bind(this)
 	}
 
 	emailInput: any
 	pwdinput: any
+
 	async signup(pin: string) {
-		const userCreated = await this.props.userStore.createUser(this.props.signupForm.email, pin)
-		this.props.signupForm.clearStore()
-		if (userCreated) {
-			this.props.navigation.navigate('Drawer')
+		if (!submitted) {
+			submitted = true
+			const userCreated = await this.props.userStore.createUser(this.props.signupForm.email, pin)
+			this.props.signupForm.clearStore()
+			if (userCreated) {
+				this.props.navigation.navigate('Mnemonic')
+			}
 		}
+	}
+
+	goToRestore() {
+		this.props.navigation.navigate('Restore')
 	}
 
 	checkFormValidity() {
@@ -67,6 +78,6 @@ export default class SignupContainer extends React.Component<Props, State> {
 				</Item>
 			</Form>
 		)
-		return <Signup signupForm={Fields} onSignup={(pin: string) => this.signup(pin)} checkForm={this.checkFormValidity} />
+		return <Signup signupForm={Fields} onSignup={(pin: string) => this.signup(pin)} goToRestore={this.goToRestore} checkForm={this.checkFormValidity} />
 	}
 }

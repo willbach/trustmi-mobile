@@ -5,9 +5,9 @@ import { Container, Content, Header, Body, Title, Button, Text, View, Icon, Foot
 import Pinpad from 'ui/components/Pinpad'
 //import styles from './styles'
 export interface Props {
-  onSignup: Function
-  goToRestore: () => void
-	signupForm: any
+  onRestore: Function
+  goToSignup: () => void
+	restoreForm: any
 	checkForm: Function
 }
 export interface State {
@@ -16,7 +16,7 @@ export interface State {
   confirmPIN: string
 }
 
-export default class Signup extends React.Component<Props, State> {
+export default class Restore extends React.Component<Props, State> {
 	constructor(props) {
     super(props)
     this.state = {
@@ -48,11 +48,12 @@ export default class Signup extends React.Component<Props, State> {
     const { pin, confirmPIN, step } = this.state
 
     if (step === 4 && pin === confirmPIN) {
-      const component = this
-      
-      setTimeout(() => {
-        this.props.onSignup(pin)
-      }, 100)
+			const component = this
+			
+      setTimeout(async () => {
+        await component.props.onRestore(pin)
+      }, 1000)
+
     } else if (pin.length === 4 && confirmPIN.length === 4) {
       this.setState({ step: 4 })
     } else if (pin.length === 4 && step === 2) {
@@ -116,15 +117,15 @@ export default class Signup extends React.Component<Props, State> {
 						</Body>
 					</Header>
 					<Content>
-						{this.props.signupForm}
+						{this.props.restoreForm}
 						<View padder>
 							<Button block onPress={this.submit}>
-								<Text>Create Account</Text>
+								<Text>Restore Account</Text>
 							</Button>
 						</View>
             <View padder>
-							<Button block onPress={this.props.goToRestore}>
-								<Text>Restore Account</Text>
+							<Button block onPress={this.props.goToSignup}>
+								<Text>Go Back</Text>
 							</Button>
 						</View>
 					</Content>

@@ -1,31 +1,43 @@
-import * as React from "react";
-import { Text, Container, List, ListItem, Content } from "native-base";
-import { NavigationActions } from "react-navigation";
+import * as React from 'react'
+import { Text, Container, List, ListItem, Content } from 'native-base'
+import { NavigationActions } from 'react-navigation'
 
 const routes = [
 	{
-		route: "Home",
-		caption: "Home",
+		route: 'Home',
+		caption: 'Home',
 	},
 	{
-		route: "BlankPage",
-		caption: "Blank Page",
+		route: 'BlankPage',
+		caption: 'Blank Page',
 	},
 	{
-		route: "Signup",
-		caption: "Logout",
+		route: 'Login',
+		caption: 'Logout',
 	},
-];
+]
 
 export interface Props {
-	navigation: any;
+	navigation: any,
+	onLogout: Function
 }
 export interface State {}
 const resetAction = NavigationActions.reset({
 	index: 0,
-	actions: [NavigationActions.navigate({ routeName: "Signup" })],
-});
+	actions: [NavigationActions.navigate({ routeName: 'Login' })],
+})
+
+
 export default class Sidebar extends React.Component<Props, State> {
+	constructor(props) {
+		super(props)
+	}
+
+	logout() {
+		this.props.onLogout()
+		this.props.navigation.dispatch(resetAction)
+	}
+
 	render() {
 		return (
 			<Container>
@@ -38,18 +50,18 @@ export default class Sidebar extends React.Component<Props, State> {
 								<ListItem
 									button
 									onPress={() => {
-										data.route === "Signup"
-											? this.props.navigation.dispatch(resetAction)
-											: this.props.navigation.navigate(data.route);
+										data.route === 'Login'
+											? this.logout()
+											: this.props.navigation.navigate(data.route)
 									}}
 								>
 									<Text>{data.caption}</Text>
 								</ListItem>
-							);
+							)
 						}}
 					/>
 				</Content>
 			</Container>
-		);
+		)
 	}
 }

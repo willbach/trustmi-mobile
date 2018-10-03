@@ -14,16 +14,6 @@ export default class UserStore {
   @observable address = ''
 
   @action
-  retrievePIN() {
-
-  }
-
-  @action
-  comparePIN() {
-
-  }
-
-  @action
   async createUser(email: string, pin: string) {
     try {
       const mnemonic = new Mnemonic()
@@ -32,7 +22,7 @@ export default class UserStore {
       const privateKeyBuffer = privateKey.privateKey.toBuffer()
       const privateKeyHex = privateKeyBuffer.toString('hex')
       const ethAddress = ethUtil.privateToAddress(privateKeyBuffer)
-      
+
       this.email = email
       this.mnemonic = mnemonic.toString()
       this.privateKeyHex = privateKeyHex
@@ -40,19 +30,12 @@ export default class UserStore {
 
       const encryptedPIN = CryptoJS.AES.encrypt(hashedPIN, pin).toString()
       await AsyncStorage.setItem('hashedPIN', encryptedPIN)
-      await this.storeUser(hashedPIN)
+      await this.storeUser(pin)
       return true
     } catch (e) {
       console.log('ERROR CREATING USER: ', e)
       return false
     }
-  }
-
-  @action
-  async getHashedPIN(pin: string) {
-    const encryptedPIN = await AsyncStorage.getItem('hashedPIN')
-    const bytes = CryptoJS.AES.decrypt(encryptedPIN, pin)
-    return bytes.toString(CryptoJS.enc.Utf8)
   }
 
   @action
@@ -64,8 +47,7 @@ export default class UserStore {
         privateKeyHex: this.privateKeyHex,
         address: this.address,
       }
-      const hashedPIN = await this.getHashedPIN(pin)
-      const encryptedUser = CryptoJS.AES.encrypt(JSON.stringify(user), hashedPIN).toString()
+      const encryptedUser = CryptoJS.AES.encrypt(JSON.stringify(user), pin).toString()
       await AsyncStorage.setItem('user', encryptedUser)
 
       return true
@@ -75,15 +57,39 @@ export default class UserStore {
     }
   }
 
+  @action restoreUser(pin: string) {
+    
+  }
+
   @action
-  async retrieveUser(pin: string) {
+  async getHashedPIN(pin: string) {
+    const encryptedPIN = await AsyncStorage.getItem('hashedPIN')
+    const bytes = CryptoJS.AES.decrypt(encryptedPIN, pin)
+    return bytes.toString(CryptoJS.enc.Utf8)
+  }
+
+  @action
+  async checkUserExists() {
+    const user = await AsyncStorage.getItem('user')
+    return !!user
+  }
+
+  @action
+  async checkPIN(pin: string) {
+    const hashedPIN = await this.getHashedPIN(pin)
+    return bcrypt.compareSync(pin, hashedPIN)
+  }
+
+  @action
+  async loginUser(pin: string) {
     try {
       const hashedPIN = await this.getHashedPIN(pin)
       const passwordMatch = bcrypt.compareSync(pin, hashedPIN)
       if (passwordMatch) {
         const encryptedUser = await AsyncStorage.getItem('user')
-        const decryptedUserBytes = CryptoJS.AES.decrypt(encryptedUser, hashedPIN)
-        const user = JSON.parse(decryptedUserBytes.toString(CryptoJS.enc.Utf8))
+        const decryptedUserBytes = CryptoJS.AES.decrypt(encryptedUser, pin)
+        const decryptedUser = decryptedUserBytes.toString(CryptoJS.enc.Utf8)
+        const user = JSON.parse(decryptedUser)
 
         this.email = user.email
         this.mnemonic = user.mnemonic
@@ -98,6 +104,14 @@ export default class UserStore {
       console.log('ERROR RETRIEVING USER: ', e)
       return false
     }
+  }
+
+  @action
+  logoutUser() {
+    this.email = ''
+    this.mnemonic = ''
+    this.privateKeyHex = ''
+    this.address = ''
   }
 
   @action

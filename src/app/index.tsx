@@ -5,10 +5,13 @@ import { Dimensions } from 'react-native'
 
 const deviceWidth = Dimensions.get("window").width
 
-import Signup from '../container/SignupContainer'
-import Home from '../container/HomeContainer'
-import BlankPage from '../container/BlankPageContainer'
-import Sidebar from '../container/SidebarContainer'
+import Signup from 'container/SignupContainer'
+import Home from 'container/HomeContainer'
+import BlankPage from 'container/BlankPageContainer'
+import Sidebar from 'container/SidebarContainer'
+import Mnemonic from 'container/MnemonicContainer'
+import Login from 'container/LoginContainer'
+import Restore from 'container/RestoreContainer'
 
 const Drawer = DrawerNavigator(
 	{
@@ -23,12 +26,15 @@ const Drawer = DrawerNavigator(
 
 const App = StackNavigator(
 	{
+		Login: { screen: Login },
+		Restore: { screen: Restore },
 		Signup: { screen: Signup },
-		BlankPage: { screen: BlankPage },
+		Mnemonic: { screen: Mnemonic },
 		Drawer: { screen: Drawer },
+		BlankPage: { screen: BlankPage },
 	},
 	{
-		initialRouteName: 'Signup',
+		initialRouteName: 'Login',
 		headerMode: 'none',
 	}
 )
