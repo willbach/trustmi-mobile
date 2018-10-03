@@ -8,8 +8,10 @@
     "@types/react-native": "^0.47.7",
     "@types/react-native-vector-icons": "^4.3.1",
     "@types/react-navigation": "^1.0.19",
+    "assert": "^1.4.1",
     "babel-eslint": "8.1.0",
     "babel-jest": "22.0.4",
+    "babel-plugin-module-alias": "^1.6.0",
     "babel-preset-react-native": "^3.0.1",
     "babel-preset-react-native-stage-0": "^1.0.1",
     "concurrently": "3.5.1",
@@ -26,24 +28,30 @@
     "rimraf": "^2.6.2",
     "ts-jest": "22.0.0",
     "tslint": "^5.8.0",
-    "typescript": "2.6.2"
+    "typescript": "2.6.2",
+    "url": "^0.11.0"
   },
   "scripts": {
+    "typescript": "node_modules/.bin/tsc -w --skipLibCheck",
     "start": "react-native start",
     "jest": "node node_modules/jest/bin/jest.js",
     "watch": "npm run build -- -w",
     "ios": "react-native run-ios",
     "android": "react-native run-android",
     "tsc": "tsc",
-    "clean": "rimraf artifacts",
     "build": "npm run clean && npm run tsc --",
     "lint": "tslint src/**/*.ts",
     "test": "yarn jest && tslint src/**/*.tsx && eslint .",
-    "precommit": "yarn test"
+    "postinstall": "node_modules/.bin/rn-nodeify --install stream,crypto --hack",
+    "setup:env": "node scripts/env.js"
   },
   "jest": {
     "preset": "jest-expo",
-    "moduleFileExtensions": ["ts", "tsx", "js"],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
     "transform": {
       "^.+\\.(js)$": "<rootDir>/node_modules/babel-jest",
       "\\.(ts|tsx)$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
@@ -54,12 +62,43 @@
     ]
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "bitcore-mnemonic": "^1.5.0",
+    "crypto-js": "^3.1.9-1",
+    "ethereumjs-util": "^5.2.0",
+    "events": "^3.0.0",
     "lodash": "4.17.4",
     "mobx": "3.4.1",
     "mobx-react": "4.3.5",
     "native-base": "2.3.5",
     "react": "16.2.0",
     "react-native": "0.51.0",
-    "react-navigation": "1.0.0-beta.21"
+    "react-native-crypto": "^2.1.2",
+    "react-native-randombytes": "^3.5.1",
+    "react-navigation": "1.0.0-beta.21",
+    "readable-stream": "^1.0.33",
+    "rn-nodeify": "^10.0.0",
+    "stream": "^0.0.2",
+    "stream-browserify": "^2.0.1",
+    "underscore": "^1.9.1",
+    "vm": "^0.1.0"
+  },
+  "react-native": {
+    "crypto": "react-native-crypto",
+    "_stream_transform": "readable-stream/transform",
+    "_stream_readable": "readable-stream/readable",
+    "_stream_writable": "readable-stream/writable",
+    "_stream_duplex": "readable-stream/duplex",
+    "_stream_passthrough": "readable-stream/passthrough",
+    "stream": "stream-browserify"
+  },
+  "browser": {
+    "crypto": "react-native-crypto",
+    "_stream_transform": "readable-stream/transform",
+    "_stream_readable": "readable-stream/readable",
+    "_stream_writable": "readable-stream/writable",
+    "_stream_duplex": "readable-stream/duplex",
+    "_stream_passthrough": "readable-stream/passthrough",
+    "stream": "stream-browserify"
   }
 }

@@ -1,3 +1,2 @@
-import { AppRegistry } from "react-native";
-import App from "./App";
-AppRegistry.registerComponent("TrustMi", () => App);
+import './shim'
+import './lib'

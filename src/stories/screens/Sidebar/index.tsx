@@ -12,7 +12,7 @@ const routes = [
 		caption: "Blank Page",
 	},
 	{
-		route: "Login",
+		route: "Signup",
 		caption: "Logout",
 	},
 ];
@@ -23,7 +23,7 @@ export interface Props {
 export interface State {}
 const resetAction = NavigationActions.reset({
 	index: 0,
-	actions: [NavigationActions.navigate({ routeName: "Login" })],
+	actions: [NavigationActions.navigate({ routeName: "Signup" })],
 });
 export default class Sidebar extends React.Component<Props, State> {
 	render() {
@@ -38,7 +38,7 @@ export default class Sidebar extends React.Component<Props, State> {
 								<ListItem
 									button
 									onPress={() => {
-										data.route === "Login"
+										data.route === "Signup"
 											? this.props.navigation.dispatch(resetAction)
 											: this.props.navigation.navigate(data.route);
 									}}
