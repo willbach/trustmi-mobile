@@ -16,7 +16,8 @@
       { "src": "./lib/src/theme", "expose": "theme" },
       { "src": "./lib/src/ui", "expose": "ui" },
       { "src": "./src/images", "expose": "images" },
-      { "src": "./lib/src/utils", "expose": "utils" }
+      { "src": "./lib/src/utils", "expose": "utils" },
+      { "src": "./lib/src/data-sources", "expose": "data-sources" }
     ]]
   ],
   "env": {

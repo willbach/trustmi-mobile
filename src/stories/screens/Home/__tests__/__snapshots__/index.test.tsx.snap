@@ -9,7 +9,7 @@ exports[`renders correctly 1`] = `
         "height": 1334,
       },
       Object {
-        "backgroundColor": "#FBFAFA",
+        "backgroundColor": commonColor.brandPrimary,
       },
     ]
   }
@@ -19,8 +19,8 @@ exports[`renders correctly 1`] = `
     <View
       style={
         Object {
-          "backgroundColor": "#F8F8F8",
-          "borderBottomColor": "#a7a6ab",
+          "backgroundColor": commonColor.touchableUnderlay,
+          "borderBottomColor": commonColor.brandPrimary,
           "borderBottomWidth": 0.5,
           "elevation": 3,
           "flexDirection": "row",
@@ -115,7 +115,7 @@ exports[`renders correctly 1`] = `
                     "fontSize": 30,
                   },
                   Object {
-                    "color": "#007aff",
+                    "color": commonColor.brandPrimary,
                     "fontSize": 33,
                     "marginLeft": 2,
                     "marginRight": 2,

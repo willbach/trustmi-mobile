@@ -2,8 +2,14 @@
 import * as React from 'react'
 import { Item, Input, Icon, Form, Toast } from 'native-base'
 import { observer, inject } from 'mobx-react/native'
+import { NavigationActions } from 'react-navigation'
 
 import Login from 'stories/screens/Login'
+
+const resetAction = NavigationActions.reset({
+	index: 0,
+	actions: [NavigationActions.navigate({ routeName: 'Drawer' })],
+})
 
 export interface Props {
 	navigation: any
@@ -40,7 +46,7 @@ export default class LoginContainer extends React.Component<Props, State> {
 			if (pinCorrect) {
 				const userLoggedIn = await this.props.userStore.loginUser(pin)
 				if (userLoggedIn) {
-					this.props.navigation.navigate('Drawer')
+					this.props.navigation.dispatch(resetAction)
 				} else {
 					Toast.show({
 						text: 'There was an error logging in, please try again later',

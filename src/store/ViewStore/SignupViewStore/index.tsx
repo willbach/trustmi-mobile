@@ -1,8 +1,8 @@
-import { observable, action } from "mobx"
+import { observable, action } from 'mobx'
 
 export default class SignupStore {
-  @observable email = ""
-  @observable emailError: string | undefined = ""
+  @observable email = ''
+  @observable emailError: string | undefined = ''
   @observable isValid = false
 
   @action
@@ -14,10 +14,10 @@ export default class SignupStore {
   @action
   validateEmail() {
     const emailPatter = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
-    const required = this.email ? undefined : "Required"
+    const required = this.email ? undefined : 'Required'
     this.emailError = required
       ? required
-      : emailPatter.test(this.email) ? undefined : "Invalid email address"
+      : emailPatter.test(this.email) ? undefined : 'Invalid email address'
   }
 
   @action
@@ -31,8 +31,8 @@ export default class SignupStore {
 
   @action
   clearStore() {
-    this.email = ""
-    this.emailError = ""
+    this.email = ''
+    this.emailError = ''
     this.isValid = false
   }
 }

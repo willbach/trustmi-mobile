@@ -2,6 +2,8 @@ import * as React from 'react'
 import { Image, Platform, BackHandler } from 'react-native'
 import { Container, Content, Header, Body, Title, Button, Text, View, Icon, Footer } from 'native-base'
 
+import commonColor from 'theme/variables/commonColor'
+
 import Pinpad from 'ui/components/Pinpad'
 //import styles from './styles'
 export interface Props {
@@ -93,15 +95,15 @@ export default class Restore extends React.Component<Props, State> {
 		const { pin, confirmPIN, step } = this.state
 
 		if (step === 4) {
-      return <View style={{paddingHorizontal: 30, paddingVertical: 20, backgroundColor: '#ffffff'}}>
+      return <View style={{paddingHorizontal: 30, paddingVertical: 20, backgroundColor: commonColor.white}}>
         <Pinpad onNumPress={() => null} onBackspace={() => null} pin={confirmPIN} headerText={'Please Wait'} />
       </View>
     } else if (step === 3) {
-      return <View style={{paddingHorizontal: 30, paddingVertical: 20, backgroundColor: '#ffffff'}}>
+      return <View style={{paddingHorizontal: 30, paddingVertical: 20, backgroundColor: commonColor.white}}>
         <Pinpad onNumPress={(pin) => this.confirmPIN(pin)} onBackspace={() => this.clearConfirmPIN()} pin={confirmPIN} headerText={'Confirm Your PIN'} />
       </View>
     } else if (step === 2) {
-      return <View style={{paddingHorizontal: 30, paddingVertical: 20, backgroundColor: '#ffffff'}}>
+      return <View style={{paddingHorizontal: 30, paddingVertical: 20, backgroundColor: commonColor.white}}>
         <Pinpad onNumPress={(pin) => this.enterPin(pin)} onBackspace={() => this.clearPin()} pin={pin} headerText={'Enter New PIN'} />
       </View>
     } else {
@@ -112,7 +114,7 @@ export default class Restore extends React.Component<Props, State> {
 							<Icon name='flash' style={{ fontSize: 104 }} />
 							<Title>TrustMi</Title>
 							<View padder>
-								<Text style={{ color: Platform.OS === 'ios' ? '#000' : '#FFF' }} />
+								<Text style={{ color: Platform.OS === 'ios' ? commonColor.black : commonColor.white }} />
 							</View>
 						</Body>
 					</Header>

@@ -1,8 +1,5 @@
 export default [
-	"React Native Starter Kit",
-	"React Navigation",
-	"NativeBase Easy Grid",
-	"NativeBase",
-	"CodePush",
-	"Redux",
+	{ name: "College Board (SAT)", service: 'collegeBoard' },
+	{ name: "Credit Karma", service: 'creditKarma' },
+	{ name: "Mint", service: 'mint' },
 ];

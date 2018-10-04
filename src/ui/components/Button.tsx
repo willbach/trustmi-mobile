@@ -1,4 +1,5 @@
 import variable from "theme/variables/platform";
+import commonColor from 'theme/variables/commonColor'
 
 export default (variables = variable) => {
 	const platformStyle = variables.platformStyle;
@@ -11,30 +12,30 @@ export default (variables = variable) => {
 		".bordered": {
 			".dark": {
 				"NativeBase.Text": {
-					color: "#000",
+					color: commonColor.black,
 				},
 				"NativeBase.Icon": {
-					color: "#000",
+					color: commonColor.black,
 				},
 				"NativeBase.IconNB": {
-					color: "#000",
+					color: commonColor.black,
 				},
 				backgroundColor: "transparent",
-				borderColor: "#000",
+				borderColor: commonColor.black,
 				borderWidth: variables.borderWidth * 2,
 			},
 			".light": {
 				"NativeBase.Text": {
-					color: "#f4f4f4",
+					color: commonColor.touchableUnderlay,
 				},
 				"NativeBase.Icon": {
-					color: "#f4f4f4",
+					color: commonColor.touchableUnderlay,
 				},
 				"NativeBase.IconNB": {
-					color: "#f4f4f4",
+					color: commonColor.touchableUnderlay,
 				},
 				backgroundColor: "transparent",
-				borderColor: "#f4f4f4",
+				borderColor: commonColor.touchableUnderlay,
 				borderWidth: variables.borderWidth * 2,
 			},
 			".primary": {
@@ -136,51 +137,51 @@ export default (variables = variable) => {
 		".dark": {
 			".bordered": {
 				"NativeBase.Text": {
-					color: "#000",
+					color: commonColor.black,
 				},
 				"NativeBase.Icon": {
-					color: "#000",
+					color: commonColor.black,
 				},
 				"NativeBase.IconNB": {
-					color: "#000",
+					color: commonColor.black,
 				},
 			},
-			backgroundColor: "#000",
+			backgroundColor: commonColor.black,
 		},
 		".light": {
 			".transparent": {
 				"NativeBase.Text": {
-					color: "#f4f4f4",
+					color: commonColor.touchableUnderlay,
 				},
 				"NativeBase.Icon": {
-					color: "#f4f4f4",
+					color: commonColor.touchableUnderlay,
 				},
 				"NativeBase.IconNB": {
-					color: "#f4f4f4",
+					color: commonColor.touchableUnderlay,
 				},
 				backgroundColor: null,
 			},
 			".bordered": {
 				"NativeBase.Text": {
-					color: "#f4f4f4",
+					color: commonColor.touchableUnderlay,
 				},
 				"NativeBase.Icon": {
-					color: "#f4f4f4",
+					color: commonColor.touchableUnderlay,
 				},
 				"NativeBase.IconNB": {
-					color: "#f4f4f4",
+					color: commonColor.touchableUnderlay,
 				},
 			},
 			"NativeBase.Text": {
-				color: "#000",
+				color: commonColor.black,
 			},
 			"NativeBase.Icon": {
-				color: "#000",
+				color: commonColor.black,
 			},
 			"NativeBase.IconNB": {
-				color: "#000",
+				color: commonColor.black,
 			},
-			backgroundColor: "#f4f4f4",
+			backgroundColor: commonColor.touchableUnderlay,
 		},
 
 		".primary": {
@@ -293,13 +294,13 @@ export default (variables = variable) => {
 			},
 			".dark": {
 				"NativeBase.Text": {
-					color: "#000",
+					color: commonColor.black,
 				},
 				"NativeBase.IconNB": {
-					color: "#000",
+					color: commonColor.black,
 				},
 				"NativeBase.Icon": {
-					color: "#000",
+					color: commonColor.black,
 				},
 				backgroundColor: null,
 			},
@@ -365,13 +366,13 @@ export default (variables = variable) => {
 			},
 			".light": {
 				"NativeBase.Text": {
-					color: "#f4f4f4",
+					color: commonColor.touchableUnderlay,
 				},
 				"NativeBase.IconNB": {
-					color: "#f4f4f4",
+					color: commonColor.touchableUnderlay,
 				},
 				"NativeBase.Icon": {
-					color: "#f4f4f4",
+					color: commonColor.touchableUnderlay,
 				},
 				backgroundColor: null,
 			},
@@ -469,7 +470,7 @@ export default (variables = variable) => {
 		alignSelf: "flex-start",
 		flexDirection: "row",
 		elevation: 2,
-		shadowColor: platformStyle === "material" ? "#000" : undefined,
+		shadowColor: platformStyle === "material" ? commonColor.black : undefined,
 		shadowOffset: platformStyle === "material" ? { width: 0, height: 2 } : undefined,
 		shadowOpacity: platformStyle === "material" ? 0.2 : undefined,
 		shadowRadius: platformStyle === "material" ? 1.2 : undefined,

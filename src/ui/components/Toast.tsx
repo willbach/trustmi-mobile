@@ -1,4 +1,5 @@
 import variable from "theme/variables/platform";
+import commonColor from 'theme/variables/commonColor'
 
 export default (variables = variable) => {
 	const platform = variables.platform;
@@ -21,7 +22,7 @@ export default (variables = variable) => {
 		padding: 10,
 		minHeight: 50,
 		"NativeBase.Text": {
-			color: "#fff",
+			color: commonColor.white,
 			flex: 1,
 		},
 		"NativeBase.Button": {

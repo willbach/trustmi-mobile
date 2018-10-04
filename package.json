@@ -1,5 +1,5 @@
 {
-  "name": "TrustMi",
+  "name": "trust-mi",
   "version": "1.1.0",
   "private": true,
   "devDependencies": {
@@ -28,7 +28,7 @@
     "rimraf": "^2.6.2",
     "ts-jest": "22.0.0",
     "tslint": "^5.8.0",
-    "typescript": "2.6.2",
+    "typescript": "^2.6.2",
     "url": "^0.11.0"
   },
   "scripts": {

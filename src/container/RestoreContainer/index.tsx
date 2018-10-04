@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react'
-import { Item, Input, Icon, Form, Toast } from 'native-base'
+import { Item, Input, Icon, Form, Toast, View } from 'native-base'
 import { observer, inject } from 'mobx-react/native'
 
 import language from 'language'
@@ -31,10 +31,12 @@ export default class RestoreContainer extends React.Component<Props, State> {
 	}
 
 	mnemonicInput: any
+	emailInput: any
+	
 	async restore(pin: string) {
 		if (!submitted) {
 			submitted = true
-			const userRestored = await this.props.userStore.restoreUser(this.props.restoreForm.mnemonic, pin)
+			const userRestored = await this.props.userStore.restoreUser(this.props.restoreForm.email, pin, this.props.restoreForm.mnemonic)
 			this.props.restoreForm.clearStore()
 			if (userRestored) {
 				this.props.navigation.navigate('Drawer')
@@ -62,21 +64,36 @@ export default class RestoreContainer extends React.Component<Props, State> {
 	render() {
 		const form = this.props.restoreForm
 		const Fields = (
-			<Form>
-				<Item error={form.mnemonicError ? true : false}>
-					<Icon active name='ios-document' />
-					<Input
-						placeholder='Mnemonic (12-word phrase shown when the account was created)'
-						keyboardType='default'
-						multiline={true}
-						ref={c => (this.mnemonicInput = c)}
-						value={form.mnemonic}
-						onBlur={() => form.validateMnemonic()}
-						onChangeText={e => form.mnemonicOnChange(e)}
-						style={{height: 100}}
-					/>
-				</Item>
-			</Form>
+			<View>
+				<Form>
+					<Item error={form.mnemonicError ? true : false}>
+						<Icon active name='ios-document' />
+						<Input
+							placeholder='Mnemonic (12-word phrase shown when the account was created)'
+							keyboardType='default'
+							multiline={true}
+							ref={c => (this.mnemonicInput = c)}
+							value={form.mnemonic}
+							onBlur={() => form.validateMnemonic()}
+							onChangeText={e => form.mnemonicOnChange(e)}
+							style={{height: 100}}
+						/>
+					</Item>
+				</Form>
+				<Form>
+					<Item error={form.emailError ? true : false}>
+						<Icon active name='person' />
+						<Input
+							placeholder='Email'
+							keyboardType='email-address'
+							ref={c => (this.emailInput = c)}
+							value={form.email}
+							onBlur={() => form.validateEmail()}
+							onChangeText={e => form.emailOnChange(e)}
+						/>
+					</Item>
+				</Form>
+			</View>
 		)
 		return <Restore restoreForm={Fields} onRestore={(pin: string) => this.restore(pin)} goToSignup={this.goToSignup} checkForm={this.checkFormValidity} />
 	}

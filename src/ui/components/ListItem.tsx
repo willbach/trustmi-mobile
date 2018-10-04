@@ -2,6 +2,7 @@ import { Platform, PixelRatio } from "react-native";
 
 // import pickerTheme from "./Picker";
 import variable from "theme/variables/platform";
+import commonColor from 'theme/variables/commonColor'
 
 export default (variables = variable) => {
 	const platform = variables.platform;
@@ -46,7 +47,7 @@ export default (variables = variable) => {
 				flex: 1,
 				height: platform === "ios" ? 30 : 40,
 				borderColor: "transparent",
-				backgroundColor: "#fff",
+				backgroundColor: commonColor.white,
 				borderRadius: 5,
 			},
 			"NativeBase.Button": {

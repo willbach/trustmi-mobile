@@ -2,6 +2,8 @@ import color from "color";
 
 import { Platform, Dimensions, PixelRatio } from "react-native";
 
+import commonColor from 'theme/variables/commonColor'
+
 const deviceHeight = Dimensions.get("window").height;
 const deviceWidth = Dimensions.get("window").width;
 const platform = Platform.OS;
@@ -16,15 +18,15 @@ export default {
 	androidRippleColorDark: "rgba(0, 0, 0, 0.15)",
 
 	// Badge
-	badgeBg: "#ED1727",
-	badgeColor: "#fff",
+	badgeBg: commonColor.badgeRed,
+	badgeColor: commonColor.white,
 	// New Variable
 	badgePadding: platform === "ios" ? 3 : 0,
 
 	// Button
 	btnFontFamily: platform === "ios" ? "Roboto" : "Roboto_medium",
-	btnDisabledBg: "#b5b5b5",
-	btnDisabledClr: "#f1f1f1",
+	btnDisabledBg: commonColor.gray,
+	btnDisabledClr: commonColor.touchableUnderlay,
 
 	// CheckBox
 	CheckboxRadius: 0,
@@ -35,17 +37,17 @@ export default {
 	CheckboxIconMarginTop: platform === "ios" ? undefined : 1,
 	CheckboxFontSize: platform === "ios" ? 21 : 18,
 	DefaultFontSize: 17,
-	checkboxBgColor: "#039BE5",
+	checkboxBgColor: commonColor.brandPrimary,
 	checkboxSize: 20,
-	checkboxTickColor: "#fff",
+	checkboxTickColor: commonColor.white,
 
 	// Segment
-	segmentBackgroundColor: "#3F51B5",
-	segmentActiveBackgroundColor: "#fff",
-	segmentTextColor: "#fff",
-	segmentActiveTextColor: "#3F51B5",
-	segmentBorderColor: "#fff",
-	segmentBorderColorMain: "#3F51B5",
+	segmentBackgroundColor: commonColor.brandPrimary,
+	segmentActiveBackgroundColor: commonColor.white,
+	segmentTextColor: commonColor.white,
+	segmentActiveTextColor: commonColor.brandPrimary,
+	segmentBorderColor: commonColor.white,
+	segmentBorderColorMain: commonColor.brandPrimary,
 
 	// New Variable
 	get defaultTextColor() {
@@ -105,15 +107,15 @@ export default {
 	},
 
 	// Card
-	cardDefaultBg: "#fff",
+	cardDefaultBg: commonColor.white,
 
 	// Color
-	brandPrimary: "#3F51B5",
-	brandInfo: "#3F57D3",
-	brandSuccess: "#5cb85c",
-	brandDanger: "#d9534f",
-	brandWarning: "#f0ad4e",
-	brandSidebar: "#252932",
+	brandPrimary: commonColor.brandPrimary,
+	brandInfo: commonColor.brandInfo,
+	brandSuccess: commonColor.brandSuccess,
+	brandDanger: commonColor.brandDanger,
+	brandWarning: commonColor.brandWarning,
+	brandSidebar: commonColor.brandSidebar,
 
 	// Font
 	fontFamily: "Roboto",
@@ -131,35 +133,35 @@ export default {
 
 	// Footer
 	footerHeight: 55,
-	footerDefaultBg: "#3F51B5",
+	footerDefaultBg: commonColor.brandPrimary,
 
 	// FooterTab
-	tabBarTextColor: "#b3c7f9",
+	tabBarTextColor: commonColor.lightGray,
 	tabBarTextSize: platform === "ios" ? 14 : 11,
-	activeTab: "#fff",
-	sTabBarActiveTextColor: "#007aff",
-	tabBarActiveTextColor: "#fff",
+	activeTab: commonColor.white,
+	sTabBarActiveTextColor: commonColor.brandPrimary,
+	tabBarActiveTextColor: commonColor.white,
 	tabActiveBgColor: undefined,
 
 	// Tab
-	tabDefaultBg: "#3F51B5",
-	topTabBarTextColor: "#b3c7f9",
-	topTabBarActiveTextColor: "#fff",
+	tabDefaultBg: commonColor.brandPrimary,
+	topTabBarTextColor: commonColor.lightGray,
+	topTabBarActiveTextColor: commonColor.white,
 	topTabActiveBgColor: undefined,
-	topTabBarBorderColor: "#fff",
-	topTabBarActiveBorderColor: "#fff",
+	topTabBarBorderColor: commonColor.white,
+	topTabBarActiveBorderColor: commonColor.white,
 
 	// Header
-	toolbarBtnColor: "#fff",
-	toolbarDefaultBg: "#3F51B5",
+	toolbarBtnColor: commonColor.white,
+	toolbarDefaultBg: commonColor.brandPrimary,
 	toolbarHeight: platform === "ios" ? 76 : 56,
 	toolbarIconSize: platform === "ios" ? 20 : 22,
 	toolbarSearchIconSize: platform === "ios" ? 20 : 23,
-	toolbarInputColor: "#fff",
+	toolbarInputColor: commonColor.white,
 	searchBarHeight: platform === "ios" ? 30 : 40,
-	toolbarInverseBg: "#222",
-	toolbarTextColor: "#fff",
-	toolbarDefaultBorder: "#3F51B5",
+	toolbarInverseBg: commonColor.black,
+	toolbarTextColor: commonColor.white,
+	toolbarDefaultBorder: commonColor.brandPrimary,
 	iosStatusbar: "light-content",
 	get statusBarColor() {
 		return color(this.toolbarDefaultBg)
@@ -175,15 +177,15 @@ export default {
 
 	// InputGroup
 	inputFontSize: 17,
-	inputBorderColor: "#D9D5DC",
-	inputSuccessBorderColor: "#2b8339",
-	inputErrorBorderColor: "#ed2f2f",
+	inputBorderColor: commonColor.lightGray,
+	inputSuccessBorderColor: commonColor.brandSuccess,
+	inputErrorBorderColor: commonColor.brandWarning,
 
 	get inputColor() {
 		return this.textColor;
 	},
 	get inputColorPlaceholder() {
-		return "#575757";
+		return commonColor.darkGray;
 	},
 
 	inputGroupMarginBottom: 10,
@@ -203,32 +205,32 @@ export default {
 	lineHeight: platform === "ios" ? 20 : 24,
 
 	// List
-	listBorderColor: "#c9c9c9",
-	listDividerBg: "#f4f4f4",
+	listBorderColor: commonColor.lightGray,
+	listDividerBg: commonColor.touchableUnderlay,
 	listItemHeight: 45,
-	listBtnUnderlayColor: "#DDD",
+	listBtnUnderlayColor: commonColor.touchableUnderlay,
 
 	// Card
-	cardBorderColor: "#ccc",
+	cardBorderColor: commonColor.tabActive,
 
 	// Changed Variable
 	listItemPadding: platform === "ios" ? 10 : 12,
 
-	listNoteColor: "#808080",
+	listNoteColor: commonColor.darkGray,
 	listNoteSize: 13,
 
 	// Progress Bar
-	defaultProgressColor: "#E4202D",
-	inverseProgressColor: "#1A191B",
+	defaultProgressColor: commonColor.brandWarning,
+	inverseProgressColor: commonColor.black,
 
 	// Radio Button
 	radioBtnSize: platform === "ios" ? 25 : 23,
-	radioSelectedColorAndroid: "#5067FF",
+	radioSelectedColorAndroid: commonColor.brandPrimary,
 
 	// New Variable
 	radioBtnLineHeight: platform === "ios" ? 29 : 24,
 
-	radioColor: "#7e7e7e",
+	radioColor: commonColor.gray,
 
 	get radioSelectedColor() {
 		return color(this.radioColor)
@@ -237,27 +239,27 @@ export default {
 	},
 
 	// Spinner
-	defaultSpinnerColor: "#45D56E",
-	inverseSpinnerColor: "#1A191B",
+	defaultSpinnerColor: commonColor.brandSuccess,
+	inverseSpinnerColor: commonColor.black,
 
 	// Tabs
-	tabBgColor: "#F8F8F8",
+	tabBgColor: commonColor.touchableUnderlay,
 	tabFontSize: 15,
-	tabTextColor: "#222222",
+	tabTextColor: commonColor.black,
 
 	// Text
-	textColor: "#000",
-	inverseTextColor: "#fff",
+	textColor: commonColor.black,
+	inverseTextColor: commonColor.white,
 	noteFontSize: 14,
 
 	// Title
 	titleFontfamily: platform === "ios" ? "Roboto" : "Roboto_medium",
 	titleFontSize: 19,
 	subTitleFontSize: 14,
-	subtitleColor: "#FFF",
+	subtitleColor: commonColor.white,
 
 	// New Variable
-	titleFontColor: "#FFF",
+	titleFontColor: commonColor.white,
 
 	// Other
 	borderRadiusBase: 2,
@@ -270,10 +272,10 @@ export default {
 			.hex();
 	},
 
-	dropdownBg: "#000",
-	dropdownLinkColor: "#414142",
+	dropdownBg: commonColor.black,
+	dropdownLinkColor: commonColor.darkGray,
 	inputLineHeight: 24,
-	jumbotronBg: "#C9C9CE",
+	jumbotronBg: commonColor.lightGray,
 	jumbotronPadding: 30,
 	deviceWidth,
 	deviceHeight,

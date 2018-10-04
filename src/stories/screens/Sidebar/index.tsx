@@ -8,7 +8,7 @@ const routes = [
 		caption: 'Home',
 	},
 	{
-		route: 'BlankPage',
+		route: 'VerifiedPage',
 		caption: 'Blank Page',
 	},
 	{

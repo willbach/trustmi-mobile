@@ -12,11 +12,12 @@ export default class UserStore {
   @observable mnemonic = ''
   @observable privateKeyHex = ''
   @observable address = ''
+  @observable pin = ''
 
   @action
-  async createUser(email: string, pin: string) {
+  async createUser(email: string, pin: string, recoveryMnemonic?: string) {
     try {
-      const mnemonic = new Mnemonic()
+      const mnemonic = recoveryMnemonic ? new Mnemonic(recoveryMnemonic) : new Mnemonic()
       const hashedPIN = bcrypt.hashSync(pin)
       const privateKey = mnemonic.toHDPrivateKey()
       const privateKeyBuffer = privateKey.privateKey.toBuffer()
@@ -57,8 +58,9 @@ export default class UserStore {
     }
   }
 
-  @action restoreUser(pin: string) {
-    
+  @action
+  async restoreUser(email: string, pin: string, mnemonic: string) {
+    return this.createUser(email, pin, mnemonic)
   }
 
   @action

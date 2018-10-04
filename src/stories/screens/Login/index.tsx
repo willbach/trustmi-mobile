@@ -2,6 +2,8 @@ import * as React from 'react'
 import { Image, Platform, BackHandler } from 'react-native'
 import { Container, Content, Header, Body, Title, Button, Text, View, Icon, Footer } from 'native-base'
 
+import commonColor from 'theme/variables/commonColor'
+
 import Pinpad from 'ui/components/Pinpad'
 //import styles from './styles';
 export interface Props {
@@ -66,11 +68,11 @@ export default class Login extends React.Component<Props, State> {
 		const { pin, step } = this.state
 
 		if (step === 2) {
-      return <View style={{paddingHorizontal: 30, paddingVertical: 20, backgroundColor: '#ffffff'}}>
+      return <View style={{paddingHorizontal: 30, paddingVertical: 20, backgroundColor: commonColor.white}}>
         <Pinpad onNumPress={() => null} onBackspace={() => null} pin={pin} headerText={'Please Wait'} />
       </View>
     }
-    return <View style={{paddingHorizontal: 30, paddingVertical: 20, backgroundColor: '#ffffff'}}>
+    return <View style={{paddingHorizontal: 30, paddingVertical: 20, backgroundColor: commonColor.white}}>
       <Pinpad onNumPress={(pin) => this.enterPin(pin)} onBackspace={() => this.clearPin()} pin={pin} headerText={'Please Enter Your PIN'} />
     </View>
 	}

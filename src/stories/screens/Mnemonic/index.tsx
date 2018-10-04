@@ -2,6 +2,8 @@ import * as React from 'react'
 import { Platform } from 'react-native'
 import { Container, Content, Header, Body, Title, Button, Text, View, Icon, Footer } from 'native-base'
 
+import commonColor from 'theme/variables/commonColor'
+
 //import styles from './styles'
 export interface Props {
   mnemonic: string
@@ -18,7 +20,6 @@ export default class Mnemonic extends React.Component<Props, State> {
   }
 
 	render() {
-    console.log('MNEMONIC RENDER', this.props.mnemonic)
     return (
       <Container>
         <Header style={{ height: 200 }}>
@@ -26,7 +27,7 @@ export default class Mnemonic extends React.Component<Props, State> {
             <Icon name='flash' style={{ fontSize: 104 }} />
             <Title>TrustMi</Title>
             <View padder>
-              <Text style={{ color: Platform.OS === 'ios' ? '#000' : '#FFF' }} />
+              <Text style={{ color: Platform.OS === 'ios' ? commonColor.black : commonColor.white }} />
             </View>
           </Body>
         </Header>

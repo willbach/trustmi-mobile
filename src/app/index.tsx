@@ -7,7 +7,7 @@ const deviceWidth = Dimensions.get("window").width
 
 import Signup from 'container/SignupContainer'
 import Home from 'container/HomeContainer'
-import BlankPage from 'container/BlankPageContainer'
+import VerifiedPage from 'container/VerifiedPageContainer'
 import Sidebar from 'container/SidebarContainer'
 import Mnemonic from 'container/MnemonicContainer'
 import Login from 'container/LoginContainer'
@@ -31,7 +31,7 @@ const App = StackNavigator(
 		Signup: { screen: Signup },
 		Mnemonic: { screen: Mnemonic },
 		Drawer: { screen: Drawer },
-		BlankPage: { screen: BlankPage },
+		VerifiedPage: { screen: VerifiedPage },
 	},
 	{
 		initialRouteName: 'Login',

@@ -1,4 +1,5 @@
-import variable from "theme/variables/platform";
+import variable from "theme/variables/platform"
+import commonColor from 'theme/variables/commonColor'
 
 export default (variables = variable) => {
 	const platform = variables.platform;
@@ -54,7 +55,7 @@ export default (variables = variable) => {
 
 		".content": {
 			"NativeBase.Text": {
-				color: platform === "ios" ? "#555" : "#222",
+				color: platform === "ios" ? "#555" : commonColor.black,
 				fontSize: variables.DefaultFontSize - 3,
 			},
 		},
