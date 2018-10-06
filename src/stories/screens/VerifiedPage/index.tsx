@@ -2,11 +2,13 @@ import * as React from 'react'
 import { Container, Header, Title, Content, Text, Button, Icon, Left, Right, Body, View, Form, Item, Input } from 'native-base'
 
 import styles from './styles'
+import general from 'theme/general'
+import creditKarma from 'data-sources/credit-karma';
+
 export interface Props {
 	navigation: any
-	verifiedStore: any
-	userStore: any
 	getData: Function
+	data: any
 }
 export interface State {
 	username: string
@@ -39,10 +41,29 @@ export default class VerifiedPage extends React.Component<Props, State> {
 		this.setState({ username: '', password: '' })
 	}
 
+	renderInfo() {
+		const param = this.props.navigation.state.params
+		const renderRowData = (datum: any) => {
+			if (param.service === 'collegeBoard') {
+				return <Text>{`${datum.title}: ${datum.score}`}</Text>
+			} else if (param.service = creditKarma) {
+				return <Text>{`${datum.agency}: ${datum.score}`}</Text>
+			} else {
+				return null
+			}
+		}
+
+		return this.props.data instanceof Array && this.props.data.map((datum, index) => (
+			<View key={index} style={general.flexRow}>
+				{renderRowData(datum)}
+			</View>
+		))
+	}
+
 	render() {
 		const param = this.props.navigation.state.params
-		const data = this.props.userStore[param.service]
 		const { username, password } = this.state
+		const { data } = this.props
 
 		return (
 			<Container style={styles.container}>
@@ -55,14 +76,15 @@ export default class VerifiedPage extends React.Component<Props, State> {
 
 					<View padder>
 						<Body style={{ flex: 3 }}>
-							<Title>{param ? param.name : 'Blank Page'}</Title>
+							<Title style={{marginTop: 5}}>{param ? param.name : 'Blank Page'}</Title>
 						</Body>
 					</View>
 					<Right />
 				</Header>
 
 				<Content padder>
-					<Text>{param !== undefined ? param.name : 'Create Something Awesome . . .'}</Text>
+					{this.renderInfo()}
+
 					<Form>
 						<Item /*error={form.emailError ? true : false}*/>
 							<Icon active name='person' />
@@ -89,7 +111,7 @@ export default class VerifiedPage extends React.Component<Props, State> {
 						</Item>
 					</Form>
 					<Button block onPress={this.submit}>
-						<Text>Get Your Data!</Text>
+						<Text>{data ? 'Update Your Data!' : 'Get Your Data!'}</Text>
 					</Button>
 				</Content>
 			</Container>

@@ -21,7 +21,7 @@ export default class FetchUtil {
     console.log('ABOUT TO SEND: ', request)
 
     const result = await fetch(request)
-      .then(data => data)
+      .then(data => data.json())
       .catch(err => console.log('ERROR ON SCRAPING: ', err))
 
     console.log('got some data back', result)

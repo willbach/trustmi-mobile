@@ -6,18 +6,25 @@ import { NavigationActions } from 'react-navigation'
 
 import Login from 'stories/screens/Login'
 
-const resetAction = NavigationActions.reset({
+const startAtDrawer = NavigationActions.reset({
 	index: 0,
 	actions: [NavigationActions.navigate({ routeName: 'Drawer' })],
+})
+
+const startAtSignup = NavigationActions.reset({
+	index: 0,
+	actions: [NavigationActions.navigate({ routeName: 'Signup' })],
 })
 
 export interface Props {
 	navigation: any
 	userStore: any
+	verifiedStore: any
 }
 export interface State {}
 
 @inject('userStore')
+@inject('verifiedStore')
 @observer
 export default class LoginContainer extends React.Component<Props, State> {
 	constructor(props) {
@@ -29,12 +36,11 @@ export default class LoginContainer extends React.Component<Props, State> {
 	async componentWillMount() {
 		try {
 			const hasStoredUser = await this.props.userStore.checkUserExists()
-			console.log('IS THERE A USER', hasStoredUser)
 			if (!hasStoredUser) {
-				this.props.navigation.navigate('Signup')
+				this.props.navigation.dispatch(startAtSignup)
 			}
 		} catch (e) {
-			this.props.navigation.navigate('Signup')
+			this.props.navigation.dispatch(startAtSignup)
 		}
 	}
 
@@ -46,7 +52,8 @@ export default class LoginContainer extends React.Component<Props, State> {
 			if (pinCorrect) {
 				const userLoggedIn = await this.props.userStore.loginUser(pin)
 				if (userLoggedIn) {
-					this.props.navigation.dispatch(resetAction)
+					this.props.verifiedStore.services.forEach(service => this.props.verifiedStore.getData(service, pin))
+					this.props.navigation.dispatch(startAtDrawer)
 				} else {
 					Toast.show({
 						text: 'There was an error logging in, please try again later',

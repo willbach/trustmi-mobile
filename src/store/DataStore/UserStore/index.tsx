@@ -28,6 +28,7 @@ export default class UserStore {
       this.mnemonic = mnemonic.toString()
       this.privateKeyHex = privateKeyHex
       this.address = ethAddress
+      this.pin = pin
 
       const encryptedPIN = CryptoJS.AES.encrypt(hashedPIN, pin).toString()
       await AsyncStorage.setItem('hashedPIN', encryptedPIN)
@@ -97,6 +98,7 @@ export default class UserStore {
         this.mnemonic = user.mnemonic
         this.privateKeyHex = user.privateKeyHex
         this.address = user.address
+        this.pin = pin
 
         return true
       } else {
@@ -114,6 +116,7 @@ export default class UserStore {
     this.mnemonic = ''
     this.privateKeyHex = ''
     this.address = ''
+    this.pin = ''
   }
 
   @action

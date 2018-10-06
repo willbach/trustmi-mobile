@@ -1,6 +1,7 @@
 // @flow
 import * as React from 'react'
 import { Item, Input, Icon, Form, Toast } from 'native-base'
+import { NavigationActions } from 'react-navigation'
 import { observer, inject } from 'mobx-react/native'
 
 import language from 'language'
@@ -10,6 +11,11 @@ const { formErrors } = language
 import Signup from 'stories/screens/Signup'
 
 let submitted = false
+
+const startAtMnemonic = NavigationActions.reset({
+	index: 0,
+	actions: [NavigationActions.navigate({ routeName: 'Mnemonic' })],
+})
 
 export interface Props {
 	navigation: any
@@ -39,7 +45,7 @@ export default class SignupContainer extends React.Component<Props, State> {
 			const userCreated = await this.props.userStore.createUser(this.props.signupForm.email, pin)
 			this.props.signupForm.clearStore()
 			if (userCreated) {
-				this.props.navigation.navigate('Mnemonic')
+				this.props.navigation.dispatch(startAtMnemonic)
 			}
 		}
 	}

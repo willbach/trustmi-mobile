@@ -25,7 +25,6 @@ export default class VerifiedPageContainer extends React.Component<Props, State>
 
 	render() {
 		const param = this.props.navigation.state.params
-		console.log('PARAMS', param)
-		return <VerifiedPage navigation={this.props.navigation} verifiedStore={this.props.verifiedStore} userStore={this.props.userStore} getData={this.getData} />
+		return <VerifiedPage navigation={this.props.navigation} getData={this.getData} data={this.props.verifiedStore[param.service].data} />
 	}
 }
