@@ -31,6 +31,7 @@ local.properties
 *.iml
 lib/
 lib
+android/gradle.properties
 
 # node.js
 #

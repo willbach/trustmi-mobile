@@ -8,10 +8,10 @@ export default class FetchUtil {
     this.apiKey = apiKey
   }
 
-  async post(username: string, password: string) {
+  async post(body: any) {
     const request = new Request(this.apiEndpoint, {
       method: 'POST',
-      body: JSON.stringify({ username, password }),
+      body: JSON.stringify(body),
       headers: {
         "Content-Type": 'application/json',
         "x-api-key": this.apiKey,
