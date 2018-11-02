@@ -1,9 +1,9 @@
-import HomeStore from "../HomeStore";
-import data from "../../../container/HomeContainer/data";
+import InformationStore from "../InformationStore";
+import data from "../../../container/InformationContainer/data";
 
-describe("HomeStore", () => {
+describe("InformationStore", () => {
 	it("should handle FETCH_LIST_SUCCESS", () => {
-		const store = new HomeStore();
+		const store = new InformationStore();
 		store.fetchItems(data);
 		const expectedArray = [
 			"React Native Starter Kit",

@@ -37,7 +37,7 @@ export default class SignupContainer extends React.Component<Props, State> {
   }
 
 	nextScreen() {
-    this.props.navigation.navigate('Drawer')
+    this.props.navigation.navigate('HomeDrawer')
   }
 
 	render() {

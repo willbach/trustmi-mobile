@@ -108,8 +108,8 @@ export default {
 	cardDefaultBg: '#fff',
 
 	// Color
-	brandPrimary: '#808080',
-	brandSecondary: '#eeb422',
+	brandPrimary: '#36454f',
+	brandSecondary: '#40E0D0',
 	brandInfo: '#62B1F6',
 	brandSuccess: '#5cb85c',
 	brandDanger: '#d9534f',
@@ -223,7 +223,7 @@ export default {
 	// Changed Variable
 	listItemPadding: platform === 'ios' ? 10 : 12,
 
-	listNoteColor: '#808080',
+	listNoteColor: '#36454f',
 	listNoteSize: 13,
 
 	// Progress Bar

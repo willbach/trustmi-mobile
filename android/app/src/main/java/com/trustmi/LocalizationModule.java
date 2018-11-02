@@ -1,4 +1,4 @@
-package com.trustmi.react.modules.localization;
+package com.thepond.react.modules.localization;
 
 import android.os.Bundle;
 import android.os.Build;

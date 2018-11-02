@@ -1,21 +1,21 @@
 import React from 'react'
-import { StackNavigator, DrawerNavigator } from 'react-navigation'
+import { createStackNavigator, createDrawerNavigator } from 'react-navigation'
 import { Root } from 'native-base'
 import { Dimensions } from 'react-native'
 
 const deviceWidth = Dimensions.get("window").width
 
 import Signup from 'container/SignupContainer'
-import Home from 'container/HomeContainer'
+import HomeTabs from '../navigators/HomeTabs'
 import VerifiedPage from 'container/VerifiedPageContainer'
 import Sidebar from 'container/SidebarContainer'
 import Mnemonic from 'container/MnemonicContainer'
 import Login from 'container/LoginContainer'
 import Restore from 'container/RestoreContainer'
 
-const Drawer = DrawerNavigator(
+const HomeDrawer = createDrawerNavigator(
 	{
-		Home: { screen: Home },
+		HomeTabs: { screen: HomeTabs },
 	},
 	{
 		drawerWidth: deviceWidth - 50,
@@ -24,13 +24,13 @@ const Drawer = DrawerNavigator(
 	}
 )
 
-const App = StackNavigator(
+const App = createStackNavigator(
 	{
 		Login: { screen: Login },
 		Restore: { screen: Restore },
 		Signup: { screen: Signup },
 		Mnemonic: { screen: Mnemonic },
-		Drawer: { screen: Drawer },
+		HomeDrawer: { screen: HomeDrawer },
 		VerifiedPage: { screen: VerifiedPage },
 	},
 	{

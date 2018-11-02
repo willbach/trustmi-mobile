@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { View, ScrollView, Text, TouchableHighlight, Image, StyleSheet, Platform, Dimensions } from 'react-native'
+import { Icon } from 'native-base'
 
 import commonColor from 'theme/variables/commonColor'
 
@@ -67,7 +68,7 @@ export default class Pinpad extends Component<Props> {
           </TouchableHighlight>
           <TouchableHighlight underlayColor={commonColor.touchableUnderlay} onPress={() => onBackspace()} style={style.button} >
             <View>
-              <Text style={style.number}>B</Text>
+              <Icon name={'ios-backspace-outline'} style={[style.number, { marginTop: 10 }]}/>
             </View>
           </TouchableHighlight>
         </View>

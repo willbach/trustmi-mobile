@@ -1,9 +1,9 @@
-import MainStore from 'store/DomainStore/HomeStore'
+import InformationStore from 'store/DomainStore/InformationStore'
 import SignupStore from 'store/ViewStore/SignupViewStore'
 import UserStore from 'store/DataStore/UserStore'
 
 export default {
   userStore: UserStore,
-  mainStore: MainStore,
+  mainStore: InformationStore,
   signupForm: SignupStore
 }

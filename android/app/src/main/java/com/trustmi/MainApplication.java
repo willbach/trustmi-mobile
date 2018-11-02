@@ -1,4 +1,4 @@
-package com.trustmi;
+package com.thepond;
 
 import android.app.Application;
 
@@ -9,7 +9,7 @@ import com.bitgo.randombytes.RandomBytesPackage;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
-import com.trustmi.react.modules.localization.LocalizationPackage;
+import com.thepond.react.modules.localization.LocalizationPackage;
 
 import java.util.Arrays;
 import java.util.List;

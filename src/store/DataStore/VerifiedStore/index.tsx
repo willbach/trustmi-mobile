@@ -1,5 +1,6 @@
 import { observable, action } from 'mobx'
 import dataSources from 'data-sources'
+import generateRandomString from 'utils/random-string'
 
 import CryptoJS from 'crypto-js'
 
@@ -10,10 +11,16 @@ export default class VerifiedStore {
   @observable creditKarma = {}
   @observable mint = {}
   @observable services = ['collegeBoard', 'creditKarma', 'mint'] //array with all service names in it
+  @observable secret : string | undefined = undefined
 
   @action
   async storeData(service, pin, username, password) {
-    const data = await dataSources[service].scrape(username, password)
+    //generate and send secret here
+    if (dataSources.isMFA(service)) {
+      this.secret = generateRandomString(20)
+    }
+
+    const data = await dataSources.scrape(username, password, service, this.secret)
     console.log('GOT THE DATA IN THE STORE: ', data)
     console.log('PIN', pin, pin.length)
 
@@ -26,6 +33,7 @@ export default class VerifiedStore {
 
     this[service].data = data
     console.log('WE HAVE NOW STORED THE DATA: ', this[service])
+    this.secret = undefined
   }
 
   @action

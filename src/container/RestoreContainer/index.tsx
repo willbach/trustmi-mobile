@@ -39,7 +39,7 @@ export default class RestoreContainer extends React.Component<Props, State> {
 			const userRestored = await this.props.userStore.restoreUser(this.props.restoreForm.email, pin, this.props.restoreForm.mnemonic)
 			this.props.restoreForm.clearStore()
 			if (userRestored) {
-				this.props.navigation.navigate('Drawer')
+				this.props.navigation.navigate('HomeDrawer')
 			}
 		}
 	}

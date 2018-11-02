@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react'
 import { Item, Input, Icon, Form, Toast } from 'native-base'
-import { NavigationActions } from 'react-navigation'
+import { NavigationActions, StackActions } from 'react-navigation'
 import { observer, inject } from 'mobx-react/native'
 
 import language from 'language'
@@ -12,7 +12,7 @@ import Signup from 'stories/screens/Signup'
 
 let submitted = false
 
-const startAtMnemonic = NavigationActions.reset({
+const startAtMnemonic = StackActions.reset({
 	index: 0,
 	actions: [NavigationActions.navigate({ routeName: 'Mnemonic' })],
 })

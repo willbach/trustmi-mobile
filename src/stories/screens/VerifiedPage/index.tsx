@@ -3,7 +3,6 @@ import { Container, Header, Title, Content, Text, Button, Icon, Left, Right, Bod
 
 import styles from './styles'
 import general from 'theme/general'
-import creditKarma from 'data-sources/credit-karma';
 
 export interface Props {
 	navigation: any
@@ -46,7 +45,7 @@ export default class VerifiedPage extends React.Component<Props, State> {
 		const renderRowData = (datum: any) => {
 			if (param.service === 'collegeBoard') {
 				return <Text>{`${datum.title}: ${datum.score}`}</Text>
-			} else if (param.service = creditKarma) {
+			} else if (param.service = 'creditKarma') {
 				return <Text>{`${datum.agency}: ${datum.score}`}</Text>
 			} else {
 				return null

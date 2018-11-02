@@ -7,7 +7,7 @@ class Signup extends React.Component {
             React.createElement(Header, { style: { height: 200 } },
                 React.createElement(Body, { style: { alignItems: "center" } },
                     React.createElement(Icon, { name: "flash", style: { fontSize: 104 } }),
-                    React.createElement(Title, null, "TrustMi.com"),
+                    React.createElement(Title, null, "ThePond.com"),
                     React.createElement(View, { padder: true },
                         React.createElement(Text, { style: { color: Platform.OS === "ios" ? "#000" : "#FFF" } })))),
             React.createElement(Content, null,

@@ -1,7 +1,7 @@
 {
   "expo": {
     "sdkVersion": "24.0.0",
-    "slug": "Trust-Mi",
+    "slug": "The-Pond",
     "loading": {
       "hideExponentText": false,
       "icon": "./assets/loading.png"
@@ -19,6 +19,6 @@
       "backgroundColor": "#334393"
     }
   },
-  "name": "TrustMi",
-  "displayName": "TrustMi"
+  "name": "ThePond",
+  "displayName": "ThePond"
 }

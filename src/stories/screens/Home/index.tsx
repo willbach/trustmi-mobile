@@ -14,7 +14,7 @@ class Home extends React.Component<Props, State> {
         <Header>
           <Left>
             <Button transparent>
-              <Icon active name="menu" onPress={() => this.props.navigation.navigate("DrawerOpen")} />
+              <Icon active name="menu" onPress={() => this.props.navigation.openDrawer()} />
             </Button>
           </Left>
           <Body>
@@ -23,17 +23,7 @@ class Home extends React.Component<Props, State> {
           <Right />
         </Header>
         <Content>
-          <List>
-            {this.props.list.map((item, i) => (
-              <ListItem
-                key={i}
-                onPress={() =>
-                  this.props.navigation.navigate("VerifiedPage", { name: item.name, service: item.service})}
-              >
-                <Text>{item.name}</Text>
-              </ListItem>
-            ))}
-          </List>
+          
         </Content>
       </Container>
     );

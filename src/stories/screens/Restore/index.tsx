@@ -112,7 +112,7 @@ export default class Restore extends React.Component<Props, State> {
 					<Header style={{ height: 200 }}>
 						<Body style={{ alignItems: 'center' }}>
 							<Icon name='flash' style={{ fontSize: 104 }} />
-							<Title>TrustMi</Title>
+							<Title>ThePond</Title>
 							<View padder>
 								<Text style={{ color: Platform.OS === 'ios' ? commonColor.black : commonColor.white }} />
 							</View>

@@ -2,16 +2,16 @@
 import * as React from 'react'
 import { Item, Input, Icon, Form, Toast } from 'native-base'
 import { observer, inject } from 'mobx-react/native'
-import { NavigationActions } from 'react-navigation'
+import { NavigationActions, StackActions } from 'react-navigation'
 
 import Login from 'stories/screens/Login'
 
-const startAtDrawer = NavigationActions.reset({
+const startAtDrawer = StackActions.reset({
 	index: 0,
-	actions: [NavigationActions.navigate({ routeName: 'Drawer' })],
+	actions: [NavigationActions.navigate({ routeName: 'HomeDrawer' })],
 })
 
-const startAtSignup = NavigationActions.reset({
+const startAtSignup = StackActions.reset({
 	index: 0,
 	actions: [NavigationActions.navigate({ routeName: 'Signup' })],
 })
