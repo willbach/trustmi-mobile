@@ -1,21 +1,24 @@
-import InformationStore from 'store/DomainStore/InformationStore'
-import SignupStore from 'store/ViewStore/SignupViewStore'
+import GroupStore from 'store/DomainStore/GroupStore'
+import ProfileStore from 'store/DomainStore/ProfileStore'
 import RestoreStore from 'store/ViewStore/RestoreViewStore'
+import ScrapedStore from 'store/DataStore/ScrapedStore'
+import SignupStore from 'store/ViewStore/SignupViewStore'
 import UserStore from 'store/DataStore/UserStore'
-import VerifiedStore from 'store/DataStore/VerifiedStore'
 
 export default function() {
-  const mainStore = new InformationStore()
-  const signupForm = new SignupStore()
+  const groupStore = new GroupStore()
+  const profileStore = new ProfileStore()
   const restoreForm = new RestoreStore()
+  const scrapedStore = new ScrapedStore()
+  const signupForm = new SignupStore()
   const userStore = new UserStore()
-  const verifiedStore = new VerifiedStore()
 
   return {
-    mainStore,
-    signupForm,
+    groupStore,
+    profileStore,
     restoreForm,
+    scrapedStore,
+    signupForm,
     userStore,
-    verifiedStore,
   }
 }

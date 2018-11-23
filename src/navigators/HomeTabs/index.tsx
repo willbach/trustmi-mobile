@@ -1,54 +1,49 @@
 import * as React from "react"
 import { Container, Header, Title, Content, Text, Button, Icon, Left, Body, Right, List, ListItem } from "native-base"
 import { createBottomTabNavigator, createMaterialTopTabNavigator } from 'react-navigation'
-import Ionicons from 'react-native-vector-icons/Ionicons'
-import Colors from 'theme/variables/commonColor'
+import commonColor from 'theme/variables/commonColor'
 
-import HomeScreen from 'container/HomeContainer'
-import GroupsScreen from 'container/GroupsContainer'
-import InformationScreen from 'container/InformationContainer'
+import HomeScreen from 'container/home-tabs/HomeContainer'
+import SearchScreen from 'container/home-tabs/SearchContainer'
+import MessagesScreen from 'container/home-tabs/MessagesContainer'
+import ProfileScreen from 'container/home-tabs/ProfileContainer'
 
 export default createMaterialTopTabNavigator(
   {
     Home: HomeScreen,
-    Groups: GroupsScreen,
-    Information: InformationScreen,
+    Search: SearchScreen,
+    Messages: MessagesScreen,
+    Profile: ProfileScreen,
   },
   {
     navigationOptions: ({ navigation }) => ({
-      tabBarIcon: ({ focused, horizontal, tintColor }) => {
-        if (tintColor === null) {
-          tintColor = ''
-        }
+      tabBarIcon: ({ focused }) => {
         const { routeName } = navigation.state
         let iconName
         if (routeName === 'Home') {
           iconName = `ios-home${focused ? '' : '-outline'}`
-        } else if (routeName === 'Groups') {
-          iconName = `ios-people${focused ? '' : '-outline'}`
-        } else if (routeName === 'Information') {
-          iconName = `ios-paper${focused ? '' : '-outline'}`
+        } else if (routeName === 'Search') {
+          iconName = `ios-search${focused ? '' : '-outline'}`
+        } else if (routeName === 'Messages') {
+          iconName = `ios-chatbubbles${focused ? '' : '-outline'}`
+        } else if (routeName === 'Profile') {
+          iconName = `ios-contact${focused ? '' : '-outline'}`
         }
 
-        // You can return any component that you like here! We usually use an
-        // icon component from react-native-vector-icons
-        return <Icon name={iconName} style={{color: Colors.brandSecondary}} />
+        return <Icon name={iconName} style={{color: commonColor.brandSecondary}} />
       },
     }),
     tabBarPosition: 'bottom',
     animationEnabled: true,
     swipeEnabled: true,
     tabBarOptions: {
-      activeTintColor: 'tomato',
-      inactiveTintColor: 'gray',
       showIcon: true,
       showLabel: false,
-      style: { backgroundColor: Colors.brandPrimary },
-      indicatorStyle: { backgroundColor: Colors.brandSecondary },
+      style: { backgroundColor: commonColor.brandPrimary },
+      indicatorStyle: { backgroundColor: commonColor.brandSecondary },
     },
   }
 )
-
 
 // import styles from "./styles"
 // export interface Props {
@@ -59,7 +54,7 @@ export default createMaterialTopTabNavigator(
 // class Home extends React.Component<Props, State> {
 //   render() {
 //     return (
-//       <Container style={styles.container}>
+//       <Container style={general.container}>
 //         <Header>
 //           <Left>
 //             <Button transparent>

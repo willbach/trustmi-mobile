@@ -7,4 +7,4 @@ import boot from "./src/boot"
 
 const App = boot()
 
-AppRegistry.registerComponent('ThePond', () => App)
+AppRegistry.registerComponent('thepond', () => App)

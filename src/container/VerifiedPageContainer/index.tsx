@@ -3,12 +3,12 @@ import VerifiedPage from 'stories/screens/VerifiedPage'
 import { observer, inject } from 'mobx-react/native'
 export interface Props {
 	navigation: any
-	verifiedStore: any
+	scrapedStore: any
 	userStore: any
 }
 export interface State {}
 
-@inject('verifiedStore')
+@inject('scrapedStore')
 @inject('userStore')
 @observer
 export default class VerifiedPageContainer extends React.Component<Props, State> {
@@ -20,11 +20,11 @@ export default class VerifiedPageContainer extends React.Component<Props, State>
 
 	getData(username: string, password: string) {
 		const param = this.props.navigation.state.params
-		this.props.verifiedStore.storeData(param.service, this.props.userStore.pin, username, password)
+		this.props.scrapedStore.storeData(param.service, this.props.userStore.pin, username, password)
 	}
 
 	render() {
 		const param = this.props.navigation.state.params
-		return <VerifiedPage navigation={this.props.navigation} getData={this.getData} data={this.props.verifiedStore[param.service].data} />
+		return <VerifiedPage navigation={this.props.navigation} getData={this.getData} data={this.props.scrapedStore[param.service].data} />
 	}
 }

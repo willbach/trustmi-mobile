@@ -12,6 +12,9 @@ import Sidebar from 'container/SidebarContainer'
 import Mnemonic from 'container/MnemonicContainer'
 import Login from 'container/LoginContainer'
 import Restore from 'container/RestoreContainer'
+import UpdateInterests from 'container/UpdateInterestsContainer'
+
+import InformationListPage from 'container/InformationListContainer'
 
 const HomeDrawer = createDrawerNavigator(
 	{
@@ -32,6 +35,8 @@ const App = createStackNavigator(
 		Mnemonic: { screen: Mnemonic },
 		HomeDrawer: { screen: HomeDrawer },
 		VerifiedPage: { screen: VerifiedPage },
+		InformationList: { screen: InformationListPage },
+		UpdateInterests: { screen: UpdateInterests },
 	},
 	{
 		initialRouteName: 'Login',

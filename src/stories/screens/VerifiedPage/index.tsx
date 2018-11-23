@@ -65,7 +65,7 @@ export default class VerifiedPage extends React.Component<Props, State> {
 		const { data } = this.props
 
 		return (
-			<Container style={styles.container}>
+			<Container style={general.container}>
 				<Header>
 					<Left>
 						<Button transparent onPress={() => this.props.navigation.goBack()}>

@@ -4,10 +4,13 @@ const { height, width } = Dimensions.get('window')
 
 import commonColor from 'theme/variables/commonColor'
 
-export default StyleSheet.create({
+const generalStyle: any = StyleSheet.create({
   flex: {
     flex: 1
   },
+  container: {
+		backgroundColor: commonColor.white,
+	},
   whiteFlex: {
     flex: 1,
     backgroundColor: commonColor.white
@@ -22,6 +25,19 @@ export default StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
+  },
+  flexRowWrapStart: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  flexRowWrapBetween: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+  },
+  flexRowEnd: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
   },
   flexColumn: {
     flexDirection: 'column'
@@ -46,6 +62,10 @@ export default StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center'
   },
+  endColumn: {
+    flexDirection: 'column',
+    justifyContent: 'flex-end'
+  },
   fullHeight: {
     minHeight: height
   },
@@ -59,6 +79,12 @@ export default StyleSheet.create({
   largeHMargin: {
     marginHorizontal: 30
   },
+  standardLMargin: {
+    marginLeft: 15,
+  },
+  tinyTopMargin: {
+    marginTop: 5
+  },
   smallTopMargin: {
     marginTop: 10
   },
@@ -67,6 +93,15 @@ export default StyleSheet.create({
   },
   largeTopMargin: {
     marginTop: 30
+  },
+  smallBottomMargin: {
+    marginBottom: 10
+  },
+  mediumBottomMargin: {
+    marginBottom: 20
+  },
+  largeBottomMargin: {
+    marginBottom: 30
   },
   smallVMargin: {
     marginVertical: 10
@@ -82,5 +117,24 @@ export default StyleSheet.create({
   },
   spaceBelowM: {
     paddingBottom: 20
+  },
+  subHeader: {
+    color: commonColor.brandPrimary,
+    fontWeight: 'bold',
+		fontSize: 20,
+		marginTop: 40,
+		marginBottom: 5,
+		padding: 2,
+		marginHorizontal: 15
+  },
+  lightGrayDivider: {
+    borderBottomColor: commonColor.lightGray,
+		borderBottomWidth: 2,
+  },
+  brandSecondaryDivider: {
+    borderBottomColor: commonColor.brandSecondary,
+		borderBottomWidth: 2,
   }
 } as any)
+
+export default generalStyle

@@ -3,9 +3,8 @@ import { observable, action } from 'mobx'
 import Mnemonic from 'bitcore-mnemonic'
 import bcrypt from 'bcryptjs'
 import ethUtil from 'ethereumjs-util'
-import CryptoJS from 'crypto-js'
 
-import { AsyncStorage } from 'react-native'
+import { storeLocalData, retrieveLocalData, deleteLocalData, checkLocalDataExists } from 'utils/local-storage'
 
 export default class UserStore {
   @observable email = ''
@@ -30,8 +29,7 @@ export default class UserStore {
       this.address = ethAddress
       this.pin = pin
 
-      const encryptedPIN = CryptoJS.AES.encrypt(hashedPIN, pin).toString()
-      await AsyncStorage.setItem('hashedPIN', encryptedPIN)
+      await storeLocalData(hashedPIN, 'hashedPIN', pin)
       await this.storeUser(pin)
       return true
     } catch (e) {
@@ -49,8 +47,7 @@ export default class UserStore {
         privateKeyHex: this.privateKeyHex,
         address: this.address,
       }
-      const encryptedUser = CryptoJS.AES.encrypt(JSON.stringify(user), pin).toString()
-      await AsyncStorage.setItem('user', encryptedUser)
+      await storeLocalData(user, 'user', pin)
 
       return true
     } catch (e) {
@@ -65,34 +62,23 @@ export default class UserStore {
   }
 
   @action
-  async getHashedPIN(pin: string) {
-    const encryptedPIN = await AsyncStorage.getItem('hashedPIN')
-    const bytes = CryptoJS.AES.decrypt(encryptedPIN, pin)
-    return bytes.toString(CryptoJS.enc.Utf8)
-  }
-
-  @action
   async checkUserExists() {
-    const user = await AsyncStorage.getItem('user')
-    return !!user
+    return checkLocalDataExists('user')
   }
 
   @action
   async checkPIN(pin: string) {
-    const hashedPIN = await this.getHashedPIN(pin)
+    const hashedPIN = await retrieveLocalData('hashedPIN', pin)
     return bcrypt.compareSync(pin, hashedPIN)
   }
 
   @action
   async loginUser(pin: string) {
     try {
-      const hashedPIN = await this.getHashedPIN(pin)
+      const hashedPIN = await retrieveLocalData('hashedPIN', pin)
       const passwordMatch = bcrypt.compareSync(pin, hashedPIN)
       if (passwordMatch) {
-        const encryptedUser = await AsyncStorage.getItem('user')
-        const decryptedUserBytes = CryptoJS.AES.decrypt(encryptedUser, pin)
-        const decryptedUser = decryptedUserBytes.toString(CryptoJS.enc.Utf8)
-        const user = JSON.parse(decryptedUser)
+        const user = await retrieveLocalData('user', pin)
 
         this.email = user.email
         this.mnemonic = user.mnemonic
@@ -122,12 +108,12 @@ export default class UserStore {
   @action
   async removeUser(pin: string) {
     try {
-      const hashedPIN = await this.getHashedPIN(pin)
+      const hashedPIN = await retrieveLocalData('hashedPIN', pin)
       const passwordMatch = bcrypt.compareSync(pin, hashedPIN)
 
       if (passwordMatch) {
-        AsyncStorage.removeItem('hashedPIN')
-        AsyncStorage.removeItem('user')
+        deleteLocalData('hashedPIN')
+        deleteLocalData('user')
         return true
       } else {
         return false

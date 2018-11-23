@@ -106,7 +106,7 @@ export default {
 	},
 
 	// Card
-	cardDefaultBg: commonColor.white,
+	cardDefaultBg: commonColor.brandPrimary,
 
 	// Color
 	brandPrimary: commonColor.brandPrimary,

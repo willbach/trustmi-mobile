@@ -2,23 +2,28 @@
   "ignore": [
     "**/__tests__"
   ],
-  "presets": ["react-native"],
+  "presets": ["module:metro-react-native-babel-preset"],
   "plugins": [
-    ["module-alias", [
-      { "src": "./lib/src/app", "expose": "app"},
-      { "src": "./lib/src/boot", "expose": "boot" },
-      { "src": "./lib/src/container", "expose": "container" },
-      { "src": "./lib/src/store", "expose": "language" },
-      { "src": "./lib/src/stories", "expose": "stories" },
-      { "src": "./lib/src/navigators", "expose": "navigators" },
-      { "src": "./lib/src/reducers", "expose": "reducers" },
-      { "src": "./lib/src/store", "expose": "store" },
-      { "src": "./lib/src/theme", "expose": "theme" },
-      { "src": "./lib/src/ui", "expose": "ui" },
-      { "src": "./src/images", "expose": "images" },
-      { "src": "./lib/src/utils", "expose": "utils" },
-      { "src": "./lib/src/data-sources", "expose": "data-sources" }
-    ]]
+    ["@babel/plugin-proposal-decorators", {"legacy": true}],
+    ["module-resolver", {
+      "root": ["./lib"],
+      "alias": {
+        "app": "./src/app",
+        "boot": "./src/boot",
+        "container": "./src/container",
+        "store": "./src/store",
+        "stories": "./src/stories",
+        "navigators": "./src/navigators",
+        "reducers": "./src/reducers",
+        "theme": "./src/theme",
+        "ui": "./src/ui",
+        "images": "./src/images",
+        "utils": "./src/utils",
+        "data-sources": "./src/data-sources",
+        "types": "./src/types",
+        "language": "./src/language"
+      }
+    }]
   ],
   "env": {
     "production": {
