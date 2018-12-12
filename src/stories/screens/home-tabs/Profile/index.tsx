@@ -3,6 +3,9 @@ import { View, Image, TouchableHighlight } from 'react-native'
 import { Container, Header, Title, Content, Text, Button, Icon, Left, Body, Right, List, ListItem } from "native-base"
 import Tile from 'ui/components/Tile'
 import ProfileCompletionBar from 'ui/components/ProfileCompletionBar'
+import ProfilePic from 'ui/components/ProfilePic'
+import Interests from 'ui/components/Interests'
+import { PROFILE_PIC_SIZE } from 'theme/constants'
 
 import styles from "./styles"
 import general from 'theme/general'
@@ -34,12 +37,11 @@ class Profile extends React.Component<Props, State> {
 
   renderProfileInfo() {
     const { profileData, profileCompletionPercentage } = this.props
-    const profilePic = profileData.pic ? <Image source={{uri: profileData.pic}} style={styles.profilePic} /> : <Icon name="ios-contact" style={styles.avatarIcon}/>
     
     //at some point will add logic to ask users to update the information
     return <View style={styles.profileInfo}>
       <ProfileCompletionBar percentage={profileCompletionPercentage} onPress={this.addData} style={styles.completionBar}/>
-      {profilePic}
+      <ProfilePic image={profileData.pic} size={PROFILE_PIC_SIZE}/>
       <View style={styles.nameCityState}>
         <Text style={styles.name}>{`${profileData.first} ${profileData.last}`}</Text>
         <Text style={styles.location}>{`${profileData.city}, ${profileData.state}`}</Text>
@@ -78,11 +80,7 @@ class Profile extends React.Component<Props, State> {
               </View>
             </TouchableHighlight>
           </View>
-          <TouchableHighlight onPress={this.changeUpdateInterests} underlayColor={commonColor.touchableUnderlay}>
-            <View style={general.flexRowWrap}>
-              {interests.map((ele: string, ind: number) => (<Text key={ind} style={styles.interest}>{ele}</Text>))}
-            </View>
-          </TouchableHighlight>
+          <Interests onPress={this.changeUpdateInterests} interests={interests} />
         </Content>
       </Container>
     )

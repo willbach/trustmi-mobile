@@ -2,8 +2,26 @@ import Group from 'types/Group'
 import Event from 'types/Event'
 import Chat from 'types/Chat'
 import Notification from 'types/Notification'
+import City from 'types/City'
 
 export default {
+  availableInterests: {
+    "Arts & Entertainment": ["Acting", "Architecture", "Art", "Book Club", "Dance", "Film", "Fine Arts", "Improv", "Models", "Movies", "Music", "Painting", "Photography", "Publishing", "Screenwriting", "Storytelling", "Theater", "Writing"],
+    "Business & Career": ["Accounting","Blockchain Startups","Business Strategy","Cashflow","Construction","Digital Nomads","Entrepreneurship","Fashion Industry","Human Resources","Innovation","Investing","Lean Startup","Marketing","Professional Development","Professional Networking","Public Speaking","Real Estate","Sales","Small Businesses","Startups","Veterans","Young Professionals"],
+    "Cultures & Languages": [,"Chinese","English Language","Expat","French","German","Indian","International Students","Italian","Japanese","Korean","Spanish"],
+    "Education": ["College Students","Communication Skills","Courses and Workshops","Critical Thinking","Engineering","Finance","Grad School","History","Intellectual Discussion","Philosophy","Psychology","Science"],
+    "Health & Wellness": ["Fitness","Fitness Professionals","Group Fitness Training","Meditation","Outdoor Fitness","Nutrition","Self-Defense","Self-Empowerment","Self-Improvement","Vegan and Vegetarian","Weight Loss","Women's Support","Yoga"],
+    "Hobbies": ["Baking","Beer","Board Games","Card Games","Chess","Cocktails","Coffee","Comic Books","Cooking","Cosplay","Day Trips","Dining Out","Drinking","Domestic Travel","Ethnic Foods","Foodie","Gaming","International Travel","Poker","Sci-Fi/Fantasy","Strategy Games","Tea","Trivia","Video Games","Weekend Getaways","Wine"],
+    "Social": ["Brunch","Concerts","Couples","Dinner Parties","Family Friendly","Game Night","Girlfriends","Happy Hour","House Parties","Local Activities","Men's Social","Museums","New in Town","NFL Football","Nightlife","Pets","Pubs and Bars","Social Dancing","Social Networking","Women's Social"],
+    "Sports & Recreation": ["Backpacking","Bicycling","Bowling","Camping","Golf","Hiking","Hockey","Kayaking","Martial Arts","Mountain Biking","Outdoor Adventures","Recreational Sports","Running","Soccer","Softball/Baseball","Sports and Socials","Tennis","Ultimate Frisbee","Volleyball","Walking","Women's Fitness"],
+    "Technology": ["Agile Project Management","Android Development","Artificial Intelligence","Augmented Reality","Big Data","Business Intelligence","Cloud Computing","Computer Programming","Cryptocurrency","FinTech","Game Development","Interaction Design","Java","JavaScript","Linux","Mobile Development","Mobile Technology","New Technology","Online Marketing","Open Source","PHP","Programing Languages","Python","Robotics","Ruby","Social Media","Software Development","Web Design","Web Development","Web Technology","Women in Tech","WordPress"],
+  },
+  availableLocations: [
+    { city: 'Boston', state: 'MA' },
+    { city: 'Springfield', state: 'MA' },
+    { city: 'Natick', state: 'MA' },
+    { city: 'Waltham', state: 'MA' },
+  ].map(ele => new City(ele)),
   groups: [
     {
       id: '1234567890',
@@ -392,7 +410,6 @@ export default {
       filters: {}
     }
   ].map(ele => new Group(ele)),
-  availableInterests: ['Skydiving', 'Arts and Crafts', 'Entrepreneurship', 'Book Club', 'Outdoor Adventure', 'Engineering', 'Cars', 'Movies and TV', 'Surfing', 'Brunching'],
   events: [
     {
       name: 'Learn to Build a Website',

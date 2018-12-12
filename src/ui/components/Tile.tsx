@@ -1,8 +1,8 @@
 import variable from "theme/variables/platform"
 import commonColor from 'theme/variables/commonColor'
 import * as React from "react"
-import { View, ScrollView, TouchableHighlight, Image, StyleSheet, Platform, Dimensions } from 'react-native'
-import { Container, Header, Title, Content, Text, Button, Icon, Left, Body, Right, List, ListItem } from "native-base"
+import { View, TouchableHighlight, Dimensions } from 'react-native'
+import { Text } from "native-base"
 
 import general from 'theme/general'
 

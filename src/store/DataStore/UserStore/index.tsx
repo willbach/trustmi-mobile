@@ -21,7 +21,7 @@ export default class UserStore {
       const privateKey = mnemonic.toHDPrivateKey()
       const privateKeyBuffer = privateKey.privateKey.toBuffer()
       const privateKeyHex = privateKeyBuffer.toString('hex')
-      const ethAddress = ethUtil.privateToAddress(privateKeyBuffer)
+      const ethAddress = ethUtil.privateToAddress(privateKeyBuffer).toString('hex')
 
       this.email = email
       this.mnemonic = mnemonic.toString()

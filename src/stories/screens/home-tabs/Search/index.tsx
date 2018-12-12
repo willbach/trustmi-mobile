@@ -1,9 +1,10 @@
 import * as React from "react"
 import { View, TouchableHighlight, Image, ScrollView } from "react-native"
-import { Container, Header, Title, Content, Text, Button, Icon, Left, Body, Right, List, ListItem, Form, Input, Item } from "native-base"
+import { Container, Header, Title, Content, Text, Button, Icon, Left, Body, Right, Form, Input, Item } from "native-base"
 
 import Group from 'types/Group'
 import Event from 'types/Event'
+import AvailableInterests from 'types/AvailableInterests'
 
 import styles from "./styles"
 import general from 'theme/general'
@@ -14,7 +15,7 @@ export interface Props {
   groups: Group[]
   availableGroups: Group[]
   interests: string[]
-  availableInterests: string[]
+  availableInterests: AvailableInterests
   location: string
   eventsByInterest: any
 }
@@ -136,7 +137,7 @@ class Search extends React.Component<Props, State> {
           {interests.map(this.renderEventsByInterest)}
           <Text style={general.subHeader}>Browse Events by Category</Text>
           <View style={[general.flexRowWrapBetween, general.standardHMargin]}>
-            {availableInterests.map(this.renderInterestTile)}
+            {Object.keys(availableInterests).map(this.renderInterestTile)}
           </View>
         </Content>
       </Container>

@@ -4,6 +4,7 @@ import RestoreStore from 'store/ViewStore/RestoreViewStore'
 import ScrapedStore from 'store/DataStore/ScrapedStore'
 import SignupStore from 'store/ViewStore/SignupViewStore'
 import UserStore from 'store/DataStore/UserStore'
+import CreateGroupStore from 'store/ViewStore/CreateGroupViewStore'
 
 export default function() {
   const groupStore = new GroupStore()
@@ -12,6 +13,7 @@ export default function() {
   const scrapedStore = new ScrapedStore()
   const signupForm = new SignupStore()
   const userStore = new UserStore()
+  const createGroupStore = new CreateGroupStore()
 
   return {
     groupStore,
@@ -20,5 +22,6 @@ export default function() {
     scrapedStore,
     signupForm,
     userStore,
+    createGroupStore,
   }
 }

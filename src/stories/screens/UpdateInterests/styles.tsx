@@ -37,5 +37,10 @@ const styles: any = StyleSheet.create({
 		color: commonColor.mediumGray,
 		marginLeft: 5,
 	},
+	intro: {
+		fontSize: 18,
+		color: commonColor.brandPrimary,
+		marginBottom: 20,
+	}
 })
 export default styles

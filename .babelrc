@@ -21,7 +21,8 @@
         "utils": "./src/utils",
         "data-sources": "./src/data-sources",
         "types": "./src/types",
-        "language": "./src/language"
+        "language": "./src/language",
+        "server": "./src/server"
       }
     }]
   ],

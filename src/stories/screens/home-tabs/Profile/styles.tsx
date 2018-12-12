@@ -32,14 +32,6 @@ const styles: any = StyleSheet.create({
 		backgroundColor: commonColor.lightGray,
 		marginBottom: 10,
 	},
-	profilePic: {
-		height: 100,
-		width: 100,
-	},
-	avatarIcon: {
-		fontSize: 100,
-		color: commonColor.brandPrimary,
-	},
 	nameCityState: {
 		flexDirection: 'column',
 		marginLeft: 20,
@@ -70,15 +62,6 @@ const styles: any = StyleSheet.create({
 		marginTop: 2,
 		marginLeft: 6,
 		fontSize: 20,
-	},
-	interest: {
-		color: commonColor.white,
-		fontSize: 14,
-		backgroundColor: commonColor.brandPrimary,
-		paddingVertical: 3,
-		paddingHorizontal: 6,
-		margin: 5,
-		borderRadius: 5,
 	},
 })
 export default styles

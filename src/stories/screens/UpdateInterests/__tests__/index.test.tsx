@@ -7,7 +7,9 @@ const goBack = jest.fn()
 const addInterest = jest.fn()
 const removeInterest = jest.fn()
 const interests = []
-const availableInterests = []
+const availableInterests: any = {}
+const title = 'Update Interests'
+const origin = 'group'
 
 it("renders correctly", () => {
 	const tree = renderer.create(<UpdateInterests goBack={goBack} addInterest={addInterest} removeInterest={removeInterest} interests={interests} availableInterests={availableInterests}/>).toJSON()

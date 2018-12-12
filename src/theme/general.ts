@@ -21,10 +21,19 @@ const generalStyle: any = StyleSheet.create({
   flexRow: {
     flexDirection: 'row',
   },
+  flexRowCenter: {
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
   flexRowWrap: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
+  },
+  centeredRowBetween: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   flexRowWrapStart: {
     flexDirection: 'row',
@@ -69,9 +78,15 @@ const generalStyle: any = StyleSheet.create({
   fullHeight: {
     minHeight: height
   },
+  fullWidth: {
+    width
+  },
   betweenRow: {
     flexDirection: 'row',
     justifyContent: 'space-between'
+  },
+  smallHMargin: {
+    marginHorizontal: 10
   },
   standardHMargin: {
     marginHorizontal: 15
@@ -131,10 +146,14 @@ const generalStyle: any = StyleSheet.create({
     borderBottomColor: commonColor.lightGray,
 		borderBottomWidth: 2,
   },
+  brandPrimaryDivider: {
+    borderBottomColor: commonColor.brandPrimary,
+		borderBottomWidth: 2,
+  },
   brandSecondaryDivider: {
     borderBottomColor: commonColor.brandSecondary,
 		borderBottomWidth: 2,
-  }
+  },
 } as any)
 
 export default generalStyle
