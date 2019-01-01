@@ -11,6 +11,7 @@ export default class ProfileStore {
     first: 'John',
     last: 'Doe',
     middle: '',
+    sex: '',
     birthDate: '',
     city: 'Springfield',
     state: 'MA',

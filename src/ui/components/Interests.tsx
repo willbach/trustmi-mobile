@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
 	},
 })
 
-export default class ProfilePic extends React.Component<Props> {
+export default class Interests extends React.Component<Props> {
   render() {
     return <TouchableHighlight onPress={this.props.onPress} underlayColor={commonColor.touchableUnderlay}>
       <View style={general.flexRowWrap}>

@@ -9,7 +9,7 @@ import City from 'types/City'
 import AvailableInterests from 'types/AvailableInterests'
 import { INTEREST_CATEGORIES } from 'theme/constants'
 
-import ServerInterface from 'server'
+import { AuthenticatedServerInterface } from 'server'
 import devData from 'utils/dev-data'
 
 export default class GroupStore {
@@ -26,7 +26,7 @@ export default class GroupStore {
   @observable events: Event[] = []
   @observable availableEvents: Event[] = []
   @observable eventsByInterest = {}
-  @observable thepondAPI: ServerInterface
+  @observable thepondAPI: AuthenticatedServerInterface
 
   @action
   loadData() {
@@ -96,7 +96,7 @@ export default class GroupStore {
 
   @action
   connectToServer(address: string, privateKey: string) {
-    this.thepondAPI = new ServerInterface(address, privateKey)
+    this.thepondAPI = new AuthenticatedServerInterface(address, privateKey)
   }
 
   @action

@@ -3,6 +3,7 @@ import { Icon, Text } from 'native-base'
 import { View, TouchableHighlight, Dimensions } from 'react-native'
 import moment from 'moment'
 import DateRow from 'ui/components/DateRow'
+import GetImage from 'ui/components/GetImage'
 
 import Event from 'types/Event'
 
@@ -44,11 +45,6 @@ class EventCalendar extends React.Component<Props, State> {
     this.renderEventsByDate = this.renderEventsByDate.bind(this)
   }
 
-  getImage(id: string) {
-    // return <Image source={} style={styles.eventImage}/>
-    return <View style={styles.eventImage}/>
-  }
-
   renderEventsByDate(events: Event[], day: number) {
     return (
       <View key={day}>
@@ -68,7 +64,7 @@ class EventCalendar extends React.Component<Props, State> {
     return (
       <TouchableHighlight key={ind} onPress={() => this.props.navigation.navigate('Event', { event })} underlayColor={commonColor.touchableUnderlay}>
         <View style={[general.flexRow, styles.event]}>
-          {this.getImage(event.id)}
+          <GetImage imageId={event.id} style={styles.eventImage} size={eventImageWidth} />
           <View style={general.flexColumn}>
             <Text style={styles.eventName} numberOfLines={1}>{event.name}</Text>
             <Text style={styles.eventLocation} numberOfLines={1}>{event.location}</Text>

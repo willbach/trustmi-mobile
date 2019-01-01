@@ -1,7 +1,7 @@
 import ethUtil from 'ethereumjs-util'
 
 export const serverSign = (hexHash, privateKeyHex) => {
-  const privateKeyBuffer = Buffer.from(privateKeyHex, 'hex')
+  const privateKeyBuffer = hexToBuffer(privateKeyHex)
 
   const { r, s, v } = ethUtil.ecsign(
     hexToBuffer(hexHash),

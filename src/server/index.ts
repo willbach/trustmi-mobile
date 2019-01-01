@@ -2,7 +2,7 @@ import ethUtil from 'ethereumjs-util'
 import { serverSign } from 'utils/buffer-util'
 import Fetch from './fetch'
 
-export default class ServerInterface {
+export  class AuthenticatedServerInterface {
   token: string
   fetch: any
 
@@ -23,7 +23,7 @@ export default class ServerInterface {
   }
 
   get(route: string) {
-    return this.fetch.post(route, this.token)
+    return this.fetch.get(route, this.token)
   }
 
   put(route: string, body: any) {
@@ -32,5 +32,29 @@ export default class ServerInterface {
 
   delete(route: string) {
     return this.fetch.delete(route, this.token)
+  }
+}
+
+export  class UnauthenticatedServerInterface {
+  fetch: any
+
+  constructor() {
+    this.fetch = new Fetch()
+  }
+
+  post(route: string, body: any) {
+    return this.fetch.post(route, body)
+  }
+
+  get(route: string) {
+    return this.fetch.get(route)
+  }
+
+  put(route: string, body: any) {
+    return this.fetch.put(route, body)
+  }
+
+  delete(route: string) {
+    return this.fetch.delete(route)
   }
 }

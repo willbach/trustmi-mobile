@@ -19,7 +19,7 @@
         "ui": "./src/ui",
         "images": "./src/images",
         "utils": "./src/utils",
-        "data-sources": "./src/data-sources",
+        "repositories": "./src/repositories",
         "types": "./src/types",
         "language": "./src/language",
         "server": "./src/server"

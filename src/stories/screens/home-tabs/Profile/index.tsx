@@ -41,7 +41,7 @@ class Profile extends React.Component<Props, State> {
     //at some point will add logic to ask users to update the information
     return <View style={styles.profileInfo}>
       <ProfileCompletionBar percentage={profileCompletionPercentage} onPress={this.addData} style={styles.completionBar}/>
-      <ProfilePic image={profileData.pic} size={PROFILE_PIC_SIZE}/>
+      <ProfilePic imageId={profileData.pic} size={PROFILE_PIC_SIZE}/>
       <View style={styles.nameCityState}>
         <Text style={styles.name}>{`${profileData.first} ${profileData.last}`}</Text>
         <Text style={styles.location}>{`${profileData.city}, ${profileData.state}`}</Text>

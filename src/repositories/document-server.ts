@@ -2,7 +2,8 @@ export default class DocumentServer {
   apiEndpoint: string
 
   constructor() {
-    this.apiEndpoint = 'https://localhost:4000'
+    // this.apiEndpoint = 'http://localhost:4000'
+    this.apiEndpoint = 'http://10.0.2.2:7402'
   }
 
   async post(route: string, body: any) {
@@ -15,6 +16,7 @@ export default class DocumentServer {
     })
 
     console.log('ABOUT TO SEND: ', request)
+    console.log('BODY', JSON.stringify(body))
 
     const result = await fetch(request)
       .then(data => data.json())

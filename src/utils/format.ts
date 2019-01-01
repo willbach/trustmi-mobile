@@ -17,3 +17,30 @@ export const messageDate = (date: Date) => {
 }
 
 export const formatMsgPreview = (chat: Chat) : string => chat.members.length <= 2 ? chat.messages[0].text : `${chat.messages[0].author.split(' ')[0]}: ${chat.messages[0].text}`
+
+export const formatDate = (date: string) : string => {
+  const cleanDate = date.replace(/[^0-9\/]/, '').replace(/\/\//, '/')
+
+  const correctFormat = cleanDate.match(/^(0[1-9]|1[012])\/(0[1-9]|[12][0-9]|3[01])\/\d{4}$/) ||
+    cleanDate.match(/^(0[1-9]|1[012])\/(0[1-9]|[1-2][0-9]|3[01])\/\d{3}$/) ||
+    cleanDate.match(/^(0[1-9]|1[012])\/(0[1-9]|[1-2][0-9]|3[01])\/\d{2}$/) ||
+    cleanDate.match(/^(0[1-9]|1[012])\/(0[1-9]|[1-2][0-9]|3[01])\/\d{1}$/) ||
+    cleanDate.match(/^(0[1-9]|1[012])\/(0[1-9]|[1-2][0-9]|3[01])\/$/) ||
+    cleanDate.match(/^(0[1-9]|1[012])\/(0[1-9]|[1-2][0-9]|3[01])$/) ||
+    cleanDate.match(/^(0[1-9]|1[012])\/[0-3]$/) ||
+    cleanDate.match(/^(0[1-9]|1[012])\/$/) ||
+    cleanDate.match(/^(0[1-9]|1[012])$/) ||
+    cleanDate.match(/^[0-1]$/)
+
+  if (cleanDate.match(/^(0[1-9]|1[012])[0-3]$/)) {
+    return `${cleanDate.slice(0,2)}/${cleanDate.slice(-1)}`
+  } else if (cleanDate.match(/^(0[1-9]|1[012])\/(0[1-9]|[12][0-9]|3[01])[0-9]$/)) {
+    return `${cleanDate.slice(0,5)}/${cleanDate.slice(-1)}`
+  } else if (correctFormat) {
+    return cleanDate
+  } else {
+    return cleanDate.slice(0, -1)
+  }
+}
+
+export const formatZip = (zip: string) => zip.replace(/^[0-9]/, '')

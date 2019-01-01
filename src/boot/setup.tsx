@@ -1,14 +1,12 @@
-import * as React from "react";
-import { Provider } from "mobx-react/native";
-import { StyleProvider } from "native-base";
+import * as React from "react"
+import { Provider } from "mobx-react/native"
+import { StyleProvider } from "native-base"
 
-import App from "app";
-import getTheme from "ui/components";
-import variables from "theme/variables/platform";
-export interface Props {}
-export interface State {}
+import App from "app"
+import getTheme from "ui/components"
+import variables from "theme/variables/platform"
 export default function(store) {
-  return class Setup extends React.Component<Props, State> {
+  return class Setup extends React.Component {
     render() {
       return (
         <StyleProvider style={getTheme(variables)}>
@@ -16,7 +14,7 @@ export default function(store) {
             <App />
           </Provider>
         </StyleProvider>
-      );
+      )
     }
-  };
+  }
 }

@@ -51,8 +51,8 @@
 			"utils/*":				["src/utils/*"],
 			"language":       ["src/language"],
 			"language/*":     ["src/language/*"],
-			"data-sources":   ["src/data-sources"],
-			"data-sources/*": ["src/data-sources/*"],
+			"repositories":   ["src/repositories"],
+			"repositories/*": ["src/repositories/*"],
 			"types/*": 				["src/types/*"],
 			"server": 				["src/server"],
 		},                           /* A series of entries which re-map imports to lookup locations relative to the 'baseUrl'. */

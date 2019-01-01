@@ -49,11 +49,6 @@ const styles: any = StyleSheet.create({
 		width: (width - 45)/2,
 		height: (width - 45)/2.5,
 		backgroundColor: commonColor.brandSecondary,
-		shadowColor: "#000",
-		shadowOffset: { width: 1, height: 3 },
-		shadowOpacity: 1,
-		shadowRadius: 2.5,
-		elevation: 3,
 	},
 	arrowForward: {
 		fontSize: 20,

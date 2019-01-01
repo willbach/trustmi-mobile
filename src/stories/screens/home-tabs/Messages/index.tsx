@@ -1,7 +1,8 @@
 import * as React from "react"
-import { View, TouchableHighlight } from 'react-native'
+import { View, TouchableHighlight, Dimensions } from 'react-native'
 import { Container, Header, Title, Content, Text, Button, Icon, Left, Body, Right, List, ListItem, Form, Item, Input } from "native-base"
 import { WrapperIcon } from 'ui/components/WrapperIcon'
+import GetImage from 'ui/components/GetImage'
 
 import Chat from 'types/Chat'
 import Member from 'types/Member'
@@ -13,6 +14,8 @@ import { messageDate, formatMsgPreview } from 'utils/format'
 import styles from "./styles"
 import general from 'theme/general'
 import commonColor from 'theme/variables/commonColor'
+
+const { height, width } = Dimensions.get('window')
 
 export interface Props {
   navigation: any
@@ -43,12 +46,15 @@ class Messages extends React.Component<Props, State> {
   }
 
   filterMessagesAndNotifications(searchTerm?: string) {
+    console.log('there is a search term', searchTerm)
     //TODO: add some good search functionality here
   }
 
   getImage(id: string, type: string, newItem: boolean) {
-    // return <Image source={} style={styles.itemImage}/>
-    return <View style={[styles.itemImage, type === 'chat' ? styles.chatImageRounding : {}]}>{!newItem ? null : <View style={styles.newItemIndicator}/>}</View>
+    return <View style={[styles.itemImage, type === 'chat' ? styles.chatImageRounding : {}]}>
+      <GetImage imageId={id} style={styles.itemImage} size={(width - 50) / 7} />
+      {!newItem ? null : <View style={styles.newItemIndicator}/>}
+    </View>
   }
 
   renderRow(ind: number, title: string, image: string, onPress: () => void, body: any, type: string, newItem: boolean) {

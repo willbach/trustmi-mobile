@@ -1,6 +1,7 @@
 import * as React from "react"
-import { View, TouchableHighlight, Image, ScrollView } from "react-native"
+import { View, TouchableHighlight, ScrollView, Dimensions } from "react-native"
 import { Container, Header, Title, Content, Text, Button, Icon, Left, Body, Right, Form, Input, Item } from "native-base"
+import GetImage from 'ui/components/GetImage'
 
 import Group from 'types/Group'
 import Event from 'types/Event'
@@ -9,6 +10,8 @@ import AvailableInterests from 'types/AvailableInterests'
 import styles from "./styles"
 import general from 'theme/general'
 import commonColor from 'theme/variables/commonColor'
+
+const { height, width } = Dimensions.get('window')
 
 export interface Props {
   navigation: any
@@ -19,12 +22,14 @@ export interface Props {
   location: string
   eventsByInterest: any
 }
+
 export interface State {
   filteredGroups: Group[]
   location: string
   date: string
   searchTerm?: string
 }
+
 class Search extends React.Component<Props, State> {
   constructor(props) {
     super(props)
@@ -40,10 +45,8 @@ class Search extends React.Component<Props, State> {
     this.changeLocation = this.changeLocation.bind(this)
     this.changeDates = this.changeDates.bind(this)
     this.renderEventsByInterest = this.renderEventsByInterest.bind(this)
-    this.getInterestImage = this.getInterestImage.bind(this)
     this.renderInterestTile = this.renderInterestTile.bind(this)
     this.filterAvailableGroups = this.filterAvailableGroups.bind(this)
-    this.getInterestImage = this.getInterestImage.bind(this)
   }
 
   filterAvailableGroups(searchTerm?: string) {
@@ -70,7 +73,6 @@ class Search extends React.Component<Props, State> {
         {!!this.props && !!this.props.eventsByInterest && !!this.props.eventsByInterest[interest] && this.props.eventsByInterest[interest].slice(0, 6).map((event: Event, ind: number) => (
           <TouchableHighlight key={ind} onPress={() => this.props.navigation.navigate('Event', { event })} underlayColor={commonColor.touchableUnderlay}>
             <View style={[general.endColumn, styles.event]}>
-              {/* <Image source={} style={styles.eventImage}/> */}
               <View style={styles.eventImage}></View>
               <Text style={styles.eventText}>{event.name}</Text>
               <Text style={styles.eventText}>{event.location}</Text>
@@ -83,15 +85,10 @@ class Search extends React.Component<Props, State> {
     </View>)
   }
 
-  getInterestImage(interest: string) {
-    // return <Image source={}/>
-    return <View style={styles.interestImage}></View>
-  }
-
   renderInterestTile(interest: string, ind: number) {
     return (<TouchableHighlight key={ind} onPress={() => this.props.navigation.navigate('Interest', { interest })} underlayColor={commonColor.touchableUnderlay}>
       <View style={[general.flexColumn, styles.interestCategory]}>
-        {this.getInterestImage(interest)}
+        <GetImage imageId={interest} style={styles.interestImage} size={(width - 45)/2} />
         <Text style={styles.interestHeader}>{interest}</Text>
       </View>
     </TouchableHighlight>)
@@ -105,8 +102,8 @@ class Search extends React.Component<Props, State> {
       <Container style={general.container}>
         <Header>
           <Left>
-            <Button transparent>
-              <Icon active name="menu" onPress={() => this.props.navigation.openDrawer()} />
+            <Button transparent onPress={() => this.props.navigation.openDrawer()}>
+              <Icon active name="menu" />
             </Button>
           </Left>
           <Body>

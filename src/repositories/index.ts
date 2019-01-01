@@ -1,6 +1,6 @@
-import LambdaUtil from 'data-sources/scrape-util'
-import MFAServer from 'data-sources/mfa-server'
-import DocumentServer from 'data-sources/document-server'
+import LambdaUtil from 'repositories/scrape-util'
+import MFAServer from 'repositories/mfa-server'
+import DocumentServer from 'repositories/document-server'
 
 const apiEndpoint = ''
 const apiKey = ''
@@ -20,8 +20,8 @@ export default {
     return mfaServer.post('/authenticate-mfa', { secret, code })
   },
 
-  addDocument: (document: any, type: string) => { //document needs to be signed
-    return documentServer.post(`/document/${type}`, document)
+  addDocument: (type: string, body: any) => {
+    return documentServer.post(`/document/${type}`, body)
   },
 
   getDocumentToken: (auth: any) => {

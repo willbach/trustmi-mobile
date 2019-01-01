@@ -20,8 +20,8 @@ import CreateGroup from 'container/creation/CreateGroupContainer'
 import ChatDetail from 'container/detail/ChatContainer'
 import EventDetail from 'container/detail/EventContainer'
 import GroupDetail from 'container/detail/GroupContainer'
-
 import InformationListPage from 'container/InformationListContainer'
+import UploadDocument from 'container/UploadDocumentContainer'
 
 const HomeDrawer = createDrawerNavigator(
 	{
@@ -43,6 +43,7 @@ const App = createStackNavigator(
 		HomeDrawer: { screen: HomeDrawer },
 		UpdateInterests: { screen: UpdateInterests },
 		UpdateLocation: { screen: UpdateLocation },
+		UploadDocument: { screen: UploadDocument },
 		
 		VerifiedPage: { screen: VerifiedPage },
 		InformationList: { screen: InformationListPage },

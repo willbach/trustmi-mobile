@@ -8,6 +8,6 @@ const list = { map: jest.fn() };
 const interests = []
 
 it("renders correctly", () => {
-	const tree = renderer.create(<Profile navigation={navigation} informationCategories={list} profileData={{ pic: "your-face.jpg"}} interests={interests}/>).toJSON();
+	const tree = renderer.create(<Profile profileCompletionPercentage={10} navigation={navigation} informationCategories={list} profileData={{ pic: "your-face.jpg"}} interests={interests}/>).toJSON();
 	expect(tree).toMatchSnapshot();
 });

@@ -1,9 +1,9 @@
 //TODO: move this into the languages directory and localize
 export default {
 	Educational: [
-		{ name: "University", service: 'university' },
+		{ name: "University", service: 'transcript' },
 		{ name: "College Board (SAT)", service: 'collegeBoard' },
-		{ name: "High School", service: 'highSchool' },
+		{ name: "High School", service: 'transcript' },
 		{ name: "IQ Tests", service: 'iq' },
 		{ name: "ACT", service: 'act' },
 	],
@@ -20,15 +20,15 @@ export default {
 		{ name: "Booking.com", service: 'booking.com' },
 	],
 	Personal: [
-		{ name: "Verify Identity", service: 'verifyIdentity' },
-		{ name: "Location", service: 'location' },
+		{ name: "Drivers License", service: 'drivers' },
+		{ name: "Passport", service: 'passport' },
 	],
 	Physical: [
 		{ name: "Coral Health", service: 'coralHealth' },
 	],
 	Professional: [
-		{ name: "Current Company", service: 'currentCompany' },
-		{ name: "Past Companies", service: 'pastCompanies' },
+		{ name: "Current Company", service: 'payStub' },
+		{ name: "Previous Company", service: 'payStub' },
 		{ name: "Professional Certifications", service: 'professionalCertifications' }
 	],
 	Veteran: [

@@ -1,6 +1,5 @@
 import * as React from 'react'
-import { Container, Header, Title, Content, Text, Button, Icon, Left, Body, Right, Form, Item, Input, Picker } from 'native-base'
-import { View, TouchableHighlight } from 'react-native'
+import { Container, Header, Title, Content, Text, Button, Icon, Left, Body, Right, Form, Item, Input, Picker, View } from 'native-base'
 import ProfilePic from 'ui/components/ProfilePic'
 import SelectLocation from 'ui/components/SelectLocation'
 import Interests from 'ui/components/Interests'
@@ -81,7 +80,7 @@ class CreateGroup extends React.Component<Props> {
         <Content>
           <View style={general.centeredColumn}>
             <View style={general.smallTopMargin}/>
-            <ProfilePic image={profilePic} star={true} size={PROFILE_PIC_SIZE}/>
+            <ProfilePic imageId={profilePic} star={true} size={PROFILE_PIC_SIZE}/>
             <Text style={styles.header}>Start a new Group</Text>
           </View>
           <View style={general.lightGrayDivider} />

@@ -19,12 +19,12 @@ const startAtSignup = StackActions.reset({
 export interface Props {
 	navigation: any
 	userStore: any
-	scrapedStore: any
+	verifiedStore: any
 }
 export interface State {}
 
 @inject('userStore')
-@inject('scrapedStore')
+@inject('verifiedStore')
 @observer
 export default class LoginContainer extends React.Component<Props, State> {
 	constructor(props) {
@@ -52,7 +52,7 @@ export default class LoginContainer extends React.Component<Props, State> {
 			if (pinCorrect) {
 				const userLoggedIn = await this.props.userStore.loginUser(pin)
 				if (userLoggedIn) {
-					this.props.scrapedStore.services.forEach(service => this.props.scrapedStore.getData(service, pin))
+					this.props.verifiedStore.retrieveData(pin)
 					this.props.navigation.dispatch(startAtDrawer)
 				} else {
 					Toast.show({
