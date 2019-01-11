@@ -107,7 +107,7 @@ class Messages extends React.Component<Props, State> {
           <Right />
         </Header>
         <Content>
-          <Form>
+          {/* <Form>
             <Item>
               <Icon active name='ios-search' />
               <Input placeholder='Search Messages and Notifications' value={searchTerm} onChangeText={this.filterMessagesAndNotifications}/>
@@ -131,7 +131,7 @@ class Messages extends React.Component<Props, State> {
           </View>
           <TouchableHighlight onPress={() => this.props.navigation.navigate('StartChat')} style={styles.startChat} underlayColor={commonColor.touchableUnderlay}>
             <WrapperIcon family="MaterialIcons" ios="chat" android="chat" name="chat" style={styles.startChatIcon}/>
-          </TouchableHighlight>
+          </TouchableHighlight> */}
         </Content>
       </Container>
     )

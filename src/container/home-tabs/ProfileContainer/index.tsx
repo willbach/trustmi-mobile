@@ -2,7 +2,7 @@ import * as React from "react"
 import { Icon } from "native-base"
 import { observer, inject } from "mobx-react/native"
 
-import Profile from "stories/screens/home-tabs/Profile"
+import Profile from "screens/home-tabs/Profile"
 import commonColor from 'theme/variables/commonColor'
 
 export interface Props {

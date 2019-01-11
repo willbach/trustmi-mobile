@@ -20,6 +20,9 @@ export default class GroupTile extends React.Component<Props> {
   render() {
     const { group, onPress, style, addIcon } = this.props
 
+    if (!group)
+      return null
+
     const tileWidth = (width - 45)/2.5
     const tileHeight = (width - 45)/3.5
     const styles : any = {

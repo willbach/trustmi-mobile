@@ -13,10 +13,10 @@ export default class ProfileStore {
     middle: '',
     sex: '',
     birthDate: '',
-    city: 'Springfield',
-    state: 'MA',
+    city: 'Los Angeles',
+    state: 'CA',
     zip: '',
-    country: '',
+    country: 'USA',
   }
 
   @action

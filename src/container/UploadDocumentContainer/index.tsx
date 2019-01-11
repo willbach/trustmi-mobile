@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { observer, inject } from 'mobx-react/native'
 
-import UploadDocument from 'stories/screens/UploadDocument'
+import UploadDocument from 'screens/UploadDocument'
 
 export interface Props {
 	navigation: any

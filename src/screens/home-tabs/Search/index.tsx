@@ -2,6 +2,9 @@ import * as React from "react"
 import { View, TouchableHighlight, ScrollView, Dimensions } from "react-native"
 import { Container, Header, Title, Content, Text, Button, Icon, Left, Body, Right, Form, Input, Item } from "native-base"
 import GetImage from 'ui/components/GetImage'
+import { Calendar, CalendarList, Agenda } from 'react-native-calendars'
+import BlurModal from 'ui/components/BlurModal'
+import moment from 'moment'
 
 import Group from 'types/Group'
 import Event from 'types/Event'
@@ -10,6 +13,7 @@ import AvailableInterests from 'types/AvailableInterests'
 import styles from "./styles"
 import general from 'theme/general'
 import commonColor from 'theme/variables/commonColor'
+
 
 const { height, width } = Dimensions.get('window')
 
@@ -28,6 +32,7 @@ export interface State {
   location: string
   date: string
   searchTerm?: string
+  calendarVisible: boolean
 }
 
 class Search extends React.Component<Props, State> {
@@ -40,10 +45,13 @@ class Search extends React.Component<Props, State> {
       filteredGroups: [],
       location: props.location,
       date: `${today.getMonth() + 1}/${today.getDate()}/${today.getFullYear()}`,
+      calendarVisible: false,
     }
 
     this.changeLocation = this.changeLocation.bind(this)
-    this.changeDates = this.changeDates.bind(this)
+    this.changeDate = this.changeDate.bind(this)
+    this.setDate = this.setDate.bind(this)
+    this.closeCalendar = this.closeCalendar.bind(this)
     this.renderEventsByInterest = this.renderEventsByInterest.bind(this)
     this.renderInterestTile = this.renderInterestTile.bind(this)
     this.filterAvailableGroups = this.filterAvailableGroups.bind(this)
@@ -56,11 +64,20 @@ class Search extends React.Component<Props, State> {
   }
 
   changeLocation() {
-
+    
   }
 
-  changeDates() {
+  changeDate() {
+    this.setState({ calendarVisible: true })
+  }
 
+  closeCalendar() {
+    this.setState({ calendarVisible: false })
+  }
+
+  setDate(date: string) {
+    this.setState({ date: moment(date).format('M/D/YYYY') })
+    this.closeCalendar()
   }
 
   renderEventsByInterest(interest: string, ind: number) {
@@ -95,7 +112,7 @@ class Search extends React.Component<Props, State> {
   }
 
   render() {
-    const { searchTerm, location, date } = this.state
+    const { searchTerm, location, date, calendarVisible } = this.state
     const { interests, availableInterests } = this.props
 
     return (
@@ -107,26 +124,25 @@ class Search extends React.Component<Props, State> {
             </Button>
           </Left>
           <Body>
-            <Title>Search</Title>
+            <Form>
+              <Item style={styles.searchBar}>
+                <Icon active name='ios-search' style={styles.searchIcon} />
+                <Input style={styles.searchInput} placeholder='Search Events and Groups' value={searchTerm} onChangeText={this.filterAvailableGroups} placeholderTextColor={commonColor.white}/>
+              </Item>
+            </Form>
           </Body>
           <Right />
         </Header>
         <Content>
-          <Form>
-            <Item>
-              <Icon active name='ios-search' />
-              <Input placeholder='Search Events and Groups' value={searchTerm} onChangeText={this.filterAvailableGroups}/>
-            </Item>
-          </Form>
           <View style={general.standardHMargin}>
-            <View style={[general.flexRow, general.smallTopMargin]}>
+            {/* <View style={[general.flexRow, general.smallTopMargin]}>
               <Text onPress={() => null} style={styles.miniHeader}>Find Events Near Me</Text>
               <Icon name="ios-arrow-forward" style={styles.arrowForward}/>
-            </View>
+            </View> */}
             <Text style={[general.smallTopMargin, styles.miniHeader]}>Filter Events</Text>
             <View style={general.flexRowWrapStart}>
               <Text onPress={this.changeLocation} style={styles.interestFilter}>{location}</Text>
-              <Text onPress={this.changeDates} style={styles.interestFilter}>{date}</Text>
+              <Text onPress={this.changeDate} style={styles.interestFilter}>{date}</Text>
             </View>
           </View>
           {/* TODO: add a main image(?) */}
@@ -136,6 +152,13 @@ class Search extends React.Component<Props, State> {
           <View style={[general.flexRowWrapBetween, general.standardHMargin]}>
             {Object.keys(availableInterests).map(this.renderInterestTile)}
           </View>
+
+          <BlurModal visible={calendarVisible} onRequestClose={this.closeCalendar} transparent blurType="light" blurAmount={10}>
+            <View style={[general.centeredColumn, styles.modalBody]}>
+              <Calendar minDate={new Date()} onDayPress={this.setDate} />
+              <Button style={[styles.selectButton, general.centeredColumn]} onPress={this.closeCalendar}><Text>Cancel</Text></Button>
+            </View>
+          </BlurModal>
         </Content>
       </Container>
     )

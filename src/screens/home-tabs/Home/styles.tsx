@@ -24,6 +24,10 @@ const styles: any = StyleSheet.create({
 		top: 48,
 		color: commonColor.brandPrimary,
 		fontSize: 14,
+	},
+	noneMessage: {
+		color: commonColor.mediumGray,
+		marginLeft: 15
 	}
 })
 export default styles

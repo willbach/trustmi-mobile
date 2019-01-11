@@ -1,7 +1,7 @@
 import * as React from "react"
 import { observer, inject } from "mobx-react/native"
 
-import Messages from "stories/screens/home-tabs/Messages"
+import Messages from "screens/home-tabs/Messages"
 
 export interface Props {
 	navigation: any,

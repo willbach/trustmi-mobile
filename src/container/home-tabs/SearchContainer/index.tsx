@@ -1,7 +1,7 @@
 import * as React from "react"
 import { observer, inject } from "mobx-react/native"
 
-import Search from "stories/screens/home-tabs/Search"
+import Search from "screens/home-tabs/Search"
 
 export interface Props {
 	navigation: any,

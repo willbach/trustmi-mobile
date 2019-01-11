@@ -4,7 +4,7 @@ import { observer, inject } from 'mobx-react/native'
 
 import language from 'language'
 
-import UpdateLocation from 'stories/screens/UpdateLocation'
+import UpdateLocation from 'screens/UpdateLocation'
 import City from 'types/City'
 
 export interface Props {

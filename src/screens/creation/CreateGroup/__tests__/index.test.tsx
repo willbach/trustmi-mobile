@@ -9,12 +9,12 @@ const createGroup = jest.fn()
 const updateValue = jest.fn()
 const pic = ''
 const name = ''
-const description = ''
+const about = ''
 const city = new City({})
 const interests = []
 const refresh = jest.fn()
 
 it("renders correctly", () => {
-	const tree = renderer.create(<CreateGroup location={city} refresh={refresh} navigation={navigation} createGroup={createGroup} name={name} description={description} interests={interests} updateValue={updateValue} profilePic={pic}/>).toJSON()
+	const tree = renderer.create(<CreateGroup location={city} refresh={refresh} navigation={navigation} createGroup={createGroup} name={name} about={about} interests={interests} updateValue={updateValue} profilePic={pic}/>).toJSON()
 	expect(tree).toMatchSnapshot()
 })

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import VerifiedPage from 'stories/screens/VerifiedPage'
+import VerifiedPage from 'screens/VerifiedPage'
 import { observer, inject } from 'mobx-react/native'
 export interface Props {
 	navigation: any

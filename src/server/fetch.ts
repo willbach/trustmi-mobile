@@ -11,47 +11,44 @@ export default class Fetch {
       method: 'POST',
       body: JSON.stringify(body),
       headers: {
-        "Content-Type": 'application/json'
+        "Content-Type": 'application/json',
+        "x-access-token": token ? token : ''
       }
     })
 
-    if (token) {
-      request.headers['x-access-token'] = token
-    }
-
     console.log('SERVER POST: ', request)
 
-    const result = await fetch(request)
-      .then(response => {
-        if (response.status !== 200 && response.status !== 204) {
-          throw new Error('Authentication failed')
-        }
-        return response.json()
-      })
+    const response = await fetch(request)
 
-    console.log('RESULT:', result)
-    return result
+    if (response.status !== 200 && response.status !== 204) {
+      throw new Error('Authentication failed')
+    }
+      
+    const data = await response.json()
+    console.log('RESULT:', data)
+    return data
   }
 
   async get(route: string, token?: string) {
-    const request = new Request(this.apiEndpoint + route)
-
-    if (token) {
-      request.headers['x-access-token'] = token
-    }
+    const request = new Request(this.apiEndpoint + route, {
+      headers: {
+        "x-access-token": token ? token : ''
+      }
+    })
 
     console.log('SERVER GET: ', request)
+    const response = await fetch(request)
 
-    const result = await fetch(request)
-      .then(response => {
-        if (response.status !== 200 && response.status !== 204) {
-          throw new Error('Authentication failed')
-        }
-        return response.json()
-      })
+    if (response.status === 401) {
+      throw new Error('Authentication failed')
+    } else if (response.status === 400) {
+      throw new Error('Bad request')
+    }
 
-    console.log('RESULT:', result)
-    return result
+    const data = await response.json()
+
+    console.log('RESULT:', data)
+    return data
   }
 
   async put(route: string, body: any, token?: string) {

@@ -1,7 +1,7 @@
 import * as React from "react"
 import { observer, inject } from "mobx-react/native"
 
-import InformationList from "stories/screens/InformationList"
+import InformationList from "screens/InformationList"
 import data from "./data"
 
 export interface Props {

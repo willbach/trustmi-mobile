@@ -1,7 +1,7 @@
 import * as React from "react"
 import { observer, inject } from "mobx-react/native"
 
-import Home from "stories/screens/home-tabs/Home"
+import Home from "screens/home-tabs/Home"
 
 export interface Props {
 	navigation: any,
@@ -17,17 +17,22 @@ export interface State {}
 @observer
 export default class HomeContainer extends React.Component<Props, State> {
 	async componentWillMount() {
-		const { address, privateKeyHex } = this.props.userStore
-		await this.props.groupStore.loadData()
-		await this.props.profileStore.loadData()
-		await this.props.groupStore.connectToServer(address, privateKeyHex)
+		// PRIMARY LOADING SECTION FOR THE APP
+		const { address, privateKeyHex, pin } = this.props.userStore
+		
+		await Promise.all([
+			this.props.profileStore.loadData(pin),
+			this.props.groupStore.connectToServer(address, privateKeyHex)
+		])
+		
+		const { city, state, country } = this.props.profileStore.profileData
+		
+		await this.props.groupStore.loadData({ city, state, country })
 		this.props.groupStore.sortEventsByInterest(this.props.profileStore.interests)
 	}
 	
 	render() {
 		const { profileStore: { profileCompletionPercentage }, groupStore: { groups, availableGroups, events } } = this.props
-
-		console.log('EVENTS', events)
 
 		return <Home navigation={this.props.navigation} groups={groups} availableGroups={availableGroups} events={events.toJS()} profileCompletionPercentage={profileCompletionPercentage} />
 	}

@@ -44,7 +44,7 @@
 			"navigators/*":   ["src/navigators/*"],
 			"store":  				["src/store"],
 			"store/*":  			["src/store/*"],
-			"stories/*":  		["src/stories/*"],
+			"screens/*":  		["src/screens/*"],
 			"theme/*":        ["src/theme/*"],
 			"ui/*":           ["src/ui/*"],
 			"utils":					["src/utils"],

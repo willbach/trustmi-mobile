@@ -40,7 +40,7 @@ class CreateEvent extends React.Component<Props, State> {
         <Header>
           <Left>
             <Button transparent>
-              <Icon active name="menu" onPress={() => this.props.navigation.openDrawer()} />
+              <Icon active name="menu" onPress={() => navigation.openDrawer()} />
             </Button>
           </Left>
           <Body>
@@ -52,8 +52,8 @@ class CreateEvent extends React.Component<Props, State> {
           <AddDataLink onPress={this.addData} text="Connect more data to unlock additional groups" style={{marginLeft: 20}}/>
 
           <View>
-            <Text style={general.subHeader}>Your Groups</Text>{/* create new group */}
-            <Text style={styles.createGroup} onPress={() => this.props.navigation.navigate('CreateGroup')}>+ create new group</Text>
+            <Text style={general.subHeader}>Your Groups</Text>
+            <Text style={styles.createGroup} onPress={() => navigation.navigate('CreateGroup')}>+ create new group</Text>
           </View>
 
           <Text style={[general.subHeader, {marginBottom: 5}]}>Recommended Groups</Text>

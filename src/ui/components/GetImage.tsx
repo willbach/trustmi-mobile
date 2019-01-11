@@ -42,13 +42,12 @@ export default class GetImage extends React.Component<Props, State> {
       const image = await server.get(`/image/${imageId}`)
       this.setState({ image })
     } catch (error) {
-      console.log('ERROR GETTING IMAGE FROM ID: ', imageId, error)
+      // console.log('ERROR GETTING IMAGE FROM ID: ', imageId, error)
     }
   }
 
   render() {
     const { props: { size, style, icon }, state: { image } } = this
-    console.log(style, size)
 
     return !!image ? <Image source={{ uri: image }} style={style || styles.image(size)} /> : !!icon ? <Icon name={icon} style={style || styles.icon(size)} /> : <View style={style || styles.image(size)} />
   }

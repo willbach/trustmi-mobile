@@ -7,7 +7,7 @@ import language from 'language'
 
 const { formErrors } = language
 
-import Restore from 'stories/screens/Restore'
+import Restore from 'screens/Restore'
 
 let submitted = false
 

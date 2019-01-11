@@ -5,7 +5,7 @@ import { observer, inject } from 'mobx-react/native'
 
 import language from 'language'
 
-import UpdateInterests from 'stories/screens/UpdateInterests'
+import UpdateInterests from 'screens/UpdateInterests'
 
 export interface Props {
 	navigation: any

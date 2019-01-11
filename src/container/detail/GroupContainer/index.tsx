@@ -1,8 +1,8 @@
 import * as React from "react"
 import { observer, inject } from "mobx-react/native"
 
-import GroupDetail from "stories/screens/detail/Group"
-import Group from 'types/Group'
+import GroupDetail from 'screens/detail/Group'
+import Async from 'ui/components/Async'
 
 export interface Props {
 	navigation: any,
@@ -15,10 +15,12 @@ export interface State {}
 @observer
 export default class GroupContainer extends React.Component<Props, State> {
 	render() {
-		const { groupStore: { findEventGroup } } = this.props
+		const { navigation, navigation: { state: { params: { groupId } } } } = this.props
 
-		const { navigation: { state: { params: { group } } } } = this.props
-
-		return <GroupDetail navigation={this.props.navigation} group={group} />
+		return <Async
+			navigation={navigation}
+			promise={this.props.groupStore.getGroup(groupId)}
+			onResolve={(group) => <GroupDetail navigation={navigation} group={group} />}
+		/>
 	}
 }

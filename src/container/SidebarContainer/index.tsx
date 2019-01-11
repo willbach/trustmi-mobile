@@ -2,7 +2,7 @@
 import * as React from 'react'
 import { observer, inject } from 'mobx-react/native'
 
-import Sidebar from 'stories/screens/Sidebar'
+import Sidebar from 'screens/Sidebar'
 
 export interface Props {
 	navigation: any,

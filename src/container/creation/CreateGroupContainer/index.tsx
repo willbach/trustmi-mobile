@@ -1,10 +1,8 @@
-import * as React from "react"
-import { observer, inject } from "mobx-react/native"
+import * as React from 'react'
+import { observer, inject } from 'mobx-react/native'
 import { Toast } from 'native-base'
 import City from 'types/City'
-
-import CreateGroup from "stories/screens/creation/CreateGroup"
-import Group from 'types/Group'
+import CreateGroup from 'screens/creation/CreateGroup'
 
 export interface Props {
 	navigation: any,
@@ -14,9 +12,9 @@ export interface Props {
 }
 export interface State {}
 
-@inject("groupStore")
-@inject("profileStore")
-@inject("createGroupStore")
+@inject('groupStore')
+@inject('profileStore')
+@inject('createGroupStore')
 @observer
 export default class CreateGroupContainer extends React.Component<Props, State> {
 	constructor(props) {
@@ -25,45 +23,47 @@ export default class CreateGroupContainer extends React.Component<Props, State> 
 	}
 
 	componentWillMount() {
-		const { profileStore: { profileData: { city, state } }, createGroupStore: { updateValue }, createGroupStore } = this.props
+		const { profileStore: { profileData: { city, state, country } }, createGroupStore: { updateValue }, createGroupStore } = this.props
 		if (!createGroupStore.city && !createGroupStore.state) {
-			updateValue('location', new City({ city, state }))
+			updateValue('location', new City({ city, state, country }))
 		}
 	}
 
-	createGroup() : void {
-		const { createGroupStore: { name, description, location, interests }, groupStore: { createGroup }, navigation } = this.props
+	async createGroup() {
+		const { createGroupStore: { name, about, location: { city, state, country }, interests }, groupStore: { createGroup }, navigation } = this.props
 
-		createGroup({ name, description, location, interests })
-			.then((group: Group) => {
-				navigation.navigate('Group', { group })
-				Toast.show({
-					text: 'Your group has been created! Add an event to get started',
-					duration: 3000,
-					position: 'bottom',
-					textStyle: { textAlign: 'center' },
-				})
+		try {
+			const groupId = await createGroup({ name, about, city, state, country, interests })
+			console.log(3, groupId)
+			navigation.navigate('Group', { groupId })
+			Toast.show({
+				text: 'Your group has been created! Add an event to get started',
+				duration: 3000,
+				position: 'bottom',
+				textStyle: { textAlign: 'center' },
 			})
-			.catch(() => {
-				navigation.navigate('Home')
-				Toast.show({
-					text: 'There was an error creating your group, please try again later',
-					duration: 2000,
-					position: 'bottom',
-					textStyle: { textAlign: 'center' },
-				})
+		} catch (error) {
+			console.log(4, error)
+			navigation.navigate('Home')
+			Toast.show({
+				type: 'danger',
+				text: 'There was an error creating your group, please try again later',
+				duration: 2000,
+				position: 'bottom',
+				textStyle: { textAlign: 'center' },
 			})
+		}
 	}
 
 	render() {
-		const { createGroupStore: { name, description, location, interests, updateValue, refresh }, profileStore: { profileData: { pic } } } = this.props
+		const { createGroupStore: { name, about, location, interests, updateValue, refresh }, profileStore: { profileData: { pic } } } = this.props
 
 		return <CreateGroup
 			navigation={this.props.navigation}
 			createGroup={this.createGroup}
 			profilePic={pic}
 			name={name}
-			description={description}
+			about={about}
 			location={location}
 			interests={interests}
 			updateValue={updateValue}

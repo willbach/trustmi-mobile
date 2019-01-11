@@ -85,6 +85,35 @@ const styles: any = StyleSheet.create({
 		color: commonColor.brandSecondary,
 		marginTop: 16,
 		marginHorizontal: 30,
-	}
+	},
+	searchBar: {
+		paddingVertical: 10,
+		margin: 0,
+		borderBottomWidth: 0,
+		width: width - 120,
+		marginLeft: -20
+	},
+	searchIcon: {
+		color: commonColor.white,
+	},
+	searchInput: {
+		color: commonColor.white,
+		width: 200,
+	},
+	selectButton: {
+		marginVertical: 20,
+		alignSelf: 'center',
+		width: 140,
+		justifyContent: 'center',
+	},
+	modalBody: {
+		width: width - 30,
+		alignSelf: 'center',
+		position: 'absolute',
+		top: 40,
+		backgroundColor: commonColor.white,
+		paddingVertical: 20,
+		borderRadius: 20
+	},
 })
 export default styles

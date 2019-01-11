@@ -1,7 +1,7 @@
 import * as React from "react"
 import { observer, inject } from "mobx-react/native"
 
-import EventDetail from "stories/screens/detail/Event"
+import EventDetail from "screens/detail/Event"
 
 export interface Props {
 	navigation: any,

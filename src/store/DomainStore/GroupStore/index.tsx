@@ -11,6 +11,7 @@ import { INTEREST_CATEGORIES } from 'theme/constants'
 
 import { AuthenticatedServerInterface } from 'server'
 import devData from 'utils/dev-data'
+import { generateId } from 'utils/buffer-util'
 
 export default class GroupStore {
   @observable groups: Group[] = []
@@ -28,20 +29,45 @@ export default class GroupStore {
   @observable eventsByInterest = {}
   @observable thepondAPI: AuthenticatedServerInterface
 
+  constructor() {
+    this.connectToServer = this.connectToServer.bind(this)
+    this.loadData = this.loadData.bind(this)
+    this.getGroupsAndEvents = this.getGroupsAndEvents.bind(this)
+    this.getChats = this.getChats.bind(this)
+    this.getNotifications = this.getNotifications.bind(this)
+    this.getAvailableGroups = this.getAvailableGroups.bind(this)
+    this.getAvailableInterests = this.getAvailableInterests.bind(this)
+    this.getAvailableLocations = this.getAvailableLocations.bind(this)
+    this.sortEventsByInterest = this.sortEventsByInterest.bind(this)
+    this.createChat = this.createChat.bind(this)
+    this.updateChat = this.updateChat.bind(this)
+    this.createEvent = this.createEvent.bind(this)
+    this.updateEvent = this.updateEvent.bind(this)
+    this.createGroup = this.createGroup.bind(this)
+    this.updateGroup = this.updateGroup.bind(this)
+    this.createAnnouncement = this.createAnnouncement.bind(this)
+    this.updateAnnouncement = this.updateAnnouncement.bind(this)
+  }
+
   @action
-  loadData() {
+  connectToServer(address: string, privateKey: string) {
+    this.thepondAPI = new AuthenticatedServerInterface()
+    return this.thepondAPI.authenticate(address, privateKey)
+  }
+
+  @action
+  loadData({ city, state, country }) {
     this.getGroupsAndEvents()
     this.getChats()
     this.getNotifications()
-    this.getAvailableGroups()
+    this.getAvailableGroups(city, state, country)
     this.getAvailableInterests()
-    this.getAvailableEvents()
     this.getAvailableLocations()
   }
 
   @action
-  getGroupsAndEvents() {
-    const groups = devData.groups
+  async getGroupsAndEvents() {
+    const groups = await this.thepondAPI.get('/groups')
     this.groups = groups
     const events = groups.reduce((acc: Event[], group: Group) => {
       return acc.concat(group.events.map((event: Event) => {
@@ -64,23 +90,34 @@ export default class GroupStore {
   }
 
   @action
-  getAvailableGroups() {
-    this.availableGroups = devData.availableGroups
+  async getAvailableGroups(city: string, state: string, country: string) {
+    try {
+      const groups = await this.thepondAPI.get(`/groups/available?city=${city}&state=${state}&country=${country}`)
+      console.log('getting some available groups back', groups)
+      this.availableGroups = groups
+    } catch (error) {
+      console.log('ERROR GETTING GROUPS:', error)
+    }
   }
 
   @action
-  getAvailableInterests() {
-    this.availableInterests = new AvailableInterests(devData.availableInterests)
+  async getAvailableInterests() {
+    try {
+      const interests = await this.thepondAPI.get(`/interests`)
+      this.availableInterests = new AvailableInterests(interests)
+    } catch (error) {
+      console.log('ERROR GETTING INTERESTS:', error)
+      this.availableInterests = new AvailableInterests(devData.availableInterests)
+    }
   }
 
   @action
-  getAvailableEvents() {
-    this.availableEvents = devData.availableEvents
-  }
-
-  @action
-  getAvailableLocations() {
-    this.availableLocations = devData.availableLocations
+  async getAvailableLocations() {
+    try {
+      this.availableLocations = await this.thepondAPI.get(`/locations`)
+    } catch (error) {
+      console.log('ERROR GETTING LOCATIONS:', error)
+    }
   }
 
   @action
@@ -95,47 +132,47 @@ export default class GroupStore {
   }
 
   @action
-  connectToServer(address: string, privateKey: string) {
-    this.thepondAPI = new AuthenticatedServerInterface(address, privateKey)
-  }
-
-  @action
   createChat(chat: Chat) {
-    return this.thepondAPI.post('/chat', chat)
+    return this.thepondAPI.post('/chats', chat)
   }
 
   @action
   updateChat(chat: Chat) {
-    return this.thepondAPI.put('/chat', chat)
+    return this.thepondAPI.put('/chats', chat)
   }
 
   @action
   createEvent(event: Event) {
-    return this.thepondAPI.post('/event', event)
+    return this.thepondAPI.post('/events', event)
   }
 
   @action
   updateEvent(event: Event) {
-    return this.thepondAPI.put('/event', event)
+    return this.thepondAPI.put('/events', event)
   }
 
   @action
-  createGroup(group: Group) {
-    return this.thepondAPI.post('/group', group)
+  createGroup({ name, about, city, state, country, interests }) {
+    return this.thepondAPI.post('/groups', { id: generateId([ name, about, city, state, country ]), name, about, city, state, country, interests })
+  }
+
+  @action
+  getGroup(groupId: string) {
+    return this.thepondAPI.get(`/groups/${groupId}`)
   }
 
   @action
   updateGroup(group: Group) {
-    return this.thepondAPI.put('/group', group)
+    return this.thepondAPI.put('/groups', group)
   }
 
   @action
   createAnnouncement(announcement: Announcement) {
-    return this.thepondAPI.post('/announcement', announcement)
+    return this.thepondAPI.post('/announcements', announcement)
   }
 
   @action
   updateAnnouncement(announcement: Announcement) {
-    return this.thepondAPI.put('/announcement', announcement)
+    return this.thepondAPI.put('/announcements', announcement)
   }
 }

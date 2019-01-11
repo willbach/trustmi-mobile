@@ -90,9 +90,7 @@ export default class UploadDocument extends React.Component<Props, State> {
   }
 
   async submit() {
-    console.log(0, this.props)
     const { props: { type, submit }, state: { first, last, middle, sex, birthDate, street1, street2, city, state, zip, country, expirationDate, university, gpa, graduationDate, company, payDate, photo } } = this
-    console.log(1, { type, first, last, middle, sex, birthDate, street1, street2, city, state, zip, country, expirationDate, university, gpa, graduationDate, company, payDate })
     try {
       await submit({ type, first, last, middle, sex, birthDate, street1, street2, city, state, zip, country, expirationDate, university, gpa, graduationDate, company, payDate, file: photo })
     } catch (error) {

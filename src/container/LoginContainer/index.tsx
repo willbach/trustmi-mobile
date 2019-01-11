@@ -4,7 +4,7 @@ import { Item, Input, Icon, Form, Toast } from 'native-base'
 import { observer, inject } from 'mobx-react/native'
 import { NavigationActions, StackActions } from 'react-navigation'
 
-import Login from 'stories/screens/Login'
+import Login from 'screens/Login'
 
 const startAtDrawer = StackActions.reset({
 	index: 0,

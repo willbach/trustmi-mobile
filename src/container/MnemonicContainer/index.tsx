@@ -7,7 +7,7 @@ import { observer, inject } from 'mobx-react/native'
 import language from 'language'
 const { formErrors } = language
 
-import Mnemonic from 'stories/screens/Mnemonic'
+import Mnemonic from 'screens/Mnemonic'
 
 export interface Props {
 	navigation: any

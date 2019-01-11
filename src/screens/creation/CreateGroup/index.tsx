@@ -17,7 +17,7 @@ export interface Props {
   navigation: any
   createGroup: () => void
   name: string
-  description: string
+  about: string
   location: City
   interests: string[]
   profilePic: string
@@ -45,8 +45,8 @@ class CreateGroup extends React.Component<Props> {
     this.props.updateValue('name', name)
   }
 
-  updateDescription(description: string) {
-    this.props.updateValue('description', description)
+  updateDescription(about: string) {
+    this.props.updateValue('about', about)
   }
 
   updateInterests(interest: string) {
@@ -62,7 +62,7 @@ class CreateGroup extends React.Component<Props> {
   }
 
   render() {
-    const { createGroup, profilePic, name, description, interests, location } = this.props
+    const { createGroup, profilePic, name, about, interests, location } = this.props
 
     return (
       <Container style={general.container}>
@@ -101,13 +101,13 @@ class CreateGroup extends React.Component<Props> {
               <Input
                 style={styles.textInput}
                 placeholder='Description'
-                value={description}
+                value={about}
                 maxLength={DESCRIPTION_MAX_LENGTH}
                 onChangeText={this.updateDescription}
                 multiline={true}
               />
             </Item>
-            {description.length < DESCRIPTION_MIN_LENGTH ? <Text style={styles.hintText}>{`Must be at least ${DESCRIPTION_MIN_LENGTH} characters`}</Text> : null}
+            {about.length < DESCRIPTION_MIN_LENGTH ? <Text style={styles.hintText}>{`Must be at least ${DESCRIPTION_MIN_LENGTH} characters`}</Text> : null}
 
             <View style={[general.lightGrayDivider, general.mediumTopMargin]} />
             <Text style={styles.subHeader} onPress={this.goToUpdateLocation}>Location</Text>

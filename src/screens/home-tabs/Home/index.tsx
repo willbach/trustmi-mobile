@@ -33,7 +33,7 @@ class Home extends React.Component<Props, State> {
   }
 
   renderGroup(group: Group, ind: number, addIcon: boolean) {
-    return <GroupTile group={group} onPress={() => this.props.navigation.navigate('Group', { group })} key={ind} addIcon={addIcon}/>
+    return <GroupTile group={group} onPress={() => this.props.navigation.navigate('Group', { groupId: group.id })} key={ind} addIcon={addIcon}/>
   }
 
   render() {
@@ -57,12 +57,16 @@ class Home extends React.Component<Props, State> {
           <AddDataLink onPress={this.addData} text="Connect more data to unlock additional groups" style={{marginLeft: 20}}/>
 
           <View>
-            <Text style={general.subHeader}>Your Groups</Text>{/* create new group */}
+            <Text style={general.subHeader}>Your Groups</Text>
             <Text style={styles.createGroup} onPress={() => this.props.navigation.navigate('CreateGroup')}>+ create new group</Text>
           </View>
-          <ScrollView style={[general.standardLMargin, general.flexRow]} horizontal={true} showsHorizontalScrollIndicator={false}>
-            {groups.map((group: Group, ind: number) => this.renderGroup(group, ind, false))}
-          </ScrollView>
+          {groups.length ?
+            <ScrollView style={[general.standardLMargin, general.flexRow]} horizontal={true} showsHorizontalScrollIndicator={false}>
+              {groups.map((group: Group, ind: number) => this.renderGroup(group, ind, false))}
+            </ScrollView> :
+            <Text style={styles.noneMessage}>Join or create a group!</Text>
+          }
+          
 
           <Text style={[general.subHeader, {marginBottom: 5}]}>Recommended Groups</Text>
           <AddDataLink onPress={this.addData} text="Help us tailor your recommendations" style={{marginTop: -5}} />

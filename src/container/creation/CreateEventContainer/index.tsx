@@ -1,7 +1,7 @@
 import * as React from "react"
 import { observer, inject } from "mobx-react/native"
 
-import CreateEvent from "stories/screens/creation/CreateEvent"
+import CreateEvent from "screens/creation/CreateEvent"
 
 export interface Props {
 	navigation: any,

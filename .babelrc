@@ -12,7 +12,7 @@
         "boot": "./src/boot",
         "container": "./src/container",
         "store": "./src/store",
-        "stories": "./src/stories",
+        "screens": "./src/screens",
         "navigators": "./src/navigators",
         "reducers": "./src/reducers",
         "theme": "./src/theme",

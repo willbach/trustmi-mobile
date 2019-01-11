@@ -6,19 +6,24 @@ export  class AuthenticatedServerInterface {
   token: string
   fetch: any
 
-  constructor(address: string, privateKeyHex: string) {
+  constructor() {
+    this.fetch = new Fetch()
+  }
+
+  async authenticate(address: string, privateKeyHex: string) {
     const hexHash = ethUtil.sha3(Buffer.from(address, 'hex')).toString('hex')
     const signature = serverSign(hexHash, privateKeyHex)
 
-    this.fetch = new Fetch()
-
-    this.fetch.post('/token', { address, signature })
-      .then(auth => {
-        this.token = auth.body.token
-      })
+    try {
+      const result = await this.fetch.post('/token', { address, signature })
+      this.token = result.token
+    } catch(error) {
+      console.log('ERROR GETTING TOKEN:', error)
+    }
   }
 
   post(route: string, body: any) {
+    console.log(2)
     return this.fetch.post(route, body, this.token)
   }
 

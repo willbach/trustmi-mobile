@@ -3,7 +3,7 @@ import City from 'types/City'
 
 export default class CreateGroupStore {
   @observable name = ''
-  @observable description = ''
+  @observable about = ''
   @observable location: City
   @observable interests: string[] = []
 
@@ -24,14 +24,14 @@ export default class CreateGroupStore {
 
   @action.bound
   refresh() {
-    this.description = this.description + '1'
-    this.description = this.description.slice(0, -1)
+    this.about = this.about + '1'
+    this.about = this.about.slice(0, -1)
   }
 
   @action.bound
   clearStore() {
     this.name = ''
-    this.description = ''
+    this.about = ''
     this.location = new City({ city: '', state: '', country: ''})
     this.interests = []
   }

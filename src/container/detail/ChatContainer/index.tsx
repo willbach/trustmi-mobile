@@ -1,7 +1,7 @@
 import * as React from "react"
 import { observer, inject } from "mobx-react/native"
 
-import ChatDetail from "stories/screens/detail/Chat"
+import ChatDetail from "screens/detail/Chat"
 import Chat from 'types/Chat'
 
 export interface Props {

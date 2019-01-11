@@ -1,7 +1,7 @@
 import * as React from "react"
 import { observer, inject } from "mobx-react/native"
 
-import CreateChat from "stories/screens/creation/CreateChat"
+import CreateChat from "screens/creation/CreateChat"
 
 export interface Props {
 	navigation: any,

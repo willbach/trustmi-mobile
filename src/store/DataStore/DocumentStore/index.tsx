@@ -33,7 +33,6 @@ export default class VerifiedStore {
     return ({ type, first, middle, last, sex, birthDate, street1, street2, city, state, zip, country, expirationDate, university, gpa, graduationDate, company, payDate, file }) => {
       const body = { id: '', first, middle, last, sex, birthDate, street1, street2, city, state, zip, country, expirationDate, university, gpa, graduationDate, company, payDate, file: '', hash: '', signature: '' }
 
-      console.log(2, address, body)
       const hashBuffer = Object.values(body).reduce((acc, cur) => {
         if (cur)
           acc.push(stringToBuffer(cur))

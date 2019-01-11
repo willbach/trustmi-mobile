@@ -8,7 +8,7 @@ import language from 'language'
 
 const { formErrors } = language
 
-import Signup from 'stories/screens/Signup'
+import Signup from 'screens/Signup'
 
 let submitted = false
 
