@@ -1,15 +1,17 @@
 import * as React from 'react'
-import { Image, View } from 'react-native'
+import { Image, View, Dimensions } from 'react-native'
 import { Icon } from 'native-base'
 import { UnauthenticatedServerInterface } from 'server'
 
-const server = new UnauthenticatedServerInterface()
-
 import commonColor from 'theme/variables/commonColor'
+
+const server = new UnauthenticatedServerInterface()
+const { height, width } = Dimensions.get('window')
 
 export interface Props {
   imageId: string
   size: number
+  fullscreen?: boolean
   icon?: string
   style?: any
 }
@@ -19,9 +21,9 @@ export interface State {
 }
 
 const styles = {
-  image: (size: number) => ({
-    height: size,
-    width: size,
+  image: (size: number, fullscreen?: boolean) => ({
+    height: fullscreen ? width * 0.75 : size,
+    width: fullscreen ? width : size,
   }),
   icon: (size: number) => ({
     fontSize: size,
@@ -47,8 +49,8 @@ export default class GetImage extends React.Component<Props, State> {
   }
 
   render() {
-    const { props: { size, style, icon }, state: { image } } = this
+    const { props: { size, style, icon, fullscreen }, state: { image } } = this
 
-    return !!image ? <Image source={{ uri: image }} style={style || styles.image(size)} /> : !!icon ? <Icon name={icon} style={style || styles.icon(size)} /> : <View style={style || styles.image(size)} />
+    return !!image ? <Image source={{ uri: image }} style={style || styles.image(size, fullscreen)} /> : !!icon ? <Icon name={icon} style={style || styles.icon(size)} /> : <View style={style || styles.image(size, fullscreen)} />
   }
 }

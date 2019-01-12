@@ -3,8 +3,8 @@ import { View, Image, TouchableHighlight } from 'react-native'
 import { Container, Header, Title, Content, Text, Button, Icon, Left, Body, Right, List, ListItem } from "native-base"
 import Tile from 'ui/components/Tile'
 import ProfileCompletionBar from 'ui/components/ProfileCompletionBar'
-import ProfilePic from 'ui/components/ProfilePic'
-import Interests from 'ui/components/Interests'
+import ProfilePic from 'ui/custom-components/ProfilePic'
+import Interests from 'ui/custom-components/Interests'
 import { PROFILE_PIC_SIZE } from 'theme/constants'
 
 import styles from "./styles"

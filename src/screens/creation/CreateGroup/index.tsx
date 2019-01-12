@@ -1,8 +1,8 @@
 import * as React from 'react'
 import { Container, Header, Title, Content, Text, Button, Icon, Left, Body, Right, Form, Item, Input, Picker, View } from 'native-base'
-import ProfilePic from 'ui/components/ProfilePic'
+import ProfilePic from 'ui/custom-components/ProfilePic'
 import SelectLocation from 'ui/components/SelectLocation'
-import Interests from 'ui/components/Interests'
+import Interests from 'ui/custom-components/Interests'
 
 import Group from 'types/Group'
 import City from 'types/City'

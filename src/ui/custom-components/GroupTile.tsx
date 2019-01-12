@@ -39,7 +39,7 @@ export default class GroupTile extends React.Component<Props> {
           {/* <Image source={} style={styles.groupImage}/> */}
           <View style={styles.groupImage}/>
           <Text style={styles.groupTitle} numberOfLines={2}>{group.name}</Text>
-          <Text style={styles.groupText}>{group.location}</Text>
+          <Text style={styles.groupText}>{`${group.city}, ${group.state}`}</Text>
           {!!addIcon ? <Icon name="ios-add-circle" style={styles.addIcon}/> : null}
         </View>
       </TouchableHighlight>

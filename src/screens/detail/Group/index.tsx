@@ -1,13 +1,16 @@
 import * as React from 'react'
-import { Container, Header, Title, Content, Text, Button, Icon, Left, Body, Right, List, ListItem } from 'native-base'
-import { View, ScrollView } from 'react-native'
-import AddDataLink from 'ui/components/AddDataLink'
-import EventCalendar from 'ui/components/EventCalendar'
-import GroupTile from 'ui/components/GroupTile'
+import { Container, Header, Content, Text, Button, Icon, Left, Body, Right } from 'native-base'
+import { ScrollView } from 'react-native'
+import HeaderSearchBar from 'ui/custom-components/HeaderSearchBar'
+import GetImage from 'ui/custom-components/GetImage'
+import MembersDisplay from 'ui/custom-components/MembersDisplay'
+import OrganizersDisplay from 'ui/custom-components/OrganizersDisplay'
+import EventEntry from 'ui/custom-components/EventEntry'
+import GroupSelector from 'ui/custom-components/GroupSelector'
+import Interests from 'ui/custom-components/Interests'
 
 import Group from 'types/Group'
 import Event from 'types/Event'
-import Chat from 'types/Chat'
 
 import styles from './styles'
 import general from 'theme/general'
@@ -16,57 +19,75 @@ export interface Props {
   navigation: any
   group: Group
 }
-export interface State {}
-class GroupDetail extends React.Component<Props, State> {
+export interface State {
+  searchTerm?: string
+}
+export default class GroupDetail extends React.Component<Props, State> {
   constructor(props) {
     super(props)
 
-    this.renderGroup = this.renderGroup.bind(this)
+    this.state = {}
+
     this.addData = this.addData.bind(this)
+    this.goBack = this.goBack.bind(this)
+    this.searchGroup = this.searchGroup.bind(this)
+  }
+
+  goBack() {
+    this.props.navigation.goBack()
+  }
+  
+  searchGroup(searchTerm) {
+    this.setState({ searchTerm })
   }
 
   addData() {
     this.props.navigation.navigate('AddData')
   }
 
-  renderGroup(group: Group, ind: number, addIcon: boolean) {
-    return <GroupTile group={group} onPress={() => this.props.navigation.navigate('Group', { group })} key={ind} addIcon={addIcon}/>
-  }
-
   render() {
-    const { navigation, group } = this.props
+    const { props: { navigation, group, group: { id, name, city, state, members, organizers, about, events, interests } }, state: { searchTerm } } = this
 
     return (
       <Container style={general.container}>
         <Header>
           <Left>
-            <Button transparent>
-              <Icon active name="menu" onPress={() => this.props.navigation.openDrawer()} />
-            </Button>
+            <Button onPress={this.goBack} transparent><Icon name="ios-arrow-back" /></Button>
           </Left>
           <Body>
-            <Title>Group</Title>
+            <HeaderSearchBar placeholder="Search Group" searchTerm={searchTerm} onChangeText={this.searchGroup} />
           </Body>
           <Right />
         </Header>
         <Content>
-          <AddDataLink onPress={this.addData} text="Connect more data to unlock additional groups" style={{marginLeft: 20}}/>
+          <GetImage imageId={id} size={300} fullscreen={true} />
+          <Text style={styles.groupTitle}>{name}</Text>
+          <Text style={styles.location}>{`${city}, ${state}`}</Text>
 
-          <View>
-            <Text style={general.subHeader}>Your Groups</Text>{/* create new group */}
-            <Text style={styles.createGroup} onPress={() => this.props.navigation.navigate('Group')}>+ create new group</Text>
-          </View>
+          <MembersDisplay members={members} screen="group" onPress={navigation.navigate('Members', { group })} />
 
-          <Text style={[general.subHeader, {marginBottom: 5}]}>Recommended Groups</Text>
-          <AddDataLink onPress={this.addData} text="Help us tailor your recommendations" style={{marginTop: -5}} />
-          <View style={general.smallBottomMargin}/>
+          <OrganizersDisplay organizers={organizers} screen="group" onPress={navigation.navigate('Organizers', { group })} />
 
-          <Text style={general.subHeader}>Your Calendar</Text>
-          <EventCalendar navigation={navigation} events={group.events}/>
+          <Text style={general.subHeader}>About This Group</Text>
+          <Text style={styles.about}>{about}</Text>
+
+          <Text style={general.subHeader}>Upcoming Events</Text>
+          <ScrollView style={general.flexRow} horizontal={true} showsHorizontalScrollIndicator={false}>
+            {events.slice(0,5).map((event: Event) => <EventEntry navigation={navigation} event={event} />)}
+          </ScrollView>
+          <Text style={styles.link} onPress={navigation.navigate('Events', { group })} >See all events</Text>
+
+          <GroupSelector navigation={navigation} group={group} />
+
+          <Text style={general.subHeader}>Related Topics</Text>
+          <Interests interests={interests}/>
+          {/* videos */}
+          {/* photos */}
+          {/* files */}
+          {/* recommendations */}
+          {/* filters */}
         </Content>
       </Container>
     )
   }
 }
-
-export default GroupDetail

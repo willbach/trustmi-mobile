@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { View } from 'react-native'
 import { Icon } from 'native-base'
-import GetImage from 'ui/components/GetImage'
+import GetImage from 'ui/custom-components/GetImage'
 
 import commonColor from 'theme/variables/commonColor'
 
@@ -9,6 +9,7 @@ export interface Props {
   imageId: string
   size: number
   star?: boolean
+  containerStyle?: any
 }
 
 const styles = {
@@ -31,9 +32,9 @@ const styles = {
 
 export default class ProfilePic extends React.Component<Props> {
   render() {
-    const { imageId, size, star } = this.props
+    const { containerStyle, imageId, size, star } = this.props
 
-    return (<View>
+    return (<View style={containerStyle}>
       <GetImage imageId={imageId} icon="ios-contact" size={size} />
       {!!star ? <Icon name="ios-star" style={styles.star(size)} /> : null}
     </View>)

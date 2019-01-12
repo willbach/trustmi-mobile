@@ -1,9 +1,9 @@
 import * as React from 'react'
 import { Container, Header, Title, Content, Text, Button, Icon, Left, Body, Right, List, ListItem } from 'native-base'
 import { View, ScrollView } from 'react-native'
-import AddDataLink from 'ui/components/AddDataLink'
-import EventCalendar from 'ui/components/EventCalendar'
-import GroupTile from 'ui/components/GroupTile'
+import AddDataLink from 'ui/custom-components/AddDataLink'
+import EventCalendar from 'ui/custom-components/EventCalendar'
+import GroupTile from 'ui/custom-components/GroupTile'
 import ProfileCompletionBar from 'ui/components/ProfileCompletionBar'
 
 import Group from 'types/Group'

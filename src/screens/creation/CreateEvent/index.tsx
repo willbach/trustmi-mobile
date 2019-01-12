@@ -1,8 +1,8 @@
 import * as React from 'react'
 import { Container, Header, Title, Content, Text, Button, Icon, Left, Body, Right, List, ListItem } from 'native-base'
 import { View, ScrollView } from 'react-native'
-import AddDataLink from 'ui/components/AddDataLink'
-import GroupTile from 'ui/components/GroupTile'
+import AddDataLink from 'ui/custom-components/AddDataLink'
+import GroupTile from 'ui/custom-components/GroupTile'
 
 import Group from 'types/Group'
 import Event from 'types/Event'

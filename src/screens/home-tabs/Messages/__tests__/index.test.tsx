@@ -6,8 +6,9 @@ import renderer from "react-test-renderer"
 const navigation = { navigate: jest.fn() }
 const chats = []
 const notifications = []
+const lastLogin = new Date()
 
 it("renders correctly", () => {
-	const tree = renderer.create(<Messages navigation={navigation} chats={chats} notifications={notifications} />).toJSON()
+	const tree = renderer.create(<Messages navigation={navigation} chats={chats} notifications={notifications} lastLogin={lastLogin} />).toJSON()
 	expect(tree).toMatchSnapshot()
 })

@@ -1,8 +1,8 @@
 import * as React from 'react'
 import { Container, Content, Header, Body, Title, Button, Text, Icon, Left, Right, Form, Item, Input, View } from 'native-base'
 import ImagePicker from 'react-native-image-crop-picker'
-import ImageSelector from 'ui/components/ImageSelector'
-import BlurModal from 'ui/components/BlurModal'
+import ImageSelector from 'ui/custom-components/ImageSelector'
+import BlurModal from 'ui/custom-components/BlurModal'
 
 import general from 'theme/general'
 import styles from './styles'

@@ -5,7 +5,9 @@ import Member from 'types/Member'
 export default class Group {
   id: string
   name: string
-  location: string
+  city: string
+  state: string
+  country: string
   about: string
   announcements: Announcement[]
   organizers: Member[]
@@ -19,10 +21,12 @@ export default class Group {
   filters: any
 
   constructor(data) {
-    const { id, name, location, about, announcements, organizers, members, events, videos, photos, files, recommendations, interests, filters } = data
+    const { id, name, city, state, country, about, announcements, organizers, members, events, videos, photos, files, recommendations, interests, filters } = data
     this.id = id
     this.name = name
-    this.location = location
+    this.city = city
+    this.state = state
+    this.country = country
     this.about = about
     this.announcements = announcements === undefined ? [] : announcements.map(ele => new Announcement(ele))
     this.organizers = organizers === undefined ? [] : organizers.map(ele => new Member(ele))

@@ -13,7 +13,7 @@ export interface State {}
 @observer
 export default class MessagesContainer extends React.Component<Props, State> {
 	render() {
-		const { groupStore: { chats, notifications } } = this.props
-		return <Messages navigation={this.props.navigation} chats={chats} notifications={notifications} />
+		const { groupStore: { chats, notifications, lastLogin } } = this.props
+		return <Messages navigation={this.props.navigation} chats={chats} notifications={notifications} lastLogin={lastLogin} />
 	}
 }

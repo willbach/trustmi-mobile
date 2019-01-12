@@ -3,7 +3,7 @@ import { Icon, Text } from 'native-base'
 import { View, TouchableHighlight, Dimensions } from 'react-native'
 import moment from 'moment'
 import DateRow from 'ui/components/DateRow'
-import GetImage from 'ui/components/GetImage'
+import GetImage from 'ui/custom-components/GetImage'
 
 import Event from 'types/Event'
 

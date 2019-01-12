@@ -2,7 +2,7 @@ import * as React from "react"
 import { View, TouchableHighlight, Dimensions } from 'react-native'
 import { Container, Header, Title, Content, Text, Button, Icon, Left, Body, Right, List, ListItem, Form, Item, Input } from "native-base"
 import { WrapperIcon } from 'ui/components/WrapperIcon'
-import GetImage from 'ui/components/GetImage'
+import GetImage from 'ui/custom-components/GetImage'
 
 import Chat from 'types/Chat'
 import Member from 'types/Member'
@@ -11,14 +11,16 @@ import Notification from 'types/Notification'
 
 import { messageDate, formatMsgPreview } from 'utils/format'
 
-import styles from "./styles"
+import styles from './styles'
 import general from 'theme/general'
 import commonColor from 'theme/variables/commonColor'
+import HeaderSearchBar from "ui/custom-components/HeaderSearchBar";
 
 const { height, width } = Dimensions.get('window')
 
 export interface Props {
   navigation: any
+  lastLogin: Date
   chats: Chat[]
   notifications: Notification[]
 }
@@ -29,11 +31,12 @@ export interface State {
   filteredNotifications: Notification[]
   searchTerm?: string
 }
+
 class Messages extends React.Component<Props, State> {
   constructor(props) {
     super(props)
     this.state = {
-      newMessages: [props.chats[0]],
+      newMessages: this.getNewMessages(props),
       newNotifications: [],
       filteredChats: props.chats,
       filteredNotifications: props.notifications,
@@ -43,6 +46,12 @@ class Messages extends React.Component<Props, State> {
     this.getImage = this.getImage.bind(this)
     this.renderChat = this.renderChat.bind(this)
     this.renderNotification = this.renderNotification.bind(this)
+  }
+
+  getNewMessages({ chats, lastLogin }) {
+    // TODO: filter this so that it returns chats that have been updated more recently than the last update
+    // return chats.filter(chat => chat.updatedAt.getTime() > lastLogin.getTime())
+    return lastLogin && chats
   }
 
   filterMessagesAndNotifications(searchTerm?: string) {
@@ -97,22 +106,16 @@ class Messages extends React.Component<Props, State> {
       <Container style={general.container}>
         <Header>
           <Left>
-            <Button transparent>
-              <Icon active name="menu" onPress={() => this.props.navigation.openDrawer()} />
+            <Button transparent onPress={() => this.props.navigation.openDrawer()}>
+              <Icon active name="menu" />
             </Button>
           </Left>
           <Body>
-            <Title>Messages</Title>
+            <HeaderSearchBar placeholder='Search Messages' searchTerm={searchTerm} onChangeText={this.filterMessagesAndNotifications} />
           </Body>
           <Right />
         </Header>
         <Content>
-          {/* <Form>
-            <Item>
-              <Icon active name='ios-search' />
-              <Input placeholder='Search Messages and Notifications' value={searchTerm} onChangeText={this.filterMessagesAndNotifications}/>
-            </Item>
-          </Form>
           {!newMessages.length && !newNotifications.length ? null :<View style={general.mediumTopMargin}>
             <View style={[general.standardHMargin, general.flexColumn]}>
               {newMessages.map((ele, ind) => this.renderChat(ele, ind, true))}
@@ -131,7 +134,7 @@ class Messages extends React.Component<Props, State> {
           </View>
           <TouchableHighlight onPress={() => this.props.navigation.navigate('StartChat')} style={styles.startChat} underlayColor={commonColor.touchableUnderlay}>
             <WrapperIcon family="MaterialIcons" ios="chat" android="chat" name="chat" style={styles.startChatIcon}/>
-          </TouchableHighlight> */}
+          </TouchableHighlight>
         </Content>
       </Container>
     )

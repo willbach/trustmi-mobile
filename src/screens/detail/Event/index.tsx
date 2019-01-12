@@ -1,9 +1,7 @@
 import * as React from 'react'
 import { Container, Header, Title, Content, Text, Button, Icon, Left, Body, Right, List, ListItem } from 'native-base'
 import { View, ScrollView } from 'react-native'
-import AddDataLink from 'ui/components/AddDataLink'
-import EventCalendar from 'ui/components/EventCalendar'
-import GroupTile from 'ui/components/GroupTile'
+import HeaderSearchBar from 'ui/custom-components/HeaderSearchBar'
 
 import Group from 'types/Group'
 import Event from 'types/Event'
@@ -16,52 +14,41 @@ export interface Props {
   event: Event
   group: Group
 }
-export interface State {}
+export interface State {
+  searchTerm?: string
+}
 class EventDetail extends React.Component<Props, State> {
   constructor(props) {
     super(props)
 
-    this.renderGroup = this.renderGroup.bind(this)
-    this.addData = this.addData.bind(this)
+    this.goBack = this.goBack.bind(this)
+    this.searchGroup = this.searchGroup.bind(this)
   }
 
-  addData() {
-    this.props.navigation.navigate('AddData')
+  goBack() {
+    this.props.navigation.goBack()
   }
-
-  renderGroup(group: Group, ind: number, addIcon: boolean) {
-    return <GroupTile group={group} onPress={() => this.props.navigation.navigate('Group', { group })} key={ind} addIcon={addIcon}/>
+  
+  searchGroup(searchTerm) {
+    this.setState({ searchTerm })
   }
 
   render() {
-    const { navigation, group, event } = this.props
+    const { props: { navigation, event, group }, state: { searchTerm } } = this
 
     return (
       <Container style={general.container}>
         <Header>
           <Left>
-            <Button transparent>
-              <Icon active name="menu" onPress={() => this.props.navigation.openDrawer()} />
-            </Button>
+            <Button onPress={this.goBack} transparent><Icon name="ios-arrow-back" /></Button>
           </Left>
           <Body>
-            <Title>Event</Title>
+            <HeaderSearchBar placeholder="Search Event" searchTerm={searchTerm} onChangeText={this.searchGroup} />
           </Body>
           <Right />
         </Header>
         <Content>
-          <AddDataLink onPress={this.addData} text="Connect more data to unlock additional groups" style={{marginLeft: 20}}/>
-
-          <View>
-            <Text style={general.subHeader}>Your Groups</Text>{/* create new group */}
-            <Text style={styles.createGroup} onPress={() => this.props.navigation.navigate('Event')}>+ create new group</Text>
-          </View>
-
-          <Text style={[general.subHeader, {marginBottom: 5}]}>Recommended Groups</Text>
-          <AddDataLink onPress={this.addData} text="Help us tailor your recommendations" style={{marginTop: -5}} />
-          <View style={general.smallBottomMargin}/>
-
-          <Text style={general.subHeader}>Your Calendar</Text>
+          
         </Content>
       </Container>
     )

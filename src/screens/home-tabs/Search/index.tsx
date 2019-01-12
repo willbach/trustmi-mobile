@@ -1,10 +1,12 @@
 import * as React from "react"
 import { View, TouchableHighlight, ScrollView, Dimensions } from "react-native"
 import { Container, Header, Title, Content, Text, Button, Icon, Left, Body, Right, Form, Input, Item } from "native-base"
-import GetImage from 'ui/components/GetImage'
 import { Calendar, CalendarList, Agenda } from 'react-native-calendars'
-import BlurModal from 'ui/components/BlurModal'
 import moment from 'moment'
+
+import GetImage from 'ui/custom-components/GetImage'
+import BlurModal from 'ui/custom-components/BlurModal'
+import HeaderSearchBar from 'ui/custom-components/HeaderSearchBar'
 
 import Group from 'types/Group'
 import Event from 'types/Event'
@@ -13,7 +15,6 @@ import AvailableInterests from 'types/AvailableInterests'
 import styles from "./styles"
 import general from 'theme/general'
 import commonColor from 'theme/variables/commonColor'
-
 
 const { height, width } = Dimensions.get('window')
 
@@ -124,12 +125,7 @@ class Search extends React.Component<Props, State> {
             </Button>
           </Left>
           <Body>
-            <Form>
-              <Item style={styles.searchBar}>
-                <Icon active name='ios-search' style={styles.searchIcon} />
-                <Input style={styles.searchInput} placeholder='Search Events and Groups' value={searchTerm} onChangeText={this.filterAvailableGroups} placeholderTextColor={commonColor.white}/>
-              </Item>
-            </Form>
+            <HeaderSearchBar placeholder="earch Events and Groups" searchTerm={searchTerm} onChangeText={this.filterAvailableGroups} />
           </Body>
           <Right />
         </Header>

@@ -77,6 +77,6 @@ const styles: any = StyleSheet.create({
 		top: 0,
 		left: 0,
 		borderRadius: (width - 60) / 7 / 3,
-	}
+	},
 })
 export default styles

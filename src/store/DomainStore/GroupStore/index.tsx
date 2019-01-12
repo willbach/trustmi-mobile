@@ -27,6 +27,7 @@ export default class GroupStore {
   @observable events: Event[] = []
   @observable availableEvents: Event[] = []
   @observable eventsByInterest = {}
+  @observable lastLogin: Date = new Date()
   @observable thepondAPI: AuthenticatedServerInterface
 
   constructor() {

@@ -6,24 +6,16 @@ const styles: any = StyleSheet.create({
 	container: {
 		backgroundColor: commonColor.white,
 	},
-	row: {
-		flex: 1,
-		alignItems: 'center',
+	groupTitle: {
+		fontSize: 30,
+		color: commonColor.brandPrimary
 	},
-	text: {
-		fontSize: 20,
-		marginBottom: 15,
-		alignItems: 'center',
+	about: {
+
 	},
-	mt: {
-		marginTop: 18,
+	location: {
+
 	},
-	createGroup: {
-		position: 'absolute',
-		right: 15,
-		top: 48,
-		color: commonColor.brandPrimary,
-		fontSize: 14,
-	}
+	
 })
 export default styles

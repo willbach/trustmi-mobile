@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Container, Content, Header, Body, Title, Button, Text, View, Icon, Footer, Left, Right, Form, Item, Input } from 'native-base'
-import ModifyInterests from 'ui/components/ModifyInterests'
+import ModifyInterests from 'ui/custom-components/ModifyInterests'
 import AvailableInterests from 'types/AvailableInterests'
 
 import general from 'theme/general'
