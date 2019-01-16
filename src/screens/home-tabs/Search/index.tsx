@@ -1,8 +1,9 @@
-import * as React from "react"
-import { View, TouchableHighlight, ScrollView, Dimensions } from "react-native"
-import { Container, Header, Title, Content, Text, Button, Icon, Left, Body, Right, Form, Input, Item } from "native-base"
+import * as React from 'react'
+import { View, TouchableHighlight, ScrollView, Dimensions } from 'react-native'
+import { Container, Header, Title, Content, Text, Button, Icon, Left, Body, Right, Form, Input, Item } from 'native-base'
 import { Calendar, CalendarList, Agenda } from 'react-native-calendars'
 import moment from 'moment'
+import { formatEventTime } from 'utils/format'
 
 import GetImage from 'ui/custom-components/GetImage'
 import BlurModal from 'ui/custom-components/BlurModal'
@@ -12,7 +13,7 @@ import Group from 'types/Group'
 import Event from 'types/Event'
 import AvailableInterests from 'types/AvailableInterests'
 
-import styles from "./styles"
+import styles from './styles'
 import general from 'theme/general'
 import commonColor from 'theme/variables/commonColor'
 
@@ -92,9 +93,9 @@ class Search extends React.Component<Props, State> {
           <TouchableHighlight key={ind} onPress={() => this.props.navigation.navigate('Event', { event })} underlayColor={commonColor.touchableUnderlay}>
             <View style={[general.endColumn, styles.event]}>
               <View style={styles.eventImage}></View>
-              <Text style={styles.eventText}>{event.name}</Text>
+              <Text style={styles.eventText}>{event.title}</Text>
               <Text style={styles.eventText}>{event.location}</Text>
-              <Text style={styles.eventText}>{event.formatDateTime()}</Text>
+              <Text style={styles.eventText}>{formatEventTime(event.startTime)}</Text>
             </View>
           </TouchableHighlight>
         ))}

@@ -1,30 +1,32 @@
+import Member from 'types/Member'
+
 export default class Event {
   id: string
-  name: string
+  title: string
   groupName: string
-  pic: string
-  text: string
+  about: string
   location: string
+  attendees: Member[]
   interests: string[]
   rsvp: string
   saved: boolean
-  date: Date
+  startTime: Date
+  endTime: Date
+  createdAt: Date
 
   constructor(data) {
-    const { id, name, groupName, pic, text, location, interests, rsvp, saved, date } = data
+    const { id, title, groupName, about, location, attendees, interests, rsvp, saved, startTime, endTime, createdAt } = data
     this.id = id
-    this.name = name
-    this.groupName = this.groupName
-    this.pic = pic
-    this.text = text
+    this.title = title
+    this.groupName = groupName
+    this.about = about
     this.location = location
-    this.interests = interests
+    this.attendees = attendees && attendees.map(member => new Member(member)) || []
+    this.interests = interests || []
     this.rsvp = rsvp
     this.saved = saved
-    this.date = new Date(date)
-  }
-
-  formatDateTime() {
-    return `${this.date.getMonth() + 1}/${this.date.getDate()}/${this.date.getFullYear()}`
+    this.startTime = startTime && new Date(startTime) || new Date()
+    this.endTime = endTime && new Date(endTime) || new Date()
+    this.createdAt = new Date(createdAt)
   }
 }

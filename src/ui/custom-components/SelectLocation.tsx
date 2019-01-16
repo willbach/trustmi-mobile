@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
   text: { fontSize: 18, color: commonColor.brandPrimary }
 })
 
-export default class ProfilePic extends React.Component<Props> {
+export default class SelectLocation extends React.Component<Props> {
   render() {
     const { onPress, location: { city, state } } = this.props
 

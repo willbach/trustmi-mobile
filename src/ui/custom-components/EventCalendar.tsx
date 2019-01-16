@@ -48,7 +48,7 @@ class EventCalendar extends React.Component<Props, State> {
   renderEventsByDate(events: Event[], day: number) {
     return (
       <View key={day}>
-        <DateRow date={moment(events[0] ? events[0].date : moment().add(day, 'days')).format('dddd MMM Do')} daysInFuture={day}/>
+        <DateRow date={moment(events[0] ? events[0].startTime : moment().add(day, 'days')).format('dddd MMM Do')} daysInFuture={day}/>
         {!events.length ? <Text style={styles.noneMessage}>No events</Text> : events.map(this.renderEvent)}
       </View>
     )
@@ -66,9 +66,9 @@ class EventCalendar extends React.Component<Props, State> {
         <View style={[general.flexRow, styles.event]}>
           <GetImage imageId={event.id} style={styles.eventImage} size={eventImageWidth} />
           <View style={general.flexColumn}>
-            <Text style={styles.eventName} numberOfLines={1}>{event.name}</Text>
+            <Text style={styles.eventName} numberOfLines={1}>{event.title}</Text>
             <Text style={styles.eventLocation} numberOfLines={1}>{event.location}</Text>
-            <Text style={styles.eventTime} numberOfLines={1}>{`${moment(event.date).format(dateTimeFormat)} · ${event.groupName}`}</Text>
+            <Text style={styles.eventTime} numberOfLines={1}>{`${moment(event.startTime).format(dateTimeFormat)} · ${event.groupName}`}</Text>
           </View>
         </View>
       </TouchableHighlight>
@@ -80,10 +80,10 @@ class EventCalendar extends React.Component<Props, State> {
     const { filter } = this.state
 
     if (filter === 'PAST') {
-      const relevantEvents = events.filter( (event: Event) => (new Date()).getTime() > (new Date(event.date)).getTime() )
+      const relevantEvents = events.filter( (event: Event) => (new Date()).getTime() > (new Date(event.startTime)).getTime() )
       return relevantEvents.map(this.renderEvent)
     } else {
-      let relevantEvents = events.filter( (event: Event) => moment() < moment(event.date) && moment(event.date).diff(moment(), 'days') < 7 )
+      let relevantEvents = events.filter( (event: Event) => moment() < moment(event.startTime) && moment(event.startTime).diff(moment(), 'days') < 7 )
       if (filter === 'GOING') {
         relevantEvents = relevantEvents.filter((event: Event) => event.rsvp === 'GOING')
       } else if (filter === 'SAVED') {
@@ -94,7 +94,7 @@ class EventCalendar extends React.Component<Props, State> {
       const sortedEvents = relevantEvents.reduce((acc, event: Event) => {
         const today = moment(moment().format('YYYY-MM-DD'))
 
-        const daysAhead = moment(event.date).diff(today, 'days')
+        const daysAhead = moment(event.startTime).diff(today, 'days')
 
         if (!acc[daysAhead]) {
           acc[daysAhead] = []

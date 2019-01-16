@@ -1,10 +1,12 @@
 export default class Member {
   id: string
-  name: string
+  firstName: string
+  lastName: string
 
   constructor(data) {
-    const { id, name } = data
+    const { id, firstName, lastName } = data
     this.id = id
-    this.name = name
+    this.firstName = firstName
+    this.lastName = lastName
   }
 }

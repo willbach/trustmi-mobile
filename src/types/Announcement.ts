@@ -1,12 +1,18 @@
+import Member from 'types/Member'
+
 export default class Announcement {
+  id: string
+  creator: Member
   name: string
   text: string
-  timeStamp: Date
+  createdAt: Date
 
   constructor(data) {
-    const { name, text, timeStamp } = data
+    const { id, creator, name, text, createdAt } = data
+    this.creator = creator && new Member(creator) || creator
+    this.id = id
     this.name = name
     this.text = text
-    this.timeStamp = new Date(timeStamp)
+    this.createdAt = new Date(createdAt)
   }
 }

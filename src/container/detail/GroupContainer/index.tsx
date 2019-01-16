@@ -6,21 +6,22 @@ import Async from 'ui/custom-components/Async'
 
 export interface Props {
 	navigation: any,
-	profileStore: any,
+	userStore: any,
 	groupStore: any,
 }
 export interface State {}
 
 @inject("groupStore")
+@inject("userStore")
 @observer
 export default class GroupContainer extends React.Component<Props, State> {
 	render() {
-		const { navigation, navigation: { state: { params: { groupId } } } } = this.props
+		const { navigation, navigation: { state: { params: { groupId } } }, userStore: { address } } = this.props
 
 		return <Async
 			navigation={navigation}
 			promise={this.props.groupStore.getGroup(groupId)}
-			onResolve={(group) => <Group navigation={navigation} group={group} />}
+			onResolve={(group) => <Group userId={address} startDiscussion={this.props.groupStore.createChat} navigation={navigation} group={group} />}
 		/>
 	}
 }

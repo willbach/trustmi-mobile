@@ -6,6 +6,7 @@ export const NAME_MIN_LENGTH = 20
 export const DESCRIPTION_MIN_LENGTH = 100
 export const NAME_MAX_LENGTH = 100
 export const DESCRIPTION_MAX_LENGTH = 1000
+export const MESSAGE_MAX_LENGTH = 1000
 
 export const DATE_LENGTH = 10
 export const GPA_LENGTH = 4

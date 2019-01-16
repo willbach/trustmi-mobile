@@ -2,7 +2,7 @@ import * as React from 'react'
 import { Image, Platform, BackHandler } from 'react-native'
 import { Container, Content, Header, Body, Title, Button, Text, View, Icon, Footer } from 'native-base'
 
-import Pinpad from 'ui/components/Pinpad'
+import Pinpad from 'ui/custom-components/Pinpad'
 
 import commonColor from 'theme/variables/commonColor'
 

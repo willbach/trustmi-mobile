@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Container, Header, Content, Text, Button, Icon, Left, Body, Right } from 'native-base'
+import { Container, Header, Content, Text, Button, Icon, Left, Body, Right, View } from 'native-base'
 import { ScrollView } from 'react-native'
 import HeaderSearchBar from 'ui/custom-components/HeaderSearchBar'
 import GetImage from 'ui/custom-components/GetImage'
@@ -8,6 +8,7 @@ import OrganizersDisplay from 'ui/custom-components/OrganizersDisplay'
 import EventEntry from 'ui/custom-components/EventEntry'
 import GroupSelector from 'ui/custom-components/GroupSelector'
 import Interests from 'ui/custom-components/Interests'
+import { formatMemberCount } from 'utils/format'
 
 import Group from 'types/Group'
 import Event from 'types/Event'
@@ -16,6 +17,8 @@ import styles from './styles'
 import general from 'theme/general'
 
 export interface Props {
+  startDiscussion: (message: string) => void
+  userId: string
   navigation: any
   group: Group
 }
@@ -46,7 +49,7 @@ export default class GroupDetail extends React.Component<Props, State> {
   }
 
   render() {
-    const { props: { navigation, group, group: { id, name, city, state, members, organizers, about, events, interests } }, state: { searchTerm } } = this
+    const { props: { startDiscussion, userId, navigation, group, group: { id, name, city, state, members, organizers, about, events, interests } }, state: { searchTerm } } = this
 
     return (
       <Container style={general.container}>
@@ -60,24 +63,28 @@ export default class GroupDetail extends React.Component<Props, State> {
           <Right />
         </Header>
         <Content>
-          <GetImage imageId={id} size={300} fullscreen={true} />
-          <Text style={styles.groupTitle}>{name}</Text>
-          <Text style={styles.location}>{`${city}, ${state}`}</Text>
+          <View style={general.centeredColumn}>
+            <GetImage imageId={id} size={300} fullscreen={true} />
+            <Text style={styles.groupTitle}>{name}</Text>
+            <Text style={styles.location}>{`${city}, ${state}`}</Text>
 
-          <MembersDisplay members={members} screen="group" onPress={navigation.navigate('Members', { group })} />
+            <MembersDisplay members={members} screen="group" onPress={() => navigation.navigate('Members', { group })}>
+              <Text>{`Closed Group · ${formatMemberCount(members.length)}`}</Text>
+            </MembersDisplay>
 
-          <OrganizersDisplay organizers={organizers} screen="group" onPress={navigation.navigate('Organizers', { group })} />
+            <OrganizersDisplay organizers={organizers} screen="group" onPress={() => navigation.navigate('Organizers', { group })} />
+          </View>
 
           <Text style={general.subHeader}>About This Group</Text>
-          <Text style={styles.about}>{about}</Text>
+          {about.split('\\n').map((text: string, ind: number) => <Text key={ind} style={styles.about}>{text}</Text>)}
 
           <Text style={general.subHeader}>Upcoming Events</Text>
           <ScrollView style={general.flexRow} horizontal={true} showsHorizontalScrollIndicator={false}>
-            {events.slice(0,5).map((event: Event) => <EventEntry navigation={navigation} event={event} />)}
+            {events.slice(0,5).map((event: Event, ind: number) => <EventEntry key={ind} onPress={() => navigation.navigate('Event', { event })} event={event} />)}
           </ScrollView>
-          <Text style={styles.link} onPress={navigation.navigate('Events', { group })} >See all events</Text>
+          <Text style={styles.link} onPress={() => navigation.navigate('Events', { group })} >See all events</Text>
 
-          <GroupSelector navigation={navigation} group={group} />
+          <GroupSelector startDiscussion={startDiscussion} userId={userId} navigation={navigation} group={group} />
 
           <Text style={general.subHeader}>Related Topics</Text>
           <Interests interests={interests}/>

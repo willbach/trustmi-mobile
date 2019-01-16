@@ -12,6 +12,7 @@ import general from 'theme/general'
 export interface Props {
   navigation: any
   chat: Chat
+  group: Group
 }
 export interface State {
   searchTerm?: string

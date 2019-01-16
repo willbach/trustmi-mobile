@@ -6,8 +6,9 @@ import Group from "types/Group"
 
 const navigation = { navigate: jest.fn() }
 const group = new Group({})
+const startDiscussion = jest.fn()
 
 it("renders correctly", () => {
-	const tree = renderer.create(<GroupDetail navigation={navigation} group={group}/>).toJSON()
+	const tree = renderer.create(<GroupDetail navigation={navigation} group={group} userId='' startDiscussion={startDiscussion}/>).toJSON()
 	expect(tree).toMatchSnapshot()
 })

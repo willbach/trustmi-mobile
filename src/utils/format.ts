@@ -45,4 +45,12 @@ export const formatDate = (date: string) : string => {
 
 export const formatZip = (zip: string) => zip.replace(/^[0-9]/, '')
 
+export const formatMemberCount = (count: number) : string => {
+  if (count > 999) {
+    return `${count / 1000}K`
+  }
 
+  return count.toString()
+}
+
+export const formatEventTime = (time: Date) => moment(time).format('ddd, MMM Do, h:mm A')

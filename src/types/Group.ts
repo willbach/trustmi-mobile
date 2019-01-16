@@ -1,6 +1,7 @@
 import Announcement from 'types/Announcement'
 import Event from 'types/Event'
 import Member from 'types/Member'
+import Chat from './Chat';
 
 export default class Group {
   id: string
@@ -9,6 +10,7 @@ export default class Group {
   state: string
   country: string
   about: string
+  chats: Chat[]
   announcements: Announcement[]
   organizers: Member[]
   members: Member[]
@@ -21,17 +23,18 @@ export default class Group {
   filters: any
 
   constructor(data) {
-    const { id, name, city, state, country, about, announcements, organizers, members, events, videos, photos, files, recommendations, interests, filters } = data
+    const { id, name, city, state, country, about, chats, announcements, organizers, members, events, videos, photos, files, recommendations, interests, filters } = data
     this.id = id
     this.name = name
     this.city = city
     this.state = state
     this.country = country
     this.about = about
-    this.announcements = announcements === undefined ? [] : announcements.map(ele => new Announcement(ele))
-    this.organizers = organizers === undefined ? [] : organizers.map(ele => new Member(ele))
-    this.members = members === undefined ? [] : members.map(ele => new Member(ele))
-    this.events = events === undefined ? [] : events.map(ele => new Event(ele))
+    this.chats = chats && chats.map(ele => new Chat(ele)) || []
+    this.announcements = announcements && announcements.map(ele => new Announcement(ele)) || []
+    this.organizers = organizers && organizers.map(ele => new Member(ele)) || []
+    this.members = members && members.map(ele => new Member(ele)) || []
+    this.events = events && events.map(ele => new Event(ele)) || []
     this.videos = videos
     this.photos = photos
     this.files = files

@@ -4,7 +4,7 @@ import { Container, Content, Header, Body, Title, Button, Text, View, Icon, Foot
 
 import commonColor from 'theme/variables/commonColor'
 
-import Pinpad from 'ui/components/Pinpad'
+import Pinpad from 'ui/custom-components/Pinpad'
 //import styles from './styles';
 export interface Props {
 	onLogin: Function

@@ -1,6 +1,5 @@
 import { observable, action } from 'mobx'
 import { addOrDelete } from 'utils/array-utils'
-import CreateEvent from 'screens/creation/CreateEvent'
 
 export default class CreateEventStore {
   @observable groupId = ''
