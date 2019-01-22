@@ -4,7 +4,6 @@ import ProfilePic from 'ui/custom-components/ProfilePic'
 import SelectLocation from 'ui/custom-components/SelectLocation'
 import Interests from 'ui/custom-components/Interests'
 
-import Group from 'types/Group'
 import City from 'types/City'
 
 import styles from './styles'

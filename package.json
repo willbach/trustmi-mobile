@@ -65,6 +65,7 @@
     ]
   },
   "dependencies": {
+    "@babel/polyfill": "^7.2.5",
     "@types/node": "^10.12.9",
     "babel-plugin-transform-remove-console": "^6.9.4",
     "bcryptjs": "^2.4.3",

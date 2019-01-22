@@ -43,6 +43,8 @@ export default class Fetch {
       throw new Error('Authentication failed')
     } else if (response.status === 400) {
       throw new Error('Bad request')
+    } else if (response.status === 204) {
+      return []
     }
 
     const data = await response.json()

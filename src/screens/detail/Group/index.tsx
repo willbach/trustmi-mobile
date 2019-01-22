@@ -51,6 +51,10 @@ export default class GroupDetail extends React.Component<Props, State> {
   render() {
     const { props: { startDiscussion, userId, navigation, group, group: { id, name, city, state, members, organizers, about, events, interests } }, state: { searchTerm } } = this
 
+    if (!group) {
+      return <View/>
+    }
+
     return (
       <Container style={general.container}>
         <Header>
@@ -78,7 +82,11 @@ export default class GroupDetail extends React.Component<Props, State> {
           <Text style={general.subHeader}>About This Group</Text>
           {about.split('\\n').map((text: string, ind: number) => <Text key={ind} style={styles.about}>{text}</Text>)}
 
-          <Text style={general.subHeader}>Upcoming Events</Text>
+
+          <View>
+            <Text style={general.subHeader}>Upcoming Events</Text>
+            {group.isOrganizer(userId) && <Text style={styles.createEvent} onPress={() => this.props.navigation.navigate('CreateEvent', { group })}>+ create new event</Text>}
+          </View>
           <ScrollView style={general.flexRow} horizontal={true} showsHorizontalScrollIndicator={false}>
             {events.slice(0,5).map((event: Event, ind: number) => <EventEntry key={ind} onPress={() => navigation.navigate('Event', { event })} event={event} />)}
           </ScrollView>

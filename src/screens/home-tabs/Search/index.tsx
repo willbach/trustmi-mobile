@@ -77,8 +77,8 @@ class Search extends React.Component<Props, State> {
     this.setState({ calendarVisible: false })
   }
 
-  setDate(date: string) {
-    this.setState({ date: moment(date).format('M/D/YYYY') })
+  setDate(date: any) {
+    this.setState({ date: moment(date.dateString).format('M/D/YYYY') })
     this.closeCalendar()
   }
 

@@ -2,30 +2,18 @@ import { observable, action } from 'mobx'
 import { addOrDelete } from 'utils/array-utils'
 
 export default class CreateEventStore {
-  @observable groupId = ''
-  @observable pic = ''
+
   @observable title = ''
   @observable about = ''
-  @observable location = '' // this should be an exact location
-  @observable parkingInfo = ''
-  @observable interests: string[] = [] // default is the group
-  @observable documents: string[] = []
+  @observable directionsParking = ''
+  @observable street = ''
+  @observable city = ''
+  @observable state = ''
+  @observable country = ''
   @observable startTime = ''
   @observable endTime = ''
-
-  @action
-  createEvent() {
-    // id
-    // group_id
-    // title
-    // about
-    // parkingInfo
-    // location
-    // startTime
-    // endTime
-    // interests
-    // documents
-  }
+  @observable interests: string[] = [] // default is the group
+  @observable documents: string[] = []
 
   @action.bound
   updateValue(key: string, value: string) {
@@ -46,12 +34,15 @@ export default class CreateEventStore {
   
   @action.bound
   clearStore() {
-    this.groupId = ''
-    this.pic = ''
     this.title = ''
     this.about = ''
-    this.location = ''
-    this.parkingInfo = ''
+    this.directionsParking = ''
+    this.street = ''
+    this.city = ''
+    this.state = ''
+    this.country = ''
+    this.startTime = ''
+    this.endTime = ''
     this.interests = []
     this.documents = []
   }

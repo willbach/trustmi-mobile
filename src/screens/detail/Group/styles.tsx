@@ -19,6 +19,13 @@ const styles: any = StyleSheet.create({
 	link: {
 		color: commonColor.brandSecondary,
 		marginLeft: 16,
-	}
+	},
+	createEvent: {
+		position: 'absolute',
+		right: 15,
+		top: 48,
+		color: commonColor.brandPrimary,
+		fontSize: 14,
+	},
 })
 export default styles

@@ -82,7 +82,7 @@ class Messages extends React.Component<Props, State> {
     const title = `${chat.title}`
     const body = (<View>
       <Text style={styles.itemText} numberOfLines={1}>{formatMsgPreview(chat)}</Text>
-      <Text style={styles.dateText}>{this.timeAndGroup(chat.messages[0].timeStamp, chat.groupName)}</Text>
+      <Text style={styles.dateText}>{this.timeAndGroup(chat.messages[0] && chat.messages[0].createdAt, chat.groupName)}</Text>
     </View>)
     return this.renderRow(ind, title, chat.id, () => this.props.navigation.navigate('Chat', { chat }), body, 'chat', newItem)
   }

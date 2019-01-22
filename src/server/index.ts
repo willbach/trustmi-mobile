@@ -23,7 +23,6 @@ export  class AuthenticatedServerInterface {
   }
 
   post(route: string, body: any) {
-    console.log(2)
     return this.fetch.post(route, body, this.token)
   }
 

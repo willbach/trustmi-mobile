@@ -68,16 +68,19 @@ export default class GroupStore {
 
   @action
   async getGroupsAndEvents() {
-    const groups = await this.thepondAPI.get('/groups')
-    this.groups = groups.map(group => new Group(group))
-    const events = groups.reduce((acc: Event[], group: Group) => {
-      return acc.concat(group.events.map((event: Event) => {
-        event.groupName = group.name
-        return event
-      }))
-    }, [])
-    console.log('EVENTS?', events)
-    this.events = events
+    try {
+      const groups = await this.thepondAPI.get('/groups')
+      this.groups = groups.map(group => new Group(group))
+      const events = groups.reduce((acc: Event[], group: Group) => {
+        return acc.concat(group.events.map((event: Event) => {
+          event.groupName = group.name
+          return event
+        }))
+      }, [])
+      this.events = events
+    } catch (error) {
+      console.log('ERROR GETTING GROUPS:', error)
+    }
   }
 
   @action
@@ -95,9 +98,8 @@ export default class GroupStore {
     try {
       const groups = await this.thepondAPI.get(`/groups/available?city=${city}&state=${state}&country=${country}`)
       this.availableGroups = groups.map(group => new Group(group))
-      console.log('getting some available groups back', this.availableGroups)
     } catch (error) {
-      console.log('ERROR GETTING GROUPS:', error)
+      console.log('ERROR GETTING AVAILABLE GROUPS:', error)
     }
   }
 
@@ -144,8 +146,8 @@ export default class GroupStore {
   }
   
   @action
-  createEvent({ groupId, title, about, parkingInfo, location, startTime, endTime, interests }) {
-    return this.thepondAPI.post('/events', { id: generateId([ groupId, title, about, parkingInfo, location, startTime.toString(), endTime.toString() ]), groupId, title, about, parkingInfo, location, startTime, endTime, interests })
+  createEvent({ groupId, title, about, parkingInfo, location, startTime, endTime, interests, isDraft }) {
+    return this.thepondAPI.post('/events', { id: generateId([ groupId, title, about, parkingInfo, location, startTime.toString(), endTime.toString() ]), groupId, title, about, parkingInfo, location, startTime, endTime, interests, isDraft })
   }
 
   @action

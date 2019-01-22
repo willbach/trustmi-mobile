@@ -35,11 +35,15 @@ export default class Group {
     this.organizers = organizers && organizers.map(ele => new Member(ele)) || []
     this.members = members && members.map(ele => new Member(ele)) || []
     this.events = events && events.map(ele => new Event(ele)) || []
-    this.videos = videos
-    this.photos = photos
-    this.files = files
-    this.recommendations = recommendations
-    this.interests = interests
+    this.videos = videos || []
+    this.photos = photos || []
+    this.files = files || []
+    this.recommendations = recommendations || []
+    this.interests = interests && interests.map(item => item.interest) || []
     this.filters = filters
+  }
+
+  isOrganizer(userId: string) {
+    return Boolean(this.organizers.find(organizer => organizer.id === userId))
   }
 }
