@@ -15,6 +15,12 @@ export interface State {}
 @inject('createEventStore')
 @observer
 export default class CreateEventContainer extends React.Component<Props, State> {
+	constructor(props) {
+		super(props)
+
+		this.createEvent = this.createEvent.bind(this)
+	}
+
 	componentWillMount() {
 		const { createEventStore: { updateValue }, createEventStore, navigation: { state: { params: { group: { city, state, country, interests } } } } } = this.props
 		if (!createEventStore.city && !createEventStore.state) {
@@ -26,11 +32,13 @@ export default class CreateEventContainer extends React.Component<Props, State> 
 	}
 
 	async createEvent(isDraft: boolean) {
-		const { createEventStore: { title, about, directionsParking, street, city, state, country, startTime, endTime, interests, documents }, groupStore: { createEvent }, navigation,
+		const { createEventStore: { title, about, directionsParking, street, city, state, country, startTime, endTime, interests, documents }, navigation,
 		navigation: { state: { params: { group } } } } = this.props
 
+		console.log(1, { title, about, directionsParking, street, city, state, country, startTime, endTime, interests, documents, isDraft })
+
 		try {
-			const eventId = await createEvent({ title, about, directionsParking, street, city, state, country, startTime, endTime, interests, documents, isDraft })
+			const eventId = await this.props.groupStore.createEvent({ groupId: group.id, title, about, directionsParking, street, city, state, country, startTime, endTime, interests, documents, isDraft })
 			navigation.navigate('Event', { eventId })
 			Toast.show({
 				text: 'Your event has been created!',
@@ -39,7 +47,7 @@ export default class CreateEventContainer extends React.Component<Props, State> 
 				textStyle: { textAlign: 'center' },
 			})
 		} catch (error) {
-			console.log(4, error)
+			console.log('ERROR CREATING EVENT', error)
 			navigation.navigate('Group', { groupId: group.id })
 			Toast.show({
 				type: 'danger',
@@ -52,13 +60,13 @@ export default class CreateEventContainer extends React.Component<Props, State> 
 	}
 
 	render() {
-		const { groupStore: { createEvent }, createEventStore: { title, about, directionsParking, street, city, state, country, startTime, endTime, interests, documents, refresh, updateValue } } = this.props
+		const { createEventStore: { title, about, directionsParking, street, city, state, country, startTime, endTime, interests, documents, refresh, updateValue } } = this.props
 
 		const { navigation: { state: { params: { group } } } } = this.props
 
 		return <CreateEvent
 			navigation={this.props.navigation}
-			createEvent={createEvent}
+			createEvent={this.createEvent}
 			group={group}
 			title={title}
 			about={about}

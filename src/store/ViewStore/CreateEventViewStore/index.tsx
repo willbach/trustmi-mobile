@@ -10,8 +10,8 @@ export default class CreateEventStore {
   @observable city = ''
   @observable state = ''
   @observable country = ''
-  @observable startTime = ''
-  @observable endTime = ''
+  @observable startTime = new Date()
+  @observable endTime = new Date()
   @observable interests: string[] = [] // default is the group
   @observable documents: string[] = []
 
@@ -41,8 +41,8 @@ export default class CreateEventStore {
     this.city = ''
     this.state = ''
     this.country = ''
-    this.startTime = ''
-    this.endTime = ''
+    this.startTime = new Date()
+    this.endTime = new Date()
     this.interests = []
     this.documents = []
   }

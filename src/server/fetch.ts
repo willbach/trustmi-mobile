@@ -44,6 +44,7 @@ export default class Fetch {
     } else if (response.status === 400) {
       throw new Error('Bad request')
     } else if (response.status === 204) {
+      console.log('GOT A 204')
       return []
     }
 

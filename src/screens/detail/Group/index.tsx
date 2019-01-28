@@ -72,11 +72,11 @@ export default class GroupDetail extends React.Component<Props, State> {
             <Text style={styles.groupTitle}>{name}</Text>
             <Text style={styles.location}>{`${city}, ${state}`}</Text>
 
-            <MembersDisplay members={members} screen="group" onPress={() => navigation.navigate('Members', { group })}>
+            <MembersDisplay members={members} screen="group" onPress={() => navigation.navigate('Members', { members, groupId: id, groupName: name })}>
               <Text>{`Closed Group · ${formatMemberCount(members.length)}`}</Text>
             </MembersDisplay>
 
-            <OrganizersDisplay organizers={organizers} screen="group" onPress={() => navigation.navigate('Organizers', { group })} />
+            <OrganizersDisplay organizers={organizers} screen="group" onPress={() => navigation.navigate('Members', { members: organizers, groupId: id, groupName: name })} />
           </View>
 
           <Text style={general.subHeader}>About This Group</Text>
@@ -88,7 +88,7 @@ export default class GroupDetail extends React.Component<Props, State> {
             {group.isOrganizer(userId) && <Text style={styles.createEvent} onPress={() => this.props.navigation.navigate('CreateEvent', { group })}>+ create new event</Text>}
           </View>
           <ScrollView style={general.flexRow} horizontal={true} showsHorizontalScrollIndicator={false}>
-            {events.slice(0,5).map((event: Event, ind: number) => <EventEntry key={ind} onPress={() => navigation.navigate('Event', { event })} event={event} />)}
+            {events.slice(0,5).map((event: Event, ind: number) => <EventEntry key={ind} onPress={() => navigation.navigate('Event', { eventId: event.id })} event={event} />)}
           </ScrollView>
           <Text style={styles.link} onPress={() => navigation.navigate('Events', { group })} >See all events</Text>
 

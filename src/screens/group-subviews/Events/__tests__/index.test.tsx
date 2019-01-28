@@ -1,14 +1,14 @@
 import React from "react";
-import EventDetail from "../index";
+import Events from "../index";
 // Note: test renderer must be required after react-native.
 import renderer from "react-test-renderer";
-import Event from 'types/Event'
+import Group from 'types/Group'
 
 const navigation = { navigate: jest.fn() };
-const event = new Event({})
+const group = new Group({})
 const userId = '12345'
 
 it("renders correctly", () => {
-	const tree = renderer.create(<EventDetail userId={userId} navigation={navigation} event={event}/>).toJSON();
+	const tree = renderer.create(<Events userId={userId} navigation={navigation} group={group}/>).toJSON();
 	expect(tree).toMatchSnapshot();
 });

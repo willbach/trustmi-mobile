@@ -130,11 +130,11 @@ class CreateEvent extends React.Component<Props, State> {
             <View style={general.flexRow}>
               <View style={styles.dateColumn}>
                 <Text style={styles.subHeader}>Start Time</Text>
-                <DateTimePicker onDateChange={this.updateStartTime} />
+                <DateTimePicker onDateChange={this.updateStartTime} containerStyle={styles.datePicker} />
               </View>
               <View style={styles.dateColumn}>
                 <Text style={styles.subHeader}>End Time</Text>
-                <DateTimePicker onDateChange={this.updateEndTime} />
+                <DateTimePicker onDateChange={this.updateEndTime} containerStyle={styles.datePicker} />
               </View>
             </View>
 

@@ -86,5 +86,8 @@ const styles: any = StyleSheet.create({
 		width: width / 2,
 		flexDirection: 'column',
 	},
+	datePicker: {
+		marginBottom: 20,
+	},
 })
 export default styles

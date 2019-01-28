@@ -3,6 +3,7 @@ import * as React from 'react'
 import { Item, Input, Icon, Form, Toast } from 'native-base'
 import { observer, inject } from 'mobx-react/native'
 import { NavigationActions, StackActions } from 'react-navigation'
+import SplashScreen from 'react-native-splash-screen'
 
 import Login from 'screens/Login'
 
@@ -42,6 +43,8 @@ export default class LoginContainer extends React.Component<Props, State> {
 		} catch (e) {
 			this.props.navigation.dispatch(startAtSignup)
 		}
+		
+		SplashScreen.hide()
 	}
 
 	emailInput: any

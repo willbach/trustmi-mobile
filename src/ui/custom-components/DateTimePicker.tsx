@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, TouchableHighlight, ScrollView, Dimensions } from 'react-native'
+import { View, Dimensions, Platform, TimePickerAndroid, DatePickerIOS } from 'react-native'
 import { Container, Header, Title, Content, Text, Button, Icon, Left, Body, Right, Form, Input, Item } from 'native-base'
 import { Calendar, CalendarList, Agenda } from 'react-native-calendars'
 import moment from 'moment'
@@ -19,6 +19,10 @@ const styles: any = {
     paddingLeft: 16,
     fontSize: 18,
   },
+  timeStyle: {
+    paddingLeft: 16,
+    fontSize: 18,
+  },
   inputBorder: {
     borderBottomWidth: 0,
     width: 40,
@@ -26,12 +30,6 @@ const styles: any = {
   textInput: {
     width: 40,
     fontSize: 16,
-  },
-  ampm: {
-    paddingTop: 14
-  },
-  colon: {
-    paddingTop: 12
   },
   selectButton: {
 		marginVertical: 20,
@@ -58,10 +56,7 @@ export interface Props {
 }
 
 export interface State {
-  date: string
-  hours?: string
-  minutes?: string
-  ampm: string
+  date: Date
   calendarVisible: boolean
 }
 
@@ -70,17 +65,15 @@ export default class DateTimePicker extends React.Component<Props, State> {
     super(props)
 
     this.state = {
-      date: moment().format('M/D/YYYY'),
-      ampm: 'AM',
+      date: new Date(),
       calendarVisible: false
     }
 
     this.changeDate = this.changeDate.bind(this)
-    this.setDate = this.setDate.bind(this)
+    this.setDateAndroid = this.setDateAndroid.bind(this)
+    this.setDateIos = this.setDateIos.bind(this)
     this.closeCalendar = this.closeCalendar.bind(this)
-    this.changeAmpm = this.changeAmpm.bind(this)
-    this.setHours = this.setHours.bind(this)
-    this.setMinutes = this.setMinutes.bind(this)
+    this.changeTime = this.changeTime.bind(this)
     this.updateDateTime = this.updateDateTime.bind(this)
   }
 
@@ -92,56 +85,67 @@ export default class DateTimePicker extends React.Component<Props, State> {
     this.setState({ calendarVisible: false })
   }
 
-  setHours(value: string) {
-    const hours = value.replace(/[^0-9]/g, '')
-    this.setState({ hours })
-    this.updateDateTime()
-  }
-
-  setMinutes(value: string) {
-    const minutes = value.replace(/[^0-9]/g, '')
-    console.log(value, 'MINUTES', minutes)
-    this.setState({ minutes })
-    this.updateDateTime()
-  }
-
-  setDate(date: any) {
-    this.setState({ date: moment(date.dateString).format('M/D/YYYY') })
+  setDateAndroid(incomingDate: any) {
+    const oldDate = this.state.date
+    const newDate = new Date(incomingDate.dateString)
+    const year = newDate.getUTCFullYear()
+    const month = newDate.getMonth()
+    const day = newDate.getDate() + 1
+    const hours = oldDate.getHours()
+    const minutes = oldDate.getMinutes()
+    this.setState({ date: new Date(year, month, day, hours, minutes, 0, 0) })
     this.closeCalendar()
     this.updateDateTime()
   }
 
-  changeAmpm() {
-    this.setState({ ampm: this.state.ampm === 'AM' ? 'PM' : 'AM' })
+  setDateIos(date: any) {
+    this.setState({ date })
+    this.closeCalendar()
     this.updateDateTime()
   }
 
+  async changeTime() {
+    if (Platform.OS === 'ios') {
+      this.setState({ calendarVisible: true })
+    } else {
+      try {
+        const { action, hour, minute } = await TimePickerAndroid.open({
+          hour: 12,
+          minute: 0,
+          is24Hour: false, // Will display '2 PM'
+        });
+        if (action !== TimePickerAndroid.dismissedAction) {
+          const oldDate = this.state.date
+          const year = oldDate.getUTCFullYear()
+          const month = oldDate.getMonth()
+          const day = oldDate.getDate()
+          this.setState({ date: new Date(year, month, day, hour, minute, 0, 0) })
+        }
+      } catch ({code, message}) {
+        console.warn('Cannot open time picker', message)
+      }
+    }
+  }
+
   updateDateTime() {
-    const { props: { onDateChange }, state: { date, hours, minutes, ampm } } = this
-    onDateChange(new Date(`${date} ${hours}:${minutes} ${ampm}`))
+    const { props: { onDateChange }, state: { date } } = this
+    onDateChange(date)
   }
 
   render() {
-    const { props: { containerStyle, dateStyle, timeStyle }, state: { date, hours, minutes, ampm, calendarVisible } } = this
+    const { props: { containerStyle, dateStyle, timeStyle }, state: { date, calendarVisible } } = this
 
     return <View style={[general.flexColumn, containerStyle]}>
-      <Text style={[styles.dateStyle, dateStyle]} onPress={this.changeDate}>{date}</Text>
-
-      <Form style={general.flexRow}>
-        <Item style={styles.inputBorder}>
-          <Input style={styles.textInput} placeholder='00' value={hours} maxLength={2} onChangeText={this.setHours} keyboardType="numeric" />
-        </Item>
-        <Text style={styles.colon}>:</Text>
-        <Item style={styles.inputBorder}>
-          <Input style={styles.textInput} placeholder='00' value={minutes} maxLength={2} onChangeText={this.setMinutes} keyboardType="numeric" />
-        </Item>
-        <Text onPress={this.changeAmpm} style={styles.ampm}>{ampm}</Text>
-      </Form>
+      <Text style={[styles.dateStyle, dateStyle]} onPress={this.changeDate}>{moment(date).format('M/D/YYYY')}</Text>
+      <Text style={[styles.timeStyle, timeStyle]} onPress={this.changeTime}>{moment(date).format('h:mm:ss A')}</Text>
 
       <BlurModal visible={calendarVisible} onRequestClose={this.closeCalendar} transparent blurType="light" blurAmount={10}>
         <View style={[general.centeredColumn, styles.modalBody]}>
-          <Calendar minDate={new Date()} onDayPress={this.setDate} />
-          <Button style={[styles.selectButton, general.centeredColumn]} onPress={this.closeCalendar}><Text>Cancel</Text></Button>
+          {Platform.OS === 'ios' ? 
+          <DatePickerIOS date={date} onDateChange={this.setDateIos} /> :
+          <Calendar minDate={new Date()} onDayPress={this.setDateAndroid} />}
+          
+          <Button style={[styles.selectButton, general.centeredColumn]} onPress={this.closeCalendar}><Text>{Platform.OS === 'ios' ? 'Done' : 'Cancel'}</Text></Button>
         </View>
       </BlurModal>
     </View>

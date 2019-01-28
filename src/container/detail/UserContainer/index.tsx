@@ -1,7 +1,7 @@
 import * as React from "react"
 import { observer, inject } from "mobx-react/native"
 
-import Event from 'screens/detail/Event'
+import User from 'screens/detail/User'
 import Async from 'ui/custom-components/Async'
 
 export interface Props {
@@ -16,12 +16,12 @@ export interface State {}
 @observer
 export default class GroupContainer extends React.Component<Props, State> {
 	render() {
-		const { navigation, navigation: { state: { params: { eventId } } }, userStore: { address } } = this.props
+		const { navigation, navigation: { state: { params: { userId } } }, userStore: { address } } = this.props
 
 		return <Async
 			navigation={navigation}
-			promise={this.props.groupStore.getEvent(eventId)}
-			onResolve={(event) => <Event userId={address} navigation={navigation} event={event} />}
+			promise={this.props.groupStore.getUser(userId)}
+			onResolve={(user) => <User userId={address} navigation={navigation} user={user} />}
 		/>
 	}
 }

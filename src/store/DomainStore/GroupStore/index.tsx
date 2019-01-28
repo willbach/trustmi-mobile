@@ -3,6 +3,7 @@ import { observable, action } from 'mobx'
 import Group from 'types/Group'
 import Event from 'types/Event'
 import Chat from 'types/Chat'
+import User from 'types/User'
 import Notification from 'types/Notification'
 import Announcement from 'types/Announcement'
 import City from 'types/City'
@@ -146,13 +147,35 @@ export default class GroupStore {
   }
   
   @action
-  createEvent({ groupId, title, about, parkingInfo, location, startTime, endTime, interests, isDraft }) {
-    return this.thepondAPI.post('/events', { id: generateId([ groupId, title, about, parkingInfo, location, startTime.toString(), endTime.toString() ]), groupId, title, about, parkingInfo, location, startTime, endTime, interests, isDraft })
+  createEvent({ groupId, title, about, directionsParking, street, city, state, country, startTime, endTime, interests, documents, isDraft }) {
+    return this.thepondAPI.post('/events', { id: generateId([ groupId, title, city, state, country, startTime.toString(), endTime.toString() ]), groupId, title, about, directionsParking, street, city, state, country, startTime, endTime, interests, documents, isDraft })
+  }
+
+  @action
+  async getEvent(eventId: string) {
+    const event = new Event(await this.thepondAPI.get(`/events/${eventId}`))
+    return event
   }
 
   @action
   updateEvent(event: Event) {
     return this.thepondAPI.put('/events', event)
+  }
+
+  @action
+  createUser({ id, email, first, last, dateOfBirth }) {
+    return this.thepondAPI.post('/users', { id, email, first, last, dateOfBirth })
+  }
+
+  @action
+  async getUser(userId: string) {
+    const user = new User(await this.thepondAPI.get(`/users/${userId}`))
+    return user
+  }
+
+  @action
+  updateUser({ email, first, last, dateOfBirth }) {
+    return this.thepondAPI.put('/users', { email, first, last, dateOfBirth })
   }
 
   @action
