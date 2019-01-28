@@ -163,8 +163,8 @@ export default class GroupStore {
   }
 
   @action
-  createUser({ id, email, first, middle, last, dateOfBirth }) {
-    return this.thepondAPI.post('/users', { id, email, first, middle, last, dateOfBirth })
+  createUser({ email, first, middle, last, dateOfBirth }) {
+    return this.thepondAPI.post('/users', { email, first, middle, last, dateOfBirth })
   }
 
   @action
