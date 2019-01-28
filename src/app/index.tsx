@@ -20,6 +20,9 @@ import CreateGroup from 'container/creation/CreateGroupContainer'
 import ChatDetail from 'container/detail/ChatContainer'
 import EventDetail from 'container/detail/EventContainer'
 import GroupDetail from 'container/detail/GroupContainer'
+import UserDetail from 'container/detail/UserContainer'
+import Events from 'container/group-subviews/EventsContainer'
+import Members from 'container/group-subviews/MembersContainer'
 import InformationListPage from 'container/InformationListContainer'
 import UploadDocument from 'container/UploadDocumentContainer'
 
@@ -57,6 +60,11 @@ const App = createStackNavigator(
 		Chat: { screen: ChatDetail },
 		Event: { screen: EventDetail },
 		Group: { screen: GroupDetail },
+		User: { screen: UserDetail },
+
+		//group subview
+		Events: { screen: Events },
+		Members: { screen: Members },
 	},
 	{
 		initialRouteName: 'Login',
