@@ -52,9 +52,9 @@ export default class GroupStore {
   }
 
   @action
-  connectToServer(address: string, privateKey: string) {
+  connectToServer(address: string, privateKeyHex: string) {
     this.thepondAPI = new AuthenticatedServerInterface()
-    return this.thepondAPI.authenticate(address, privateKey)
+    return this.thepondAPI.authenticate(address, privateKeyHex)
   }
 
   @action
@@ -163,8 +163,8 @@ export default class GroupStore {
   }
 
   @action
-  createUser({ email, first, middle, last, dateOfBirth }) {
-    return this.thepondAPI.post('/users', { email, first, middle, last, dateOfBirth })
+  async createUser({ email, first, middle, last, sex, dateOfBirth }) {
+    return this.thepondAPI.post('/users', { email, first, middle, last, sex, dateOfBirth })
   }
 
   @action

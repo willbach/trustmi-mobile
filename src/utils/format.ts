@@ -54,3 +54,7 @@ export const formatMemberCount = (count: number) : string => {
 }
 
 export const formatEventTime = (time: Date) => moment(time).format('ddd, MMM Do, h:mm A')
+
+export const formatEmail = (email: string) : string => email.replace(/[^A-Za-z\-_0-9\.@+]/g, '')
+
+export const formatName = (name: string) : string => name.replace(/[^A-Za-z\-']/g, '')

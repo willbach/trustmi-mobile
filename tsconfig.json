@@ -41,6 +41,7 @@
 			"boot":       		["src/boot"],
 			"container":      ["src/container"],
 			"container/*":    ["src/container/*"],
+			"images/*":   		["src/images/*"],
 			"navigators/*":   ["src/navigators/*"],
 			"store":  				["src/store"],
 			"store/*":  			["src/store/*"],

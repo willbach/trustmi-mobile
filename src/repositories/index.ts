@@ -21,6 +21,7 @@ export default {
   },
 
   addDocument: (type: string, body: any) => {
+    console.log('SENDING A DOCUMENT:', type)
     return documentServer.post(`/document/${type}`, body)
   },
 

@@ -20,8 +20,7 @@ export default {
 		{ name: "Booking.com", service: 'booking.com' },
 	],
 	Personal: [
-		{ name: "Drivers License", service: 'drivers' },
-		{ name: "Passport", service: 'passport' },
+		{ name: "Photo ID", service: 'photoId' },
 	],
 	Physical: [
 		{ name: "Coral Health", service: 'coralHealth' },

@@ -16,8 +16,7 @@ export const ZIP_LENGTH = 5
 export const COUNTRY_LENGTH = 3
 
 export const DOCUMENT_NAMES = {
-  drivers: 'Drivers License',
-  passport: 'Passport',
+  photoId: 'Photo ID',
   payStub: 'Pay Stub',
   transcript: 'Transcript'
 }

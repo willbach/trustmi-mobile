@@ -1,22 +1,31 @@
 import * as React from 'react'
-import { Image, Platform, BackHandler } from 'react-native'
-import { Container, Content, Header, Body, Title, Button, Text, View, Icon, Footer } from 'native-base'
+import { BackHandler, Linking } from 'react-native'
+import { Container, Content, Button, Text, View, Icon } from 'native-base'
 
+import LogoHeader from 'ui/custom-components/LogoHeader'
 import Pinpad from 'ui/custom-components/Pinpad'
+import BlurModal from 'ui/custom-components/BlurModal'
 
 import commonColor from 'theme/variables/commonColor'
+import generalStyle from 'theme/general'
+import styles from './styles'
 
 //import styles from './styles'
 export interface Props {
   onSignup: Function
-  goToRestore: () => void
+  goToRecover: () => void
 	signupForm: any
-	checkForm: Function
+  checkForm: Function
+  takePhotoId: () => void
+  takeSelfie: () => void
+  photoIdTaken: boolean
+  selfieTaken: boolean
 }
 export interface State {
 	step: number
   pin: string
   confirmPIN: string
+  infoModalVisible: boolean
 }
 
 export default class Signup extends React.Component<Props, State> {
@@ -26,16 +35,33 @@ export default class Signup extends React.Component<Props, State> {
 			pin: '',
 			confirmPIN: '',
       step: 1,
+      infoModalVisible: false,
 		}
 		
-		this.submit = this.submit.bind(this)
+    this.submit = this.submit.bind(this)
+    this.showInfoModal = this.showInfoModal.bind(this)
+    this.hideInfoModal = this.hideInfoModal.bind(this)
+    this.linkToTerms = this.linkToTerms.bind(this)
   }
 
 	componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', this.onBackPress)
   }
+
   componentWillUnmount() {
     BackHandler.removeEventListener('hardwareBackPress', this.onBackPress)
+  }
+
+  showInfoModal() {
+    this.setState({ infoModalVisible: true })
+  }
+
+  hideInfoModal() {
+    this.setState({ infoModalVisible: false })
+  }
+
+  linkToTerms() {
+    Linking.openURL('https://thepond.app/terms')
   }
 
   onBackPress = () => {
@@ -92,59 +118,69 @@ export default class Signup extends React.Component<Props, State> {
 	}
 	
 	render() {
-		const { pin, confirmPIN, step } = this.state
-
+    const { state: { pin, confirmPIN, step, infoModalVisible }, props: { takePhotoId, takeSelfie, photoIdTaken, selfieTaken } } = this
+    
+    let content
 		if (step === 4) {
-      return <View style={{paddingHorizontal: 30, paddingVertical: 20, backgroundColor: commonColor.white}}>
+      content = <View style={{paddingHorizontal: 30, paddingVertical: 20, backgroundColor: commonColor.white}}>
         <Pinpad onNumPress={() => null} onBackspace={() => null} pin={confirmPIN} headerText={'Please Wait'} />
       </View>
     } else if (step === 3) {
-      return <View style={{paddingHorizontal: 30, paddingVertical: 20, backgroundColor: commonColor.white}}>
+      content = <View style={{paddingHorizontal: 30, paddingVertical: 20, backgroundColor: commonColor.white}}>
         <Pinpad onNumPress={(pin) => this.confirmPIN(pin)} onBackspace={() => this.clearConfirmPIN()} pin={confirmPIN} headerText={'Confirm Your PIN'} />
       </View>
     } else if (step === 2) {
-      return <View style={{paddingHorizontal: 30, paddingVertical: 20, backgroundColor: commonColor.white}}>
+      content = <View style={{paddingHorizontal: 30, paddingVertical: 20, backgroundColor: commonColor.white}}>
         <Pinpad onNumPress={(pin) => this.enterPin(pin)} onBackspace={() => this.clearPin()} pin={pin} headerText={'Enter New PIN'} />
       </View>
     } else {
-			return (
-				<Container>
-					<Header style={{ height: 200 }}>
-						<Body style={{ alignItems: 'center' }}>
-							<Icon name='flash' style={{ fontSize: 104 }} />
-							<Title>ThePond</Title>
-							<View padder>
-								<Text style={{ color: Platform.OS === 'ios' ? commonColor.black : commonColor.white }} />
-							</View>
-						</Body>
-					</Header>
-					<Content>
-						{this.props.signupForm}
-						<View padder>
-							<Button block onPress={this.submit}>
-								<Text>Create Account</Text>
-							</Button>
-						</View>
-            <View padder>
-							<Button block onPress={this.props.goToRestore}>
-								<Text>Restore Account</Text>
-							</Button>
-						</View>
-					</Content>
-					{/* <Footer style={{ backgroundColor: '#F8F8F8' }}>
-						<View style={{ alignItems: 'center', opacity: 0.5, flexDirection: 'row' }}>
-							<View padder>
-								<Text style={{ color: '#000' }}>Made with love at </Text>
-							</View>
-							<Image
-								source={{ uri: 'https://geekyants.com/images/logo-dark.png' }}
-								style={{ width: 422 / 4, height: 86 / 4 }}
-							/>
-						</View>
-					</Footer> */}
-				</Container>
-			)
-		}
+      content = <Content>
+        <View padder style={generalStyle.flexRowAround} >
+          <Button block onPress={takePhotoId} style={styles.photoButton}>
+            {/* <View style={generalStyle.flexRowCenter}> */}
+              <Text style={styles.photoButtonText}>Add Photo ID</Text>
+              {photoIdTaken && <Icon name="md-checkmark-circle-outline" style={styles.checkmark} />}
+            {/* </View> */}
+          </Button>
+          <Button block onPress={takeSelfie} style={styles.photoButton}>
+            {/* <View style={generalStyle.flexRowCenter}> */}
+              <Text style={styles.photoButtonText}>Take Selfie</Text>
+              {selfieTaken && <Icon name="md-checkmark-circle-outline" style={styles.checkmark} />}
+            {/* </View> */}
+          </Button>
+        </View>
+        <Text style={styles.infoTextButton} onPress={this.showInfoModal}>(Why do we need this?)</Text>
+        {this.props.signupForm}
+        <View style={[generalStyle.flexRowWrap, styles.termsRow]}>
+          <Text style={styles.disclaimer}>By creating an account, you agree to our </Text><Text style={styles.termsLink} onPress={this.linkToTerms}>terms and conditions</Text>
+        </View>
+        <View padder>
+          <Button block onPress={this.submit}>
+            <Text>Create Account</Text>
+          </Button>
+        </View>
+        <View padder style={{marginBottom: 30}}>
+          <Button block onPress={this.props.goToRecover}>
+            <Text>Recover Account</Text>
+          </Button>
+        </View>
+        <BlurModal visible={infoModalVisible} onRequestClose={this.hideInfoModal} transparent blurType="light" blurAmount={10}>
+          <View style={[generalStyle.centeredColumn, styles.modalBody]}>
+            <Text style={styles.infoText}>{`The Pond ensures that all users are real people by comparing your photo ID, selfie, name, and date of birth.
 
+Your photos are deleted as soon as they are verified, so we never use these photos in the app or anywhere else. 
+
+Acceptable forms of photo ID include Driver's License and Passport.`}</Text>
+            <Button style={styles.selectButton} onPress={this.hideInfoModal}><Text>OK</Text></Button>
+          </View>
+        </BlurModal>
+      </Content>
+    }
+    return (
+      <Container>
+        <LogoHeader />
+        {content}
+      </Container>
+    )
 	}
 }

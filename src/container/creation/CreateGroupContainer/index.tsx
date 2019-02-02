@@ -34,7 +34,6 @@ export default class CreateGroupContainer extends React.Component<Props, State> 
 
 		try {
 			const groupId = await createGroup({ name, about, city, state, country, interests })
-			console.log(3, groupId)
 			navigation.navigate('Group', { groupId })
 			Toast.show({
 				text: 'Your group has been created! Add an event to get started',
@@ -43,7 +42,7 @@ export default class CreateGroupContainer extends React.Component<Props, State> 
 				textStyle: { textAlign: 'center' },
 			})
 		} catch (error) {
-			console.log(4, error)
+			console.log('ERROR CREATING GROUP:', error)
 			navigation.navigate('Home')
 			Toast.show({
 				type: 'danger',

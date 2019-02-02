@@ -1,13 +1,11 @@
 export default class VerifiedDocuments {
-  drivers: any[]
-  passports: any[]
+  photoIds: any[]
   transcripts: any[]
   payStubs: any[]
 
   constructor(data: any) {
-    const { drivers, passports, transcripts, payStubs } = data
-    this.drivers = drivers || []
-    this.passports = passports || []
+    const { photoIds, transcripts, payStubs } = data
+    this.photoIds = photoIds || []
     this.transcripts = transcripts || []
     this.payStubs = payStubs || []
   }

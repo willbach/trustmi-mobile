@@ -11,7 +11,7 @@ import VerifiedPage from 'container/VerifiedPageContainer'
 import Sidebar from 'container/SidebarContainer'
 import Mnemonic from 'container/MnemonicContainer'
 import Login from 'container/LoginContainer'
-import Restore from 'container/RestoreContainer'
+import Recover from 'container/RecoverContainer'
 import UpdateInterests from 'container/UpdateInterestsContainer'
 import UpdateLocation from 'container/UpdateLocationContainer'
 import CreateChat from 'container/creation/CreateChatContainer'
@@ -40,7 +40,7 @@ const HomeDrawer = createDrawerNavigator(
 const App = createStackNavigator(
 	{
 		Login: { screen: Login },
-		Restore: { screen: Restore },
+		Recover: { screen: Recover },
 		Signup: { screen: Signup },
 		Mnemonic: { screen: Mnemonic },
 		HomeDrawer: { screen: HomeDrawer },

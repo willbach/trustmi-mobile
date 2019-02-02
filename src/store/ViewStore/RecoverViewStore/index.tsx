@@ -1,6 +1,6 @@
 import { observable, action } from 'mobx'
 
-export default class RestoreStore {
+export default class RecoverStore {
   @observable mnemonic = ''
   @observable mnemonicError: string | undefined = ''
   @observable email = ''

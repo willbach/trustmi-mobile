@@ -48,6 +48,10 @@ const generalStyle: any = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-end',
   },
+  flexRowAround: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
   flexColumn: {
     flexDirection: 'column'
   },

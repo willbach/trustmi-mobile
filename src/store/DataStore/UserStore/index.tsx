@@ -31,10 +31,9 @@ export default class UserStore {
 
       await storeLocalData(hashedPIN, 'hashedPIN', pin)
       await this.storeUser(pin)
-      return true
-    } catch (e) {
-      console.log('ERROR CREATING USER: ', e)
-      return false
+      return { address: ethAddress, privateKeyHex }
+    } catch (error) {
+      throw new Error(error.message)
     }
   }
 

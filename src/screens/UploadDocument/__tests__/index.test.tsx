@@ -9,7 +9,7 @@ const first = ''
 const last = ''
 const middle = ''
 const sex = ''
-const birthDate = ''
+const dateOfBirth = ''
 const city = ''
 const state = ''
 const zip = ''
@@ -17,6 +17,6 @@ const country = ''
 const submit = jest.fn()
 
 it("renders correctly", () => {
-	const tree = renderer.create(<UploadDocument goBack={goBack} submit={submit} type={type} first={first} last={last} middle={middle} sex={sex} birthDate={birthDate} city={city} state={state} zip={zip} country={country} />).toJSON()
+	const tree = renderer.create(<UploadDocument goBack={goBack} submit={submit} type={type} first={first} last={last} middle={middle} sex={sex} dateOfBirth={dateOfBirth} city={city} state={state} zip={zip} country={country} />).toJSON()
 	expect(tree).toMatchSnapshot()
 })

@@ -7,7 +7,7 @@ import language from 'language'
 
 const { formErrors } = language
 
-import Restore from 'screens/Restore'
+import Recover from 'screens/Recover'
 
 let submitted = false
 
@@ -21,7 +21,7 @@ export interface State {}
 @inject('restoreForm')
 @inject('userStore')
 @observer
-export default class RestoreContainer extends React.Component<Props, State> {
+export default class RecoverContainer extends React.Component<Props, State> {
 	constructor(props) {
 		super(props)
 
@@ -36,9 +36,9 @@ export default class RestoreContainer extends React.Component<Props, State> {
 	async restore(pin: string) {
 		if (!submitted) {
 			submitted = true
-			const userRestored = await this.props.userStore.restoreUser(this.props.restoreForm.email, pin, this.props.restoreForm.mnemonic)
+			const userRecoverd = await this.props.userStore.restoreUser(this.props.restoreForm.email, pin, this.props.restoreForm.mnemonic)
 			this.props.restoreForm.clearStore()
-			if (userRestored) {
+			if (userRecoverd) {
 				this.props.navigation.navigate('HomeDrawer')
 			}
 		}
@@ -95,6 +95,6 @@ export default class RestoreContainer extends React.Component<Props, State> {
 				</Form>
 			</View>
 		)
-		return <Restore restoreForm={Fields} onRestore={(pin: string) => this.restore(pin)} goToSignup={this.goToSignup} checkForm={this.checkFormValidity} />
+		return <Recover restoreForm={Fields} onRecover={(pin: string) => this.restore(pin)} goToSignup={this.goToSignup} checkForm={this.checkFormValidity} />
 	}
 }

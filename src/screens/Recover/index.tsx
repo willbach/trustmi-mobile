@@ -7,7 +7,7 @@ import commonColor from 'theme/variables/commonColor'
 import Pinpad from 'ui/custom-components/Pinpad'
 //import styles from './styles'
 export interface Props {
-  onRestore: Function
+  onRecover: Function
   goToSignup: () => void
 	restoreForm: any
 	checkForm: Function
@@ -18,7 +18,7 @@ export interface State {
   confirmPIN: string
 }
 
-export default class Restore extends React.Component<Props, State> {
+export default class Recover extends React.Component<Props, State> {
 	constructor(props) {
     super(props)
     this.state = {
@@ -53,7 +53,7 @@ export default class Restore extends React.Component<Props, State> {
 			const component = this
 			
       setTimeout(async () => {
-        await component.props.onRestore(pin)
+        await component.props.onRecover(pin)
       }, 1000)
 
     } else if (pin.length === 4 && confirmPIN.length === 4) {
@@ -122,7 +122,7 @@ export default class Restore extends React.Component<Props, State> {
 						{this.props.restoreForm}
 						<View padder>
 							<Button block onPress={this.submit}>
-								<Text>Restore Account</Text>
+								<Text>Recover Account</Text>
 							</Button>
 						</View>
             <View padder>

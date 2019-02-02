@@ -15,15 +15,19 @@ export default class DocumentServer {
       }
     })
 
-    console.log('ABOUT TO SEND: ', request)
-    console.log('BODY', JSON.stringify(body))
+    console.log('SENDING DOCUMENT: ', request)
 
     const result = await fetch(request)
-      .then(data => data.json())
-      .catch(err => console.log('ERROR ON POSTING: ', err))
 
-    console.log('RESULT:', result)
-    return result
+    if (result.status === 200) {
+      const data = await result.json()
+      console.log('document response:', data)
+      return data
+    }
+
+    console.log('response from the data server', result.status)
+
+    return true
   }
 
   async get(route: string, token: string) {

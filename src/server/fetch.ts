@@ -20,13 +20,17 @@ export default class Fetch {
 
     const response = await fetch(request)
 
-    if (response.status !== 200 && response.status !== 204) {
-      throw new Error('Authentication failed')
+    if (response.status !== 200 && response.status !== 201 && response.status !== 204) {
+      throw new Error(`Creation failed with status code: ${response.status}`)
     }
-      
-    const data = await response.json()
-    console.log('RESULT:', data)
-    return data
+
+    if (response.status === 200) {
+      const data = await response.json()
+      console.log('RESULT:', data)
+      return data
+    } else {
+      return true
+    }
   }
 
   async get(route: string, token?: string) {

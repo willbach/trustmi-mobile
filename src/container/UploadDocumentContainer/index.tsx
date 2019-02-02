@@ -34,10 +34,10 @@ export default class UpdateLocationContainer extends React.Component<Props, Stat
   }
   
 	render() {
-    const { profileStore: { profileData: { first, last, middle, sex, birthDate, city, state, zip, country } }, documentStore: { addDocument }, userStore: { address, privateKeyHex }, navigation } = this.props
+    const { profileStore: { profileData: { first, last, middle, sex, dateOfBirth, city, state, zip, country } }, documentStore: { addDocument }, userStore: { address, privateKeyHex }, navigation } = this.props
 
-    const type = navigation.state.params ? navigation.state.params.type : 'drivers'
+    const type = navigation.state.params ? navigation.state.params.type : 'photoId'
 
-		return <UploadDocument goBack={this.goBack} submit={addDocument({ address, privateKeyHex })} type={type} first={first} last={last} middle={middle} sex={sex} birthDate={birthDate} city={city} state={state} zip={zip} country={country} />
+		return <UploadDocument goBack={this.goBack} submit={addDocument({ address, privateKeyHex })} type={type} first={first} last={last} middle={middle} sex={sex} dateOfBirth={dateOfBirth} city={city} state={state} zip={zip} country={country} />
 	}
 }

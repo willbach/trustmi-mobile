@@ -1,14 +1,14 @@
 import React from "react";
-import Restore from "../index";
+import Recover from "../index";
 // Note: test renderer must be required after react-native.
 import renderer from "react-test-renderer";
 
-const onRestore = jest.fn();
+const onRecover = jest.fn();
 const goToSignup = jest.fn();
 const checkForm = jest.fn();
 const restoreForm = React.Component;
 
 it("renders correctly", () => {
-	const tree = renderer.create(<Restore goToSignup={goToSignup} checkForm={checkForm} restoreForm={restoreForm} onRestore={onRestore} />).toJSON();
+	const tree = renderer.create(<Recover goToSignup={goToSignup} checkForm={checkForm} restoreForm={restoreForm} onRecover={onRecover} />).toJSON();
 	expect(tree).toMatchSnapshot();
 });

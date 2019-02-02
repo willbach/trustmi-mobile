@@ -53,7 +53,7 @@ class Events extends React.Component<Props, State> {
           <Right />
         </Header>
         <Content>
-
+          <Text>{JSON.stringify(events)}</Text>
         </Content>
       </Container>
     )

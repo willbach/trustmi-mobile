@@ -54,7 +54,8 @@ export default class Members extends React.Component<Props, State> {
           <Right />
         </Header>
         <Content>
-
+          <Text>{eventTitle || groupName}</Text>
+          <Text>{JSON.stringify(members)}</Text>
         </Content>
       </Container>
     )

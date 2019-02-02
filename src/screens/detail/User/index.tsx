@@ -1,8 +1,7 @@
 import * as React from 'react'
 import { Container, Header, Title, Content, Text, Button, Icon, Left, Body, Right, List, ListItem } from 'native-base'
 import { View, ScrollView } from 'react-native'
-import HeaderSearchBar from 'ui/custom-components/HeaderSearchBar'
-import GetImage from 'ui/custom-components/GetImage'
+import ProfilePic from 'ui/custom-components/ProfilePic'
 
 import User from 'types/User'
 
@@ -30,7 +29,7 @@ class UserDetail extends React.Component<Props, State> {
   }
 
   render() {
-    const { props: { userId, navigation, user: { id, email, first, middle, last } } } = this
+    const { props: { userId, navigation, user: { id, email, first, middle, last, dateOfBirth } } } = this
 
     return (
       <Container style={general.container}>
@@ -45,7 +44,10 @@ class UserDetail extends React.Component<Props, State> {
         </Header>
         <Content>
           <View style={general.centeredColumn}>
-            <GetImage imageId={id} size={300} fullscreen={true} />
+            <ProfilePic imageId={id} size={300} />
+            <Text>{`${first} ${middle.slice(0, 1)} ${last}`}</Text>
+            <Text>{email}</Text>
+            <Text>{dateOfBirth}</Text>
           </View>
         </Content>
       </Container>

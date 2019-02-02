@@ -12,7 +12,7 @@ export default class ProfileStore {
     last: 'Doe',
     middle: '',
     sex: '',
-    birthDate: '',
+    dateOfBirth: '',
     city: 'Los Angeles',
     state: 'CA',
     zip: '',

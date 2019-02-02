@@ -34,7 +34,7 @@ class EventDetail extends React.Component<Props, State> {
   }
 
   render() {
-    const { props: { userId, navigation, event, event: { id, groupId, title, about, street, city, state, location, interests, attendees } } } = this
+    const { props: { userId, navigation, event, event: { id, groupId, groupName, title, about, street, city, state, location, interests, attendees } } } = this
 
     return (
       <Container style={general.container}>
@@ -53,7 +53,7 @@ class EventDetail extends React.Component<Props, State> {
             <Text style={styles.groupTitle}>{title}</Text>
             <Text style={styles.location}>{`${city}, ${state}`}</Text>
 
-            <MembersDisplay members={attendees} screen="group" onPress={() => navigation.navigate('Members', { groupId })}>
+            <MembersDisplay members={attendees} screen="group" onPress={() => navigation.navigate('Members', { members: attendees, groupId, groupName, eventId: id, eventTitle: title })}>
               <Text>{`Closed Group · ${formatMemberCount(attendees.length)}`}</Text>
             </MembersDisplay>
 

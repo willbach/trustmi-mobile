@@ -4,14 +4,13 @@ import { hexToBuffer, bufferToHex, generateHash, serverSign, stringToBuffer } fr
 import { storeLocalData, retrieveLocalData } from 'utils/local-storage'
 import ethUtil from 'ethereumjs-util'
 
-export default class VerifiedStore {
+export default class DocumentStore {
   @observable unverifiedDocuments = {
-    drivers: [],
-    passports: [],
+    photoId: [],
     payStubs: [],
     transcripts: [],
   }
-  @observable services = ['drivers', 'passports', 'payStubs', 'transcripts'] //array with all service names in it
+  @observable services = [ 'photoId', 'payStubs', 'transcripts'] //array with all service names in it
   @observable secret : string | undefined = undefined
 
   @action
@@ -29,10 +28,10 @@ export default class VerifiedStore {
 
   @action
   addDocument({ address, privateKeyHex }) {
-    // make the hash
-    return ({ type, first, middle, last, sex, birthDate, street1, street2, city, state, zip, country, expirationDate, university, gpa, graduationDate, company, payDate, file }) => {
-      const body = { id: '', first, middle, last, sex, birthDate, street1, street2, city, state, zip, country, expirationDate, university, gpa, graduationDate, company, payDate, file: '', hash: '', signature: '' }
-
+    return ({ type, first, middle, last, sex, dateOfBirth, country, expirationDate, university, gpa, graduationDate, company, payDate, file, selfie }) => {
+      const body = { id: address, first, middle, last, sex, dateOfBirth, country, expirationDate, university, gpa, graduationDate, company, payDate, file: '', selfie: '', hash: '', signature: '' }
+      
+      // make the hash
       const hashBuffer = Object.values(body).reduce((acc, cur) => {
         if (cur)
           acc.push(stringToBuffer(cur))
@@ -40,11 +39,11 @@ export default class VerifiedStore {
         return acc
       }, [ hexToBuffer(address) ])
 
-      body.id = address
-      body.file = file
       body.hash = bufferToHex(ethUtil.sha3(Buffer.concat(hashBuffer)))
-      console.log(3, body.hash, privateKeyHex)
+      body.file = file
+      body.selfie = selfie
       body.signature = serverSign(body.hash, privateKeyHex)
+      console.log('Submitting documents for verification', body.id, body.first, body.file.length, body.selfie.length)
       
       return repositories.addDocument(type, body)
     }
@@ -57,7 +56,7 @@ export default class VerifiedStore {
 //   last: 'Goodman',
 //   middle: 'J',
 //   sex: 'M',
-//   birthDate: '20001010',
+//   dateOfBirth: '20001010',
 //   expirationDate: '20201010',
 //   street1: '123 Fake St',
 //   street2: 'Apt 201',
@@ -88,7 +87,7 @@ export default class VerifiedStore {
 //   last: 'Goodman',
 //   middle: 'J',
 //   sex: 'M',
-//   birthDate: '20001010',
+//   dateOfBirth: '20001010',
 //   expirationDate: '20201010',
 //   country: 'USA',
 //   file: fs.readFileSync(path.join(__dirname, './documents/sample_passport.jpg'), { encoding: 'base64' }),
@@ -96,7 +95,7 @@ export default class VerifiedStore {
 // }
 // const passportHashBuffer = Buffer.concat([
 //   hexToBuffer(passportSubmission.id),
-//   stringToBuffer(passportSubmission.birthDate),
+//   stringToBuffer(passportSubmission.dateOfBirth),
 //   stringToBuffer(passportSubmission.expirationDate),
 //   stringToBuffer(passportSubmission.country),
 // ])
