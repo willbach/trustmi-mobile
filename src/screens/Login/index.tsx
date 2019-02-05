@@ -1,8 +1,11 @@
 import * as React from 'react'
-import { Image, Platform, BackHandler } from 'react-native'
-import { Container, Content, Header, Body, Title, Button, Text, View, Icon, Footer } from 'native-base'
+import { BackHandler } from 'react-native'
+import { Container, View } from 'native-base'
+
+import LogoHeader from 'ui/custom-components/LogoHeader'
 
 import commonColor from 'theme/variables/commonColor'
+import styles from './styles'
 
 import Pinpad from 'ui/custom-components/Pinpad'
 //import styles from './styles';
@@ -65,15 +68,21 @@ export default class Login extends React.Component<Props, State> {
   }
 	
 	render() {
-		const { pin, step } = this.state
+    const { pin, step } = this.state
+    
+    let pinpad = <View style={styles.pinpadContainer}>
+      <Pinpad onNumPress={(pin) => this.enterPin(pin)} onBackspace={() => this.clearPin()} pin={pin} headerText={'Please Enter Your PIN'} textStyle={styles.pinpadText} headerStyle={styles.pinpadHeader} circlesStyleHollow={styles.pinpadHollow} circlesStyleSolid={styles.pinpadSolid} />
+    </View>
 
 		if (step === 2) {
-      return <View style={{paddingHorizontal: 30, paddingVertical: 20, backgroundColor: commonColor.white}}>
-        <Pinpad onNumPress={() => null} onBackspace={() => null} pin={pin} headerText={'Please Wait'} />
+      pinpad = <View style={styles.pinpadContainer}>
+        <Pinpad onNumPress={() => null} onBackspace={() => null} pin={pin} headerText={'Please Wait'} textStyle={styles.pinpadText} headerStyle={styles.pinpadHeader} circlesStyleHollow={styles.pinpadHollow} circlesStyleSolid={styles.pinpadSolid} />
       </View>
     }
-    return <View style={{paddingHorizontal: 30, paddingVertical: 20, backgroundColor: commonColor.white}}>
-      <Pinpad onNumPress={(pin) => this.enterPin(pin)} onBackspace={() => this.clearPin()} pin={pin} headerText={'Please Enter Your PIN'} />
-    </View>
+
+    return <Container>
+      <LogoHeader />
+      {pinpad}
+    </Container>
 	}
 }

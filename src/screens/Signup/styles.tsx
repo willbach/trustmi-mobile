@@ -92,5 +92,22 @@ const styles: any = StyleSheet.create({
 		textDecorationLine: 'underline',
 		fontWeight: 'bold',
 	},
+	pinpadContainer: {
+		paddingHorizontal: 30,
+		backgroundColor: commonColor.brandPrimary,
+	},
+	pinpadText: {
+		color: commonColor.white
+	},
+	pinpadHeader: {
+		color: commonColor.white
+	},
+	pinpadHollow: {
+		borderColor: commonColor.white
+	},
+	pinpadSolid: {
+		borderColor: commonColor.white,
+		backgroundColor: commonColor.white,
+	},
 })
 export default styles

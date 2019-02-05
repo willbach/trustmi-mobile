@@ -16,19 +16,23 @@ export default class VerifiedStore {
   @action
   async getData(service: string, pin: string, username: string, password: string) {
     //generate and send secret here
-    if (repositories.isMFA(service)) {
-      this.secret = generateRandomString(20)
+    try {
+      if (repositories.isMFA(service)) {
+        this.secret = generateRandomString(20)
+      }
+  
+      const data = await repositories.scrape(username, password, service, this.secret)
+      console.log('GOT THE DATA IN THE STORE: ', data)
+      console.log('PIN', pin, pin.length)
+  
+      await storeLocalData(data, service, pin)
+  
+      this[service].data = data
+      console.log('WE HAVE NOW STORED THE DATA: ', this[service])
+      this.secret = undefined
+    } catch (error) {
+      console.log('ERROR SCRAPING:', error)
     }
-
-    const data = await repositories.scrape(username, password, service, this.secret)
-    console.log('GOT THE DATA IN THE STORE: ', data)
-    console.log('PIN', pin, pin.length)
-
-    await storeLocalData(data, service, pin)
-
-    this[service].data = data
-    console.log('WE HAVE NOW STORED THE DATA: ', this[service])
-    this.secret = undefined
   }
 
   @action
@@ -59,5 +63,11 @@ export default class VerifiedStore {
       const data = await retrieveLocalData(service, pin)
       return this[service].data = data
     }))
+  }
+
+  @action
+  async getPromptQuestions({ dateOfBirth }) {
+    // TODO: determine prompt questions using a combination of unfilled data
+    return [{ name: "University Transcript", service: 'transcript' }, { name: "Credit Karma", service: 'creditKarma' }, { name: "Company Email", service: 'companyEmail' }]
   }
 }

@@ -1,9 +1,10 @@
+import { Platform } from 'react-native'
+
 export default class DocumentServer {
   apiEndpoint: string
 
   constructor() {
-    // this.apiEndpoint = 'http://localhost:4000'
-    this.apiEndpoint = 'http://10.0.2.2:7402'
+    this.apiEndpoint = Platform.OS === 'ios' ? 'http://localhost:4000' : 'http://10.0.2.2:4000'
   }
 
   async post(route: string, body: any) {
@@ -15,7 +16,7 @@ export default class DocumentServer {
       }
     })
 
-    console.log('SENDING DOCUMENT: ', request)
+    console.log('SENDING DOCUMENT REQUEST: ', request)
 
     const result = await fetch(request)
 

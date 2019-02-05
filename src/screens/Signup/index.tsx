@@ -1,12 +1,11 @@
 import * as React from 'react'
 import { BackHandler, Linking } from 'react-native'
-import { Container, Content, Button, Text, View, Icon } from 'native-base'
+import { Container, Content, Button, Text, View, Icon, Toast } from 'native-base'
 
 import LogoHeader from 'ui/custom-components/LogoHeader'
 import Pinpad from 'ui/custom-components/Pinpad'
 import BlurModal from 'ui/custom-components/BlurModal'
 
-import commonColor from 'theme/variables/commonColor'
 import generalStyle from 'theme/general'
 import styles from './styles'
 
@@ -76,12 +75,15 @@ export default class Signup extends React.Component<Props, State> {
   componentDidUpdate() {
     const { pin, confirmPIN, step } = this.state
 
-    if (step === 4 && pin === confirmPIN) {
-      const component = this
-      
-      setTimeout(() => {
-        this.props.onSignup(pin)
-      }, 100)
+    if (step === 4) {
+      if (pin === confirmPIN) {
+        setTimeout(() => {
+          this.props.onSignup(pin)
+        }, 100)
+      } else if (confirmPIN.length === 4) {
+        Toast.show({ type: 'danger', text: 'PINs do not match, please reenter your PIN', duration: 3000, position: 'bottom', textStyle: { textAlign: 'center' } })
+        this.setState({ pin: '', confirmPIN: '', step: 2, infoModalVisible: false })
+      }
     } else if (pin.length === 4 && confirmPIN.length === 4) {
       this.setState({ step: 4 })
     } else if (pin.length === 4 && step === 2) {
@@ -122,16 +124,16 @@ export default class Signup extends React.Component<Props, State> {
     
     let content
 		if (step === 4) {
-      content = <View style={{paddingHorizontal: 30, paddingVertical: 20, backgroundColor: commonColor.white}}>
-        <Pinpad onNumPress={() => null} onBackspace={() => null} pin={confirmPIN} headerText={'Please Wait'} />
+      content = <View style={styles.pinpadContainer}>
+        <Pinpad onNumPress={() => null} onBackspace={() => null} pin={confirmPIN} headerText={'Please Wait'} textStyle={styles.pinpadText} headerStyle={styles.pinpadHeader} circlesStyleHollow={styles.pinpadHollow} circlesStyleSolid={styles.pinpadSolid} />
       </View>
     } else if (step === 3) {
-      content = <View style={{paddingHorizontal: 30, paddingVertical: 20, backgroundColor: commonColor.white}}>
-        <Pinpad onNumPress={(pin) => this.confirmPIN(pin)} onBackspace={() => this.clearConfirmPIN()} pin={confirmPIN} headerText={'Confirm Your PIN'} />
+      content = <View style={styles.pinpadContainer}>
+        <Pinpad onNumPress={(pin) => this.confirmPIN(pin)} onBackspace={() => this.clearConfirmPIN()} pin={confirmPIN} headerText={'Confirm Your PIN'} textStyle={styles.pinpadText} headerStyle={styles.pinpadHeader} circlesStyleHollow={styles.pinpadHollow} circlesStyleSolid={styles.pinpadSolid} />
       </View>
     } else if (step === 2) {
-      content = <View style={{paddingHorizontal: 30, paddingVertical: 20, backgroundColor: commonColor.white}}>
-        <Pinpad onNumPress={(pin) => this.enterPin(pin)} onBackspace={() => this.clearPin()} pin={pin} headerText={'Enter New PIN'} />
+      content = <View style={styles.pinpadContainer}>
+        <Pinpad onNumPress={(pin) => this.enterPin(pin)} onBackspace={() => this.clearPin()} pin={pin} headerText={'Enter New PIN'} textStyle={styles.pinpadText} headerStyle={styles.pinpadHeader} circlesStyleHollow={styles.pinpadHollow} circlesStyleSolid={styles.pinpadSolid} />
       </View>
     } else {
       content = <Content>

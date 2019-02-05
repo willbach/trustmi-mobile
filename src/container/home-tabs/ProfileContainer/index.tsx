@@ -8,32 +8,51 @@ import commonColor from 'theme/variables/commonColor'
 export interface Props {
 	navigation: any,
 	profileStore: any,
+	groupStore: any,
+	userStore: any,
+	verifiedStore: any,
 }
 export interface State {}
 
+@inject("userStore")
 @inject("profileStore")
+@inject("groupStore")
+@inject("verifiedStore")
 @observer
 export default class ProfileContainer extends React.Component<Props, State> {
-	render() {
-		const { navigation, profileStore: { profileData, interests, profileCompletionPercentage } } = this.props
+	constructor(props) {
+		super(props)
 
-		const iconStyle = {
-			color: commonColor.brandSecondary,
-			fontSize: 40,
-			marginTop: 14,
-			marginBottom: 6,
+		// PRIMARY LOADING SECTION FOR THE APP
+		this.loadUserData()
+	}
+
+	async loadUserData() {
+		try {
+			const { address, privateKeyHex, pin } = this.props.userStore
+			const { city, state, country, dateOfBirth } = this.props.profileStore.profileData
+			
+			const [ shouldPrompt ] = await Promise.all([
+				this.props.profileStore.shouldPrompt(pin),
+				this.props.profileStore.loadData(pin),
+				this.props.groupStore.connectToServer(address, privateKeyHex)
+			])
+			
+			await this.props.groupStore.loadData({ city, state, country })
+			this.props.groupStore.sortEventsByInterest(this.props.profileStore.interests)
+
+			if (shouldPrompt) {
+				const promptQuestions = await this.props.verifiedStore.getPromptQuestions({ dateOfBirth })
+				this.props.navigation.navigate('DataInputPrompt', { promptQuestions })
+			}
+		} catch(error) {
+			console.log('ERROR LOADING AND SHOWING PROMPT:', error)
 		}
+	}
 
-		const list = [
-			{ image: <Icon style={iconStyle} name="ios-person" />, footerText: 'Personal' },
-			{ image: <Icon style={iconStyle} name="md-school" />, footerText: 'Educational' },
-			{ image: <Icon style={iconStyle} name="ios-card" />, footerText: 'Financial' },
-			{ image: <Icon style={iconStyle} name="ios-wine" />, footerText: 'Lifestyle' },
-			{ image: <Icon style={iconStyle} name="ios-body" />, footerText: 'Physical' },
-			{ image: <Icon style={iconStyle} name="ios-briefcase" />, footerText: 'Professional' },
-			// { image: <Icon style={iconStyle} name="ios-star" />, footerText: 'Veteran' },
-		]
+	render() {
+		const { navigation, profileStore: { profileData, interests, getAge } } = this.props
 
-		return <Profile navigation={navigation} informationCategories={list} profileData={profileData} interests={interests} profileCompletionPercentage={profileCompletionPercentage}/>
+		return <Profile navigation={navigation} profileData={profileData} interests={interests} getAge={getAge} />
 	}
 }

@@ -19,8 +19,12 @@ export default class VerifiedPageContainer extends React.Component<Props, State>
 	}
 
 	getData(username: string, password: string) {
-		const param = this.props.navigation.state.params
-		this.props.verifiedStore.getData(param.service, this.props.userStore.pin, username, password)
+		const { props: { navigation: { state: { params: { service, onContinue } } } } } = this
+		this.props.verifiedStore.getData(service, this.props.userStore.pin, username, password)
+
+		if (onContinue) {
+			onContinue()
+		}
 	}
 
 	render() {

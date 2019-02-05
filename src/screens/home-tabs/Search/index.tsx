@@ -126,7 +126,7 @@ class Search extends React.Component<Props, State> {
             </Button>
           </Left>
           <Body>
-            <HeaderSearchBar placeholder="earch Events and Groups" searchTerm={searchTerm} onChangeText={this.filterAvailableGroups} />
+            <HeaderSearchBar placeholder="Search Events and Groups" searchTerm={searchTerm} onChangeText={this.filterAvailableGroups} />
           </Body>
           <Right />
         </Header>

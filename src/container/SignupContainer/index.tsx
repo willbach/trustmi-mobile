@@ -29,6 +29,7 @@ export interface Props {
 	userStore: any
 	groupStore: any
 	documentStore: any
+	profileStore: any
 }
 export interface State {}
 
@@ -36,6 +37,7 @@ export interface State {}
 @inject('userStore')
 @inject('groupStore')
 @inject('documentStore')
+@inject('profileStore')
 @observer
 export default class SignupContainer extends React.Component<Props, State> {
 	emailInput: any
@@ -89,11 +91,10 @@ export default class SignupContainer extends React.Component<Props, State> {
 			try {
 				const { address, privateKeyHex } = await this.props.userStore.createUser(this.props.signupForm.email, pin)
 				await this.props.groupStore.connectToServer(address, privateKeyHex)
-				console.log(1)
 				await this.props.documentStore.addDocument({ address, privateKeyHex })({ type: 'photoId', first, middle, last, sex, dateOfBirth, file: photoId.data, selfie: selfie.data })
-				console.log(2)
 
 				const userCreated = await this.props.groupStore.createUser({ email, first, middle, last, sex, dateOfBirth })
+				this.props.profileStore.setProfileData({ email, first, middle, last, sex, dateOfBirth }, pin)
 
 				if (userCreated) {
 					this.props.signupForm.clearStore()
@@ -104,7 +105,7 @@ export default class SignupContainer extends React.Component<Props, State> {
 				this.props.userStore.removeUser(pin)
 				this.props.signupForm.clearStore()
 				this.props.navigation.dispatch(startAtSignup) //need to clear the navigation stack
-				Toast.show({ type: 'danger', text: 'There was an error creating your account, please try again later', duration: 2000, position: 'bottom', textStyle: { textAlign: 'center' } })
+				Toast.show({ type: 'danger', text: 'There was an error creating your account, please try again later', duration: 3000, position: 'bottom', textStyle: { textAlign: 'center' } })
 			}
 		}
 	}

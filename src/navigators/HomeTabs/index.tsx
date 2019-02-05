@@ -10,24 +10,21 @@ import ProfileScreen from 'container/home-tabs/ProfileContainer'
 
 export default createMaterialTopTabNavigator(
   {
-    Home: HomeScreen,
+    Profile: ProfileScreen,
     Search: SearchScreen,
     Messages: MessagesScreen,
-    Profile: ProfileScreen,
   },
   {
     navigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ focused }) => {
         const { routeName } = navigation.state
         let iconName
-        if (routeName === 'Home') {
-          iconName = `ios-home${focused ? '' : '-outline'}`
+        if (routeName === 'Profile') {
+          iconName = `ios-contact${focused ? '' : '-outline'}`
         } else if (routeName === 'Search') {
           iconName = `ios-search${focused ? '' : '-outline'}`
         } else if (routeName === 'Messages') {
           iconName = `ios-chatbubbles${focused ? '' : '-outline'}`
-        } else if (routeName === 'Profile') {
-          iconName = `ios-contact${focused ? '' : '-outline'}`
         }
 
         return <Icon name={iconName} style={{color: commonColor.brandSecondary}} />

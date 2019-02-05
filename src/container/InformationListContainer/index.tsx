@@ -2,7 +2,7 @@ import * as React from "react"
 import { observer, inject } from "mobx-react/native"
 
 import InformationList from "screens/InformationList"
-import data from "./data"
+import data from "utils/service-list"
 
 export interface Props {
 	navigation: any,

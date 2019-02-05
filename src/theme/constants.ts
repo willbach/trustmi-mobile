@@ -20,3 +20,5 @@ export const DOCUMENT_NAMES = {
   payStub: 'Pay Stub',
   transcript: 'Transcript'
 }
+
+export const ONE_WEEK = 604800000

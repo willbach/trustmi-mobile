@@ -8,27 +8,44 @@ export interface Props {
 	profileStore: any,
 	groupStore: any,
 	userStore: any,
+	verifiedStore: any,
 }
 export interface State {}
 
 @inject("userStore")
 @inject("profileStore")
 @inject("groupStore")
+@inject("verifiedStore")
 @observer
 export default class HomeContainer extends React.Component<Props, State> {
-	async componentWillMount() {
+	constructor(props) {
+		super(props)
+
 		// PRIMARY LOADING SECTION FOR THE APP
-		const { address, privateKeyHex, pin } = this.props.userStore
-		
-		await Promise.all([
-			this.props.profileStore.loadData(pin),
-			this.props.groupStore.connectToServer(address, privateKeyHex)
-		])
-		
-		const { city, state, country } = this.props.profileStore.profileData
-		
-		await this.props.groupStore.loadData({ city, state, country })
-		this.props.groupStore.sortEventsByInterest(this.props.profileStore.interests)
+		this.loadUserData()
+	}
+
+	async loadUserData() {
+		try {
+			const { address, privateKeyHex, pin } = this.props.userStore
+			const { city, state, country, dateOfBirth } = this.props.profileStore.profileData
+			
+			const [ shouldPrompt ] = await Promise.all([
+				this.props.profileStore.shouldPrompt(pin),
+				this.props.profileStore.loadData(pin),
+				this.props.groupStore.connectToServer(address, privateKeyHex)
+			])
+			
+			await this.props.groupStore.loadData({ city, state, country })
+			this.props.groupStore.sortEventsByInterest(this.props.profileStore.interests)
+
+			if (shouldPrompt) {
+				const promptQuestions = await this.props.verifiedStore.getPromptQuestions({ dateOfBirth })
+				this.props.navigation.navigate('DataInputPrompt', { promptQuestions })
+			}
+		} catch(error) {
+			console.log('ERROR LOADING AND SHOWING PROMPT:', error)
+		}
 	}
 	
 	render() {

@@ -2,8 +2,8 @@ import LambdaUtil from 'repositories/scrape-util'
 import MFAServer from 'repositories/mfa-server'
 import DocumentServer from 'repositories/document-server'
 
-const apiEndpoint = ''
-const apiKey = ''
+const apiEndpoint = 'https://7ksbiabql8.execute-api.us-east-2.amazonaws.com/default/testCreditKarma'
+const apiKey = 'lfiGZNhrbK11rM1dsYo5R1pamCgXblb1JVNtks3b'
 
 const lambda = new LambdaUtil({ apiEndpoint, apiKey })
 const mfaServer = new MFAServer()
@@ -21,15 +21,14 @@ export default {
   },
 
   addDocument: (type: string, body: any) => {
-    console.log('SENDING A DOCUMENT:', type)
-    return documentServer.post(`/document/${type}`, body)
+    return documentServer.post(`/documents/${type}`, body)
   },
 
   getDocumentToken: (auth: any) => {
-    return documentServer.post(`/document/auth`, auth)
+    return documentServer.post(`/documents/auth`, auth)
   },
 
   getDocuments: (address: string, verified: boolean, token: string) => {
-    return documentServer.get(`/document/${verified}/${address}`, token)
+    return documentServer.get(`/documents/${verified}/${address}`, token)
   }
 }

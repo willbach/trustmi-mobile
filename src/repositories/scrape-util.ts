@@ -18,13 +18,18 @@ export default class FetchUtil {
       }
     })
 
-    console.log('ABOUT TO SEND: ', request)
+    console.log('ABOUT TO SCRAPE: ', request)
 
     const result = await fetch(request)
-      .then(data => data.json())
-      .catch(err => console.log('ERROR ON SCRAPING: ', err))
 
-    console.log('got some data back', result)
-    return result
+    if (result.status > 199 && result.status < 300) {
+      const data = await result.json()
+      console.log('got some data back', result)
+
+      return data
+    } else {
+      const message = await result.json()
+      throw new Error(`${result.status}: ${message}`)
+    }
   }
 }

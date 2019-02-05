@@ -25,6 +25,7 @@ import Events from 'container/group-subviews/EventsContainer'
 import Members from 'container/group-subviews/MembersContainer'
 import InformationListPage from 'container/InformationListContainer'
 import UploadDocument from 'container/UploadDocumentContainer'
+import DataInputPrompt from 'container/DataInputPromptContainer'
 
 const HomeDrawer = createDrawerNavigator(
 	{
@@ -43,6 +44,8 @@ const App = createStackNavigator(
 		Recover: { screen: Recover },
 		Signup: { screen: Signup },
 		Mnemonic: { screen: Mnemonic },
+		DataInputPrompt: { screen: DataInputPrompt },
+
 		HomeDrawer: { screen: HomeDrawer },
 		UpdateInterests: { screen: UpdateInterests },
 		UpdateLocation: { screen: UpdateLocation },

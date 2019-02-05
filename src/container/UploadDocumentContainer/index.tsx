@@ -20,6 +20,7 @@ export default class UpdateLocationContainer extends React.Component<Props, Stat
 		super(props)
 
     this.goBack = this.goBack.bind(this)
+    this.submit = this.submit.bind(this)
   }
 
   goBack() {
@@ -32,12 +33,25 @@ export default class UpdateLocationContainer extends React.Component<Props, Stat
       refresh()
     }
   }
+
+  async submit(data) {
+    const { props: { documentStore: { addDocument }, userStore: { address, privateKeyHex }, navigation: { state: { params: { onContinue } } } } } = this
+    
+    if (onContinue) {
+      addDocument({ address, privateKeyHex })(data)
+      onContinue()
+      
+    } else {
+      await addDocument({ address, privateKeyHex })(data)
+      this.goBack()
+    }
+  }
   
 	render() {
-    const { profileStore: { profileData: { first, last, middle, sex, dateOfBirth, city, state, zip, country } }, documentStore: { addDocument }, userStore: { address, privateKeyHex }, navigation } = this.props
+    const { profileStore: { profileData: { first, last, middle, sex, dateOfBirth, city, state, zip, country } }, navigation } = this.props
 
     const type = navigation.state.params ? navigation.state.params.type : 'photoId'
 
-		return <UploadDocument goBack={this.goBack} submit={addDocument({ address, privateKeyHex })} type={type} first={first} last={last} middle={middle} sex={sex} dateOfBirth={dateOfBirth} city={city} state={state} zip={zip} country={country} />
+		return <UploadDocument goBack={this.goBack} submit={this.submit} type={type} first={first} last={last} middle={middle} sex={sex} dateOfBirth={dateOfBirth} city={city} state={state} zip={zip} country={country} />
 	}
 }
