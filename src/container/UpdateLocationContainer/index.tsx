@@ -9,23 +9,39 @@ import City from 'types/City'
 
 export interface Props {
 	navigation: any
-  profileStore: any
   userStore: any
   groupStore: any
-  createGroupStore: any
+  createGroupStore: any 
+  accountSetupForm: any
 }
-export interface State {}
+export interface State {
+  locations: City[]
+}
 
-@inject('profileStore')
 @inject('userStore')
 @inject('groupStore')
 @inject('createGroupStore')
+@inject('accountSetupForm')
 @observer
 export default class UpdateLocationContainer extends React.Component<Props, State> {
 	constructor(props) {
-		super(props)
+    super(props)
+    
+    this.state = {
+      locations: []
+    }
 
     this.goBack = this.goBack.bind(this)
+    this.searchLocations = this.searchLocations.bind(this)
+  }
+
+  async searchLocations(cityQuery: string) {
+    try {
+      const locations = await this.props.groupStore.searchLocations(cityQuery)
+      this.setState({ locations })
+    } catch (error) {
+      console.log('ERROR SEARCHING CITIES:', error)
+    }
   }
 
   goBack() {
@@ -40,7 +56,7 @@ export default class UpdateLocationContainer extends React.Component<Props, Stat
   }
   
 	render() {
-    const { profileStore, profileStore: { profileData: { city, state } }, groupStore: { availableLocations }, userStore, createGroupStore } = this.props
+    const { props: { groupStore, userStore, createGroupStore }, state: { locations } } = this
 
     const currentLocation = new City({})
 
@@ -51,11 +67,27 @@ export default class UpdateLocationContainer extends React.Component<Props, Stat
       title = 'Select Location'
       changeLocation = (location: City) => createGroupStore.updateValue('location', location)
       location = createGroupStore.location
+    } else if (origin === 'setupLocation') {
+      title = 'Select Location'
+      changeLocation = async (location: City) => {
+        try {
+          await userStore.updateUser(location)
+        } catch (error) {
+          console.log('ERROR UPDATING LOCATION:', error, location)
+        }
+      }
+      location = new City(userStore)
     } else {
-      changeLocation = (location: City) => profileStore.changeLocation(userStore.pin, location)
-      location = new City({ city, state })
+      changeLocation = async (location: City) => {
+        try {
+          await userStore.updateUser(location)
+        } catch (error) {
+          console.log('ERROR UPDATING LOCATION:', error, location)
+        }
+      }
+      location = new City(userStore)
     }
 
-		return <UpdateLocation goBack={this.goBack} changeLocation={changeLocation} location={location} availableLocations={availableLocations} origin={origin} title={title} currentLocation={currentLocation}/>
+		return <UpdateLocation goBack={this.goBack} searchLocations={this.searchLocations} changeLocation={changeLocation} location={location} locations={locations} origin={origin} title={title} currentLocation={currentLocation}/>
 	}
 }

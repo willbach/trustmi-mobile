@@ -1,21 +1,26 @@
 // @flow
 import * as React from 'react'
-import { Item, Input, Icon, Form, Toast } from 'native-base'
+import { Linking, TouchableHighlight } from 'react-native'
+import { Item, Input, Icon, Form, Toast, View, Radio, Text } from 'native-base'
 import { NavigationActions, StackActions } from 'react-navigation'
 import { observer, inject } from 'mobx-react/native'
-import { getPhoto } from 'utils/camera'
+import SplashScreen from 'react-native-splash-screen'
+import firebase from 'react-native-firebase'
 
 import language from 'language'
 
 const { formErrors } = language
 
-import { NAME_MAX_LENGTH, DATE_LENGTH } from 'theme/constants'
-
 import Signup from 'screens/Signup'
 
-const startAtMnemonic = StackActions.reset({
+const startAtProfile = StackActions.reset({
 	index: 0,
-	actions: [NavigationActions.navigate({ routeName: 'Mnemonic' })],
+	actions: [NavigationActions.navigate({ routeName: 'HomeDrawer' })],
+})
+
+const startAtVerification = (routeName: string) => StackActions.reset({
+	index: 0,
+	actions: [NavigationActions.navigate({ routeName })],
 })
 
 const startAtSignup = StackActions.reset({
@@ -27,84 +32,90 @@ export interface Props {
 	navigation: any
 	signupForm: any
 	userStore: any
-	groupStore: any
-	documentStore: any
-	profileStore: any
 }
-export interface State {}
+export interface State {
+	hasStoredAccount: boolean
+}
 
 @inject('signupForm')
 @inject('userStore')
-@inject('groupStore')
-@inject('documentStore')
-@inject('profileStore')
 @observer
 export default class SignupContainer extends React.Component<Props, State> {
 	emailInput: any
-	firstInput: any
-	middleInput: any
-	lastInput: any
-	sexInput: any
-	dateOfBirthInput: any
-	pwdinput: any
+	phoneInput: any
 	submitted: boolean
 
 	constructor(props) {
 		super(props)
 
+		this.state = {
+			hasStoredAccount: false
+		}
 		this.submitted = false
 
 		this.signup = this.signup.bind(this)
 		this.goToRecover = this.goToRecover.bind(this)
 		this.checkFormValidity = this.checkFormValidity.bind(this)
-		this.takePhotoId = this.takePhotoId.bind(this)
-		this.takeSelfie = this.takeSelfie.bind(this)
+		this.checkEmail = this.checkEmail.bind(this)
+		this.checkPhone = this.checkPhone.bind(this)
+
+		this.checkForStoredAccountOrUrl()
 	}
 
-	async takePhotoId() {
+	async checkForStoredAccountOrUrl() {
 		try {
-			const image = await getPhoto(true)
+			const { invalidToken, first, verificationStage }  = await this.props.userStore.getUser()
+			console.log('Just logged in, routing:', { invalidToken, first, verificationStage })
+
+
+			if (first) {
+				console.log(1)
+				this.props.navigation.dispatch(startAtProfile)
+			} else if (verificationStage) {
+				console.log(2)
+				this.props.navigation.dispatch(startAtVerification(verificationStage))
+			} else if (invalidToken) {
+				console.log(3)
+				Toast.show({ type: 'warning', text: 'Your session has expired, please confirm your phone number to continue', duration: 3000, position: 'bottom', textStyle: { textAlign: 'center' } })
+				this.setState({ hasStoredAccount: true })
+			} else {
+				// const url = await Linking.getInitialURL()
+				// if (url) {
+				// 	const startIndex = url.indexOf('signupId=')
+				// 	const signupId = url.slice(startIndex + 9)
 	
-			const { mime, data } = image
-			this.props.signupForm.onChange('photoId', { data, mime })
+				// 	await this.props.userStore.registerAccount({ signupId })
+				// 	this.props.navigation.dispatch(startAtProfile)
+				// }
+			}
+
+			SplashScreen.hide()
 		} catch (error) {
-			console.log('ERROR TAKING PHOTO OF ID:', error)
+			console.log('NO USER EXISTS:', error)
+			SplashScreen.hide()
 		}
 	}
 
-	async takeSelfie() {
-		try {
-			const image = await getPhoto(true, 'front')
-	
-			const { mime, data } = image
-			this.props.signupForm.onChange('selfie', { data, mime })
-		} catch (error) {
-			console.log('ERROR TAKING SELFIE:', error)
-		}
-	}
+	async signup() {
+		const { props: { signupForm: { email, phone, sendTo } } } = this
 
-	async signup(pin: string) {
-		const { props: { signupForm: { email, first, middle, last, sex, dateOfBirth, photoId, selfie } } } = this
+		if (!this.checkFormValidity()) {
+			return
+		}
+
 		if (!this.submitted) {
 			this.submitted = true
 
 			try {
-				const { address, privateKeyHex } = await this.props.userStore.createUser(this.props.signupForm.email, pin)
-				await this.props.groupStore.connectToServer(address, privateKeyHex)
-				await this.props.documentStore.addDocument({ address, privateKeyHex })({ type: 'photoId', first, middle, last, sex, dateOfBirth, file: photoId.data, selfie: selfie.data })
-
-				const userCreated = await this.props.groupStore.createUser({ email, first, middle, last, sex, dateOfBirth })
-				this.props.profileStore.setProfileData({ email, first, middle, last, sex, dateOfBirth }, pin)
-
-				if (userCreated) {
-					this.props.signupForm.clearStore()
-					this.props.navigation.dispatch(startAtMnemonic)
-				}
-			} catch (error) {
-				console.log('ERROR CREATING ACCOUNT', error)
-				this.props.userStore.removeUser(pin)
+				this.props.userStore.setProperties({ phone })
+				await this.props.userStore.requestCode({ email, phone, sendTo })
+				this.props.navigation.navigate('ConfirmationCode', { email, phone })
 				this.props.signupForm.clearStore()
-				this.props.navigation.dispatch(startAtSignup) //need to clear the navigation stack
+
+			} catch (error) {
+				console.log('ERROR REQUESTING CODE:', error)
+				this.props.signupForm.clearStore()
+				this.props.navigation.dispatch(startAtSignup)
 				Toast.show({ type: 'danger', text: 'There was an error creating your account, please try again later', duration: 3000, position: 'bottom', textStyle: { textAlign: 'center' } })
 			}
 		}
@@ -127,43 +138,36 @@ export default class SignupContainer extends React.Component<Props, State> {
 		return this.props.signupForm.isValid
 	}
 
+	checkEmail() {
+		this.props.signupForm.validate('email')
+	}
+
+	checkPhone() {
+		this.props.signupForm.validate('phone')
+	}
+
 	render() {
 		const form = this.props.signupForm
 
 		const Fields = (
-			<Form>
-				<Item error={form.emailError ? true : false}>
+			<Form style={{marginTop: 16}}>
+				{/* <Item error={form.emailError ? true : false}>
 					<Icon name='ios-mail' />
-					<Input placeholder='Email' keyboardType='email-address' ref={(c) => {this.emailInput = c}} value={form.email} onBlur={() => form.validate('email')} maxLength={NAME_MAX_LENGTH}
-						onChangeText={(e) => form.onChange('email', e)} returnKeyType="next" onSubmitEditing={() => { this.firstInput.wrappedInstance.focus() }}/>
+					<Input placeholder='Email' keyboardType='email-address' ref={(c) => {this.emailInput = c}} value={form.email} onBlur={this.checkEmail} maxLength={100}
+						onChangeText={(e) => form.onChange('email', e)} returnKeyType="next" onSubmitEditing={() => { this.phoneInput.wrappedInstance.focus() }}/>
+				</Item> */}
+				<Item error={form.phoneError ? true : false}>
+					<Icon name='ios-phone-portrait' />
+					<Input placeholder='Phone Number' keyboardType="phone-pad" ref={(c) => {this.phoneInput = c}} value={form.phone} onBlur={this.checkPhone} maxLength={12}
+						onChangeText={(e) => form.onChange('phone', e)}/>
 				</Item>
-				<Item error={form.emailError ? true : false}>
-					<Icon name='ios-person' />
-					<Input placeholder='First Name' ref={(c) => {this.firstInput = c}} value={form.first} onBlur={() => form.validate('first')} maxLength={NAME_MAX_LENGTH}
-						onChangeText={(e) => form.onChange('first', e)} returnKeyType="next" onSubmitEditing={() => { this.middleInput.wrappedInstance.focus() }}/>
-				</Item>
-				<Item error={form.emailError ? true : false}>
-					<Icon name='ios-person' />
-					<Input placeholder='Middle Initial (optional)' ref={(c) => {this.middleInput = c}} value={form.middle} onBlur={() => form.validate('middle')} maxLength={1}
-						onChangeText={(e) => form.onChange('middle', e)} returnKeyType="next" onSubmitEditing={() => { this.lastInput.wrappedInstance.focus() }}/>
-				</Item>
-				<Item error={form.emailError ? true : false}>
-					<Icon name='ios-person' />
-					<Input placeholder='Last Name' ref={(c) => {this.lastInput = c}} value={form.last} onBlur={() => form.validate('last')} maxLength={NAME_MAX_LENGTH}
-						onChangeText={(e) => form.onChange('last', e)} returnKeyType="next" onSubmitEditing={() => { this.sexInput.wrappedInstance.focus() }}/>
-				</Item>
-				<Item error={form.emailError ? true : false}>
-					<Icon name='md-transgender' />
-					<Input placeholder='Sex' ref={(c) => {this.sexInput = c}} value={form.sex} onBlur={() => form.validate('sex')} maxLength={1}
-						onChangeText={(e) => form.onChange('sex', e)} returnKeyType="next" onSubmitEditing={() => { this.dateOfBirthInput.wrappedInstance.focus() }}/>
-				</Item>
-				<Item error={form.emailError ? true : false}>
-					<Icon name='ios-calendar' />
-					<Input placeholder='Date of Birth MM/DD/YYYY' ref={(c) => {this.dateOfBirthInput = c}} value={form.dateOfBirth} onBlur={() => form.validate('dateOfBirth')} maxLength={DATE_LENGTH}
-						onChangeText={(e) => form.onChange('dateOfBirth', e)} />
-				</Item>
+				{/* <Text style={styles.linkMessage}>Send the confirmation link to:</Text>
+				<View style={general.flexRowCenter}>
+					<Text style={styles.sendTo(form.sendTo === 'phone')} onPress={() => form.onChange('sendTo', 'phone')}>Phone</Text>
+					<Text style={styles.sendTo(form.sendTo === 'email')} onPress={() => form.onChange('sendTo', 'email')}>Email</Text>
+				</View> */}
 			</Form>
 		)
-		return <Signup signupForm={Fields} onSignup={this.signup} goToRecover={this.goToRecover} checkForm={this.checkFormValidity} takePhotoId={this.takePhotoId} takeSelfie={this.takeSelfie} photoIdTaken={form.photoId.data.length > 0} selfieTaken={form.selfie.data.length > 0} />
+		return <Signup signupForm={Fields} onSignup={this.signup} goToRecover={this.goToRecover} hasStoredAccount={this.state.hasStoredAccount} />
 	}
 }

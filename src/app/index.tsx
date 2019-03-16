@@ -6,12 +6,15 @@ import { Dimensions } from 'react-native'
 const deviceWidth = Dimensions.get("window").width
 
 import Signup from 'container/SignupContainer'
+import ConfirmationCode from 'container/ConfirmationCodeContainer'
+import VerifyIdentity from 'container/account-setup/VerifyIdentityContainer'
+import SetupLocation from 'container/account-setup/SetupLocationContainer'
+import SetupObjectives from 'container/account-setup/SetupObjectivesContainer'
+import SetupConfirmation from 'container/account-setup/SetupConfirmationContainer'
+
 import HomeTabs from '../navigators/HomeTabs'
 import VerifiedPage from 'container/VerifiedPageContainer'
 import Sidebar from 'container/SidebarContainer'
-import Mnemonic from 'container/MnemonicContainer'
-import Login from 'container/LoginContainer'
-import Recover from 'container/RecoverContainer'
 import UpdateInterests from 'container/UpdateInterestsContainer'
 import UpdateLocation from 'container/UpdateLocationContainer'
 import CreateChat from 'container/creation/CreateChatContainer'
@@ -40,10 +43,13 @@ const HomeDrawer = createDrawerNavigator(
 
 const App = createStackNavigator(
 	{
-		Login: { screen: Login },
-		Recover: { screen: Recover },
 		Signup: { screen: Signup },
-		Mnemonic: { screen: Mnemonic },
+		ConfirmationCode: { screen: ConfirmationCode },
+		VerifyIdentity: { screen: VerifyIdentity },
+		SetupLocation: { screen: SetupLocation },
+		SetupObjectives: { screen: SetupObjectives },
+		SetupConfirmation: { screen: SetupConfirmation },
+
 		DataInputPrompt: { screen: DataInputPrompt },
 
 		HomeDrawer: { screen: HomeDrawer },
@@ -70,7 +76,7 @@ const App = createStackNavigator(
 		Members: { screen: Members },
 	},
 	{
-		initialRouteName: 'Login',
+		initialRouteName: 'Signup',
 		headerMode: 'none',
 	}
 )

@@ -16,6 +16,7 @@ const styles = {
   profilePic: (size: number) => ({
     height: size,
     width: size,
+    borderRadius: size / 2,
   }),
   avatarIcon: (size: number) => ({
     fontSize: size,
@@ -35,7 +36,7 @@ export default class ProfilePic extends React.Component<Props> {
     const { containerStyle, imageId, size, star } = this.props
 
     return (<View style={containerStyle}>
-      <GetImage imageId={imageId} icon="ios-contact" size={size} />
+      <GetImage imageId={imageId} icon="ios-contact" type="circle" size={size} />
       {!!star ? <Icon name="ios-star" style={styles.star(size)} /> : null}
     </View>)
   }

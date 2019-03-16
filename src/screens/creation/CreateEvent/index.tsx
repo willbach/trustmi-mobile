@@ -129,17 +129,17 @@ class CreateEvent extends React.Component<Props, State> {
 
             <View style={general.flexRow}>
               <View style={styles.dateColumn}>
-                <Text style={styles.subHeader}>Start Time</Text>
+                <Text style={styles.h2}>Start Time</Text>
                 <DateTimePicker onDateChange={this.updateStartTime} containerStyle={styles.datePicker} />
               </View>
               <View style={styles.dateColumn}>
-                <Text style={styles.subHeader}>End Time</Text>
+                <Text style={styles.h2}>End Time</Text>
                 <DateTimePicker onDateChange={this.updateEndTime} containerStyle={styles.datePicker} />
               </View>
             </View>
 
             <View style={general.lightGrayDivider} />
-            <Text style={styles.subHeader}>Event Location</Text>
+            <Text style={styles.h2}>Event Location</Text>
 
             <Item style={styles.inputUnderline}>
               <Input style={styles.textInput} placeholder='Street Address' value={street} maxLength={DESCRIPTION_MAX_LENGTH} onChangeText={this.updateStreet} />
@@ -154,13 +154,13 @@ class CreateEvent extends React.Component<Props, State> {
               <Input style={styles.textInput} placeholder='Country' value={country} maxLength={DESCRIPTION_MAX_LENGTH} onChangeText={this.updateCountry} />
             </Item>
 
-            <Text style={styles.subHeader}>Event Directions</Text>
+            <Text style={styles.h2}>Event Directions</Text>
 
             <Item style={styles.inputUnderline}>
               <Input style={styles.textInput} placeholder='Directions / Parking Info' value={directionsParking} maxLength={DESCRIPTION_MAX_LENGTH} onChangeText={this.updateDirections} multiline={true} />
             </Item>
 
-            <Text style={styles.subHeader} onPress={this.goToUpdateInterests}>Interests</Text>
+            <Text style={styles.h2} onPress={this.goToUpdateInterests}>Interests</Text>
             <Item style={styles.inputUnderline}>
               {interests.slice().length > 0 ? <Interests onPress={this.goToUpdateInterests} interests={interests} />
               : <Text style={styles.lightText} onPress={this.goToUpdateInterests}>Select a few interests</Text>}

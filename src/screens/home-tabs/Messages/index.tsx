@@ -122,12 +122,12 @@ class Messages extends React.Component<Props, State> {
               {newNotifications.map((ele, ind) => this.renderNotification(ele, ind, true))}
             </View>
           </View>}
-          <Text style={general.subHeader}>Messages</Text>
+          <Text style={general.h2}>Messages</Text>
           <View style={[general.standardHMargin, general.flexColumn]}>
             {!filteredChats.length ? <Text style={styles.noneMessage}>You have no messages, start a conversation!</Text> : null}
             {filteredChats.map((ele, ind) => this.renderChat(ele, ind))}
           </View>
-          <Text style={general.subHeader}>Notifications</Text>
+          <Text style={general.h2}>Notifications</Text>
           <View style={[general.standardHMargin, general.flexColumn]}>
             {!filteredNotifications.length ? <Text style={styles.noneMessage}>You have no notifications</Text> : null}
             {filteredNotifications.map((ele, ind) => this.renderNotification(ele, ind))}

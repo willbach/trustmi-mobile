@@ -1,7 +1,7 @@
 import { observable, action } from 'mobx'
 import repositories from 'repositories'
 import { hexToBuffer, bufferToHex, generateHash, serverSign, stringToBuffer } from 'utils/buffer-util'
-import { storeLocalData, retrieveLocalData } from 'utils/local-storage'
+import { storeLocalDataSecure, retrieveLocalData } from 'utils/local-storage'
 import ethUtil from 'ethereumjs-util'
 
 export default class DocumentStore {

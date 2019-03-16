@@ -5,14 +5,11 @@ import UploadDocument from 'screens/UploadDocument'
 
 export interface Props {
 	navigation: any
-  profileStore: any
-  documentStore: any
   userStore: any
+  documentStore: any
 }
 export interface State {}
 
-@inject('profileStore')
-@inject('documentStore')
 @inject('userStore')
 @observer
 export default class UpdateLocationContainer extends React.Component<Props, State> {
@@ -48,7 +45,7 @@ export default class UpdateLocationContainer extends React.Component<Props, Stat
   }
   
 	render() {
-    const { profileStore: { profileData: { first, last, middle, sex, dateOfBirth, city, state, zip, country } }, navigation } = this.props
+    const { userStore: { first, last, middle, sex, dateOfBirth, city, state, zip, country }, navigation } = this.props
 
     const type = navigation.state.params ? navigation.state.params.type : 'photoId'
 

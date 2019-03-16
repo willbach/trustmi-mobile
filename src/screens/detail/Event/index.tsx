@@ -60,10 +60,10 @@ class EventDetail extends React.Component<Props, State> {
             {/* <OrganizersDisplay organizers={organizers} screen="group" onPress={() => navigation.navigate('Organizers', { group })} /> */}
           </View>
 
-          <Text style={general.subHeader}>About This Group</Text>
+          <Text style={general.h2}>About This Group</Text>
           {about.split('\\n').map((text: string, ind: number) => <Text key={ind} style={styles.about}>{text}</Text>)}
 
-          <Text style={general.subHeader}>Related Topics</Text>
+          <Text style={general.h2}>Related Topics</Text>
           <Interests interests={interests}/>
         </Content>
       </Container>

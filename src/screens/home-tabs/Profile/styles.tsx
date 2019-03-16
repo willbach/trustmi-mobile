@@ -1,6 +1,7 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet, Dimensions } from 'react-native'
 
 import commonColor from 'theme/variables/commonColor'
+const { height, width } = Dimensions.get('window')
 
 const styles: any = StyleSheet.create({
 	container: {
@@ -23,28 +24,83 @@ const styles: any = StyleSheet.create({
 		top: 0,
 		left: 0,
 	},
-	picAndName: {
-		flexDirection: 'row',
-		justifyContent: 'center',
-		alignItems: 'center',
-		marginBottom: 10,
-	},
 	profileInfo: {
-		paddingVertical: 12,
+		paddingBottom: 10,
 		flexDirection: 'column',
 		justifyContent: 'center',
 		alignItems: 'center',
-		marginBottom: 10,
 		marginHorizontal: 16,
+	},
+	picAndName: {
+		paddingVertical: 16,
+		width
+	},
+	location: {
+		marginTop: 16,
+		lineHeight: 16,
+		textAlignVertical: 'top'
+	},
+	waterBackground: {
+		width,
+		position: 'absolute',
+		top: 0,
+		opacity: 0.4,
+		zIndex: -5
+	},
+	locationIcon: {
+		fontSize: 20,
+		color: commonColor.brandPrimary,
+		marginRight: 4,
+		marginTop: 12
+	},
+	editButton: {
+		position: 'absolute',
+		right: 16,
+		top: 16,
+	},
+	editIcon: {
+		fontSize: 32,
+		color: commonColor.brandPrimary,
+	},
+	introContainer: {
+		width,
+	},
+	openQuote: {
+		position: 'absolute',
+		top: 12,
+		left: 12,
+		fontSize: 32,
+		color: commonColor.lightGray,
+	},
+	closeQuote: {
+		position: 'absolute',
+		right: 14,
+		bottom: 12,
+		fontSize: 32,
+		color: commonColor.lightGray,
+	},
+	intro: {
+		paddingHorizontal: 54,
+		paddingVertical: 16,
 	},
 	nameCityState: {
 		flexDirection: 'column',
 		marginLeft: 20,
 	},
+	userInfo: {
+		backgroundColor: commonColor.white
+	},
 	name: {
-		color: commonColor.brandPrimary,
-		fontWeight: '600',
-		fontSize: 20,
+		fontSize: 24,
+		marginTop: 12,
+	},
+	entry: {
+		width: width - 32,
+		marginLeft: 16,
+		marginVertical: 4,
+		paddingVertical: 4,
+		borderBottomColor: commonColor.paleGray,
+		borderBottomWidth: 1,
 	},
 	interestsHeader: {
 		borderBottomColor: commonColor.brandSecondary,
@@ -72,6 +128,7 @@ const styles: any = StyleSheet.create({
 	headerText: {height: 24, width: 95, marginLeft: 16, marginTop: 3},
 	work: {
 		fontWeight: 'bold',
+		fontSize: 18
 	},
 	categoryTitle: {
 		marginLeft: 10,
@@ -85,6 +142,39 @@ const styles: any = StyleSheet.create({
 		borderBottomColor: commonColor.brandSecondary,
 		marginHorizontal: 16,
 		marginVertical: 16,
+	},
+	userType: {
+		backgroundColor: 'white',
+		paddingVertical: 8,
+	},
+	userPurpose: {
+		paddingHorizontal: 16,
+		paddingVertical: 8,
+		marginVertical: 8,
+		backgroundColor: commonColor.brandSecondary,
+		borderRadius: 8,
+		color: commonColor.white,
+		fontWeight: 'bold',
+	},
+	dataItem: {
+		fontWeight: 'bold'
+	},
+	verifiedIcon: {
+		fontSize: 20,
+		color: commonColor.brandSecondary,
+		marginLeft: 4,
+		fontWeight: 'bold',
+	},
+	link: {
+		color: commonColor.brandSecondary,
+		textDecorationLine: 'underline',
+		fontWeight: '100',
+	},
+	smallLink: {
+		color: commonColor.brandSecondary,
+		fontSize: 16,
+		textDecorationLine: 'underline',
+		fontWeight: '100',
 	},
 })
 export default styles

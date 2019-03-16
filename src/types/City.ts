@@ -7,6 +7,6 @@ export default class City {
     const { city, state, country } = data
     this.city = city
     this.state = state
-    this.country = country
+    this.country = country || 'USA'
   }
 }

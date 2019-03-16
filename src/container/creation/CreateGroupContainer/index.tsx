@@ -7,13 +7,13 @@ import CreateGroup from 'screens/creation/CreateGroup'
 export interface Props {
 	navigation: any,
 	groupStore: any,
-	profileStore: any
+	userStore: any,
 	createGroupStore: any
 }
 export interface State {}
 
 @inject('groupStore')
-@inject('profileStore')
+@inject('userStore')
 @inject('createGroupStore')
 @observer
 export default class CreateGroupContainer extends React.Component<Props, State> {
@@ -23,7 +23,7 @@ export default class CreateGroupContainer extends React.Component<Props, State> 
 	}
 
 	componentWillMount() {
-		const { profileStore: { profileData: { city, state, country } }, createGroupStore: { updateValue }, createGroupStore } = this.props
+		const { userStore: { city, state, country }, createGroupStore: { updateValue }, createGroupStore } = this.props
 		if (!createGroupStore.city && !createGroupStore.state) {
 			updateValue('location', new City({ city, state, country }))
 		}
@@ -55,7 +55,7 @@ export default class CreateGroupContainer extends React.Component<Props, State> 
 	}
 
 	render() {
-		const { createGroupStore: { name, about, location, interests, updateValue, refresh }, profileStore: { profileData: { pic } } } = this.props
+		const { createGroupStore: { name, about, location, interests, updateValue, refresh }, userStore: { pic } } = this.props
 
 		return <CreateGroup
 			navigation={this.props.navigation}

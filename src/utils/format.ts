@@ -43,6 +43,8 @@ export const formatDate = (date: string) : string => {
   }
 }
 
+export const formatPhone = (phone: string) => phone.replace(/[^0-9]/g, '')
+
 export const formatZip = (zip: string) => zip.replace(/^[0-9]/, '')
 
 export const formatMemberCount = (count: number) : string => {
@@ -58,3 +60,11 @@ export const formatEventTime = (time: Date) => moment(time).format('ddd, MMM Do,
 export const formatEmail = (email: string) : string => email.replace(/[^A-Za-z\-_0-9\.@+]/g, '')
 
 export const formatName = (name: string) : string => name.replace(/[^A-Za-z\-']/g, '')
+
+export const getDescriptionMessage = (userType: string) : string => {
+  if (userType === 'Business Development') {
+    return 'I work in'
+  } else {
+    return 'I am a'
+  }
+}

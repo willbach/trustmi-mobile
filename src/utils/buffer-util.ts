@@ -39,8 +39,7 @@ export const privateToAddress = (privateKeyHex) => {
 export const generateHash = (hashBuffer: Buffer) => bufferToHex(ethUtil.sha3(hashBuffer))
 
 export const generateId = (data: string[]) : string => {
-  const buffers = data.map(item => stringToBuffer(item))
-  const buffer = Buffer.concat(buffers)
+  const buffer = Buffer.concat(data.map(stringToBuffer))
   const hash = ethUtil.sha3(buffer)
   return bufferToHex(hash).slice(0, 40)
 }

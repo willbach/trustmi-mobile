@@ -3,7 +3,7 @@ import { Image, Platform } from 'react-native'
 import { Text, View, Header, Body } from 'native-base'
 
 import commonColor from 'theme/variables/commonColor'
-import generalStyle from 'theme/general'
+import general from 'theme/general'
 
 const styles = {
   logoContainer: {
@@ -36,7 +36,7 @@ export default class LogoHeader extends React.Component<Props> {
   render() {
     return <Header style={{ height: 100 }}>
       <Body style={{ alignItems: 'center' }}>
-        <View style={[generalStyle.flexRowCenter, styles.logoContainer]}>
+        <View style={[general.flexRowCenter, styles.logoContainer]}>
           <Image source={require('images/logo-transparent-small.png')} style={styles.logo} />
           <Image source={require('images/logo-text-white.png')} style={styles.logoText} />
         </View>

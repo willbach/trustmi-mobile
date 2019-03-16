@@ -7,7 +7,7 @@ import general from 'theme/general'
 import styles from './styles'
 import { NAME_MAX_LENGTH, DATE_LENGTH, GPA_LENGTH, SEX_LENGTH, STATE_LENGTH, ZIP_LENGTH, COUNTRY_LENGTH, DOCUMENT_NAMES } from 'theme/constants'
 import { formatZip, formatDate } from 'utils/format'
-import { getPhoto } from 'utils/camera';
+import { getPhoto } from 'utils/camera'
 
 export interface Props {
   goBack: () => void
@@ -99,7 +99,6 @@ export default class UploadDocument extends React.Component<Props, State> {
   }
 
   async getDocumentPhoto(useCamera: boolean) {
-    const options = { width: 300, height: 400, cropping: true, includeBase64: true }
     try {
       const image = await getPhoto(useCamera)
 

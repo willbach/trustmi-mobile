@@ -5,14 +5,10 @@ import renderer from "react-test-renderer";
 
 const onSignup = jest.fn();
 const goToRecover = jest.fn();
-const checkForm = jest.fn();
 const signupForm = React.Component;
-const takePhotoId = jest.fn()
-const takeSelfie = jest.fn()
-const photoIdTaken = false
-const selfieTaken = false
+const hasStoredAccount = false
 
 it("renders correctly", () => {
-	const tree = renderer.create(<Signup onSignup={onSignup} checkForm={checkForm} signupForm={signupForm} goToRecover={goToRecover} takePhotoId={takePhotoId} takeSelfie={takeSelfie} photoIdTaken={photoIdTaken} selfieTaken={selfieTaken} />).toJSON();
+	const tree = renderer.create(<Signup onSignup={onSignup} signupForm={signupForm} goToRecover={goToRecover} hasStoredAccount={hasStoredAccount} />).toJSON();
 	expect(tree).toMatchSnapshot();
 });

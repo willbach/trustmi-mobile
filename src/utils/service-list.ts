@@ -1,10 +1,10 @@
-export default {
+export const servicesByCategory = {
 	Educational: [
-		{ name: "University Transcript", service: 'transcript' },
+		{ name: "University Transcript", service: 'universityTranscript' },
 		{ name: "Alumni Email", service: 'alumniEmail' },
 		{ name: "College Board (SAT)", service: 'collegeBoard' },
-		{ name: "High School", service: 'transcript' },
-		{ name: "IQ Tests", service: 'iq' },
+		{ name: "High School Transcript", service: 'highschoolTranscript' },
+		{ name: "IQ Test", service: 'iq' },
 		{ name: "ACT", service: 'act' },
 	],
 	Financial: [
@@ -35,3 +35,5 @@ export default {
 		{ name: "Coast Guard", service: 'coastGuard' },
 	]
 }
+
+export const serviceList = Object.keys(servicesByCategory).reduce((acc, category) => acc.concat(servicesByCategory[category]), [])

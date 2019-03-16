@@ -143,9 +143,9 @@ class Search extends React.Component<Props, State> {
             </View>
           </View>
           {/* TODO: add a main image(?) */}
-          <Text style={general.subHeader}>Recommended Events</Text>
+          <Text style={general.h2}>Recommended Events</Text>
           {interests.map(this.renderEventsByInterest)}
-          <Text style={general.subHeader}>Browse Events by Category</Text>
+          <Text style={general.h2}>Browse Events by Category</Text>
           <View style={[general.flexRowWrapBetween, general.standardHMargin]}>
             {Object.keys(availableInterests).map(this.renderInterestTile)}
           </View>

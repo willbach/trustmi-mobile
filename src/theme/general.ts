@@ -4,7 +4,7 @@ const { height, width } = Dimensions.get('window')
 
 import commonColor from 'theme/variables/commonColor'
 
-const generalStyle: any = StyleSheet.create({
+const general: any = StyleSheet.create({
   flex: {
     flex: 1
   },
@@ -23,7 +23,8 @@ const generalStyle: any = StyleSheet.create({
   },
   flexRowCenter: {
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   flexRowWrap: {
     flexDirection: 'row',
@@ -89,41 +90,44 @@ const generalStyle: any = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between'
   },
+  tinyHMargin: {
+    marginHorizontal: 4
+  },
   smallHMargin: {
-    marginHorizontal: 10
+    marginHorizontal: 8
   },
   standardHMargin: {
-    marginHorizontal: 15
+    marginHorizontal: 16
   },
   largeHMargin: {
-    marginHorizontal: 30
+    marginHorizontal: 32
   },
   standardLMargin: {
-    marginLeft: 15,
+    marginLeft: 16,
   },
   tinyTopMargin: {
-    marginTop: 5
+    marginTop: 4
   },
   smallTopMargin: {
-    marginTop: 10
+    marginTop: 8
   },
   mediumTopMargin: {
     marginTop: 20
   },
   largeTopMargin: {
-    marginTop: 30
+    marginTop: 32
   },
   smallBottomMargin: {
-    marginBottom: 10
+    marginBottom: 8
   },
   mediumBottomMargin: {
     marginBottom: 20
   },
   largeBottomMargin: {
-    marginBottom: 30
+    marginBottom: 32
   },
   smallVMargin: {
-    marginVertical: 10
+    marginVertical: 8
   },
   iosTopMargin: {
     marginTop: Platform.OS === 'ios' ? 20 : 0
@@ -137,13 +141,20 @@ const generalStyle: any = StyleSheet.create({
   spaceBelowM: {
     paddingBottom: 20
   },
-  subHeader: {
+  h2: {
     color: commonColor.brandPrimary,
     fontWeight: 'bold',
 		fontSize: 20,
 		marginTop: 40,
 		marginBottom: 5,
 		padding: 2,
+		marginHorizontal: 15
+  },
+  h3: {
+    color: commonColor.brandPrimary,
+    fontWeight: 'bold',
+		fontSize: 18,
+		marginTop: 10,
 		marginHorizontal: 15
   },
   lightGrayDivider: {
@@ -158,6 +169,11 @@ const generalStyle: any = StyleSheet.create({
     borderBottomColor: commonColor.brandSecondary,
 		borderBottomWidth: 2,
   },
+  row: {
+    borderBottomColor: commonColor.brandPrimary,
+    borderBottomWidth: 1,
+    width
+  },
 } as any)
 
-export default generalStyle
+export default general

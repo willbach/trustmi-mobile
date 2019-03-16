@@ -22,3 +22,13 @@ export const DOCUMENT_NAMES = {
 }
 
 export const ONE_WEEK = 604800000
+
+export const USER_TYPES = ['Select', 'Business Development', 'Technical Professional', 'Subject-matter Expert', 'Sales Expert']
+
+export const USER_PURPOSES = [
+  'Select',
+  'Technical Cofounder',
+  'Bizdev Cofounder',
+  'Sales Expert',
+  'Subject-matter Expert',
+]

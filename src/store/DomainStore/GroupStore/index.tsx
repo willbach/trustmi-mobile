@@ -10,7 +10,7 @@ import City from 'types/City'
 import AvailableInterests from 'types/AvailableInterests'
 import { INTEREST_CATEGORIES } from 'theme/constants'
 
-import { AuthenticatedServerInterface } from 'server'
+import { ServerInterface, serverInterface } from 'server'
 import devData from 'utils/dev-data'
 import { generateId } from 'utils/buffer-util'
 
@@ -29,10 +29,9 @@ export default class GroupStore {
   @observable availableEvents: Event[] = []
   @observable eventsByInterest = {}
   @observable lastLogin: Date = new Date()
-  @observable thepondAPI: AuthenticatedServerInterface
+  @observable thePondApi: ServerInterface = serverInterface
 
   constructor() {
-    this.connectToServer = this.connectToServer.bind(this)
     this.loadData = this.loadData.bind(this)
     this.getGroupsAndEvents = this.getGroupsAndEvents.bind(this)
     this.getChats = this.getChats.bind(this)
@@ -40,6 +39,7 @@ export default class GroupStore {
     this.getAvailableGroups = this.getAvailableGroups.bind(this)
     this.getAvailableInterests = this.getAvailableInterests.bind(this)
     this.getAvailableLocations = this.getAvailableLocations.bind(this)
+    this.searchLocations = this.searchLocations.bind(this)
     this.sortEventsByInterest = this.sortEventsByInterest.bind(this)
     this.createChat = this.createChat.bind(this)
     this.updateChat = this.updateChat.bind(this)
@@ -49,12 +49,6 @@ export default class GroupStore {
     this.updateGroup = this.updateGroup.bind(this)
     this.createAnnouncement = this.createAnnouncement.bind(this)
     this.updateAnnouncement = this.updateAnnouncement.bind(this)
-  }
-
-  @action
-  connectToServer(address: string, privateKeyHex: string) {
-    this.thepondAPI = new AuthenticatedServerInterface()
-    return this.thepondAPI.authenticate(address, privateKeyHex)
   }
 
   @action
@@ -70,7 +64,7 @@ export default class GroupStore {
   @action
   async getGroupsAndEvents() {
     try {
-      const groups = await this.thepondAPI.get('/groups')
+      const groups = await this.thePondApi.get('/groups')
       this.groups = groups.map(group => new Group(group))
       const events = groups.reduce((acc: Event[], group: Group) => {
         return acc.concat(group.events.map((event: Event) => {
@@ -97,7 +91,7 @@ export default class GroupStore {
   @action
   async getAvailableGroups(city: string, state: string, country: string) {
     try {
-      const groups = await this.thepondAPI.get(`/groups/available?city=${city}&state=${state}&country=${country}`)
+      const groups = await this.thePondApi.get(`/groups/available?city=${city}&state=${state}&country=${country}`)
       this.availableGroups = groups.map(group => new Group(group))
     } catch (error) {
       console.log('ERROR GETTING AVAILABLE GROUPS:', error)
@@ -107,7 +101,7 @@ export default class GroupStore {
   @action
   async getAvailableInterests() {
     try {
-      const interests = await this.thepondAPI.get(`/interests`)
+      const interests = await this.thePondApi.get(`/interests`)
       this.availableInterests = new AvailableInterests(interests)
     } catch (error) {
       console.log('ERROR GETTING INTERESTS:', error)
@@ -118,10 +112,21 @@ export default class GroupStore {
   @action
   async getAvailableLocations() {
     try {
-      this.availableLocations = await this.thepondAPI.get(`/locations`)
+      if (this.availableLocations.length > 0) {
+        return this.availableLocations
+      }
+      
+      this.availableLocations = await this.thePondApi.get(`/locations`)
+      return this.availableLocations
     } catch (error) {
       console.log('ERROR GETTING LOCATIONS:', error)
+      return this.availableLocations
     }
+  }
+
+  @action
+  async searchLocations(cityQuery: string) {
+    return this.thePondApi.get(`/locations/${cityQuery}`)
   }
 
   @action
@@ -137,69 +142,69 @@ export default class GroupStore {
   
   @action
   createGroup({ name, about, city, state, country, interests }) {
-    return this.thepondAPI.post('/groups', { id: generateId([ name, about, city, state, country ]), name, about, city, state, country, interests })
+    return this.thePondApi.post('/groups', { id: generateId([ name, about, city, state, country ]), name, about, city, state, country, interests })
   }
 
   @action
   async getGroup(groupId: string) {
-    const group = new Group(await this.thepondAPI.get(`/groups/${groupId}`))
+    const group = new Group(await this.thePondApi.get(`/groups/${groupId}`))
     return group
   }
   
   @action
   createEvent({ groupId, title, about, directionsParking, street, city, state, country, startTime, endTime, interests, documents, isDraft }) {
-    return this.thepondAPI.post('/events', { id: generateId([ groupId, title, city, state, country, startTime.toString(), endTime.toString() ]), groupId, title, about, directionsParking, street, city, state, country, startTime, endTime, interests, documents, isDraft })
+    return this.thePondApi.post('/events', { id: generateId([ groupId, title, city, state, country, startTime.toString(), endTime.toString() ]), groupId, title, about, directionsParking, street, city, state, country, startTime, endTime, interests, documents, isDraft })
   }
 
   @action
   async getEvent(eventId: string) {
-    const event = new Event(await this.thepondAPI.get(`/events/${eventId}`))
+    const event = new Event(await this.thePondApi.get(`/events/${eventId}`))
     return event
   }
 
   @action
   updateEvent(event: Event) {
-    return this.thepondAPI.put('/events', event)
+    return this.thePondApi.put('/events', event)
   }
 
   @action
   async createUser({ email, first, middle, last, sex, dateOfBirth }) {
-    return this.thepondAPI.post('/users', { email, first, middle, last, sex, dateOfBirth })
+    return this.thePondApi.post('/users', { email, first, middle, last, sex, dateOfBirth })
   }
 
   @action
   async getUser(userId: string) {
-    const user = new User(await this.thepondAPI.get(`/users/${userId}`))
+    const user = new User(await this.thePondApi.get(`/users/${userId}`))
     return user
   }
 
   @action
   updateUser({ email, first, middle, last, dateOfBirth }) {
-    return this.thepondAPI.put('/users', { email, first, middle, last, dateOfBirth })
+    return this.thePondApi.put('/users', { email, first, middle, last, dateOfBirth })
   }
 
   @action
   createChat(chat: Chat) {
-    return this.thepondAPI.post('/chats', chat)
+    return this.thePondApi.post('/chats', chat)
   }
 
   @action
   updateChat(chat: Chat) {
-    return this.thepondAPI.put('/chats', chat)
+    return this.thePondApi.put('/chats', chat)
   }
 
   @action
   updateGroup(group: Group) {
-    return this.thepondAPI.put('/groups', group)
+    return this.thePondApi.put('/groups', group)
   }
 
   @action
   createAnnouncement(announcement: Announcement) {
-    return this.thepondAPI.post('/announcements', announcement)
+    return this.thePondApi.post('/announcements', announcement)
   }
 
   @action
   updateAnnouncement(announcement: Announcement) {
-    return this.thepondAPI.put('/announcements', announcement)
+    return this.thePondApi.put('/announcements', announcement)
   }
 }

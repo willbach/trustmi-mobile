@@ -1,13 +1,13 @@
 import ImagePicker from 'react-native-image-crop-picker'
 
-export const getPhoto = async (useCamera: boolean, cameraType = 'back') : Promise<any> => {
-  const options = { width: 300, height: 400, cropping: true, includeBase64: true, cameraType }
+export const getPhoto = async (useCamera: boolean, cameraType = 'back', options?: any) : Promise<any> => {
+  const imageOptions = options || { width: 300, height: 400, cropping: true, includeBase64: true, cameraType }
   try {
     if (useCamera) {
-      const image = await ImagePicker.openCamera(options)
+      const image = await ImagePicker.openCamera(imageOptions)
       return image
     } else {
-      const image = await ImagePicker.openPicker(options)
+      const image = await ImagePicker.openPicker(imageOptions)
       return image
     }
 

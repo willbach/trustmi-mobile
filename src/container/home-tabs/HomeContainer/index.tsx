@@ -5,7 +5,6 @@ import Home from "screens/home-tabs/Home"
 
 export interface Props {
 	navigation: any,
-	profileStore: any,
 	groupStore: any,
 	userStore: any,
 	verifiedStore: any,
@@ -13,7 +12,6 @@ export interface Props {
 export interface State {}
 
 @inject("userStore")
-@inject("profileStore")
 @inject("groupStore")
 @inject("verifiedStore")
 @observer
@@ -27,17 +25,12 @@ export default class HomeContainer extends React.Component<Props, State> {
 
 	async loadUserData() {
 		try {
-			const { address, privateKeyHex, pin } = this.props.userStore
-			const { city, state, country, dateOfBirth } = this.props.profileStore.profileData
+			const { props: { userStore: { city, state, country, dateOfBirth, interests } } } = this
 			
-			const [ shouldPrompt ] = await Promise.all([
-				this.props.profileStore.shouldPrompt(pin),
-				this.props.profileStore.loadData(pin),
-				this.props.groupStore.connectToServer(address, privateKeyHex)
-			])
+			const shouldPrompt = await this.props.userStore.shouldPrompt()
 			
-			await this.props.groupStore.loadData({ city, state, country })
-			this.props.groupStore.sortEventsByInterest(this.props.profileStore.interests)
+			// await this.props.groupStore.loadData({ city, state, country })
+			// this.props.groupStore.sortEventsByInterest(interests)
 
 			if (shouldPrompt) {
 				const promptQuestions = await this.props.verifiedStore.getPromptQuestions({ dateOfBirth })
@@ -49,7 +42,7 @@ export default class HomeContainer extends React.Component<Props, State> {
 	}
 	
 	render() {
-		const { profileStore: { profileCompletionPercentage }, groupStore: { groups, availableGroups, events } } = this.props
+		const { userStore: { profileCompletionPercentage }, groupStore: { groups, availableGroups, events } } = this.props
 
 		return <Home navigation={this.props.navigation} groups={groups} availableGroups={availableGroups} events={events.toJS()} profileCompletionPercentage={profileCompletionPercentage} />
 	}

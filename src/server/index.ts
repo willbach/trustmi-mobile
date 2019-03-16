@@ -1,64 +1,142 @@
-import ethUtil from 'ethereumjs-util'
-import { serverSign } from 'utils/buffer-util'
-import Fetch from './fetch'
+import RNFetchBlob from 'rn-fetch-blob'
+import { deleteLocalData } from 'utils/local-storage'
 
-export  class AuthenticatedServerInterface {
+export class ServerInterface {
+  apiEndpoint: string
   token: string
-  fetch: any
 
   constructor() {
-    this.fetch = new Fetch()
+    // this.apiEndpoint = 'http://10.0.2.2:4444'
+    // this.apiEndpoint = 'http://localhost:4444'
+    this.apiEndpoint = 'http://192.168.1.4:4444'
   }
 
-  async authenticate(address: string, privateKeyHex: string) {
-    const hexHash = ethUtil.sha3(Buffer.from(address, 'hex')).toString('hex')
-    const signature = serverSign(hexHash, privateKeyHex)
+  setToken({ auth, token }) {
+    this.token = token
+  }
 
-    try {
-      const result = await this.fetch.post('/token', { address, signature })
-      this.token = result.token
-    } catch(error) {
-      console.log('ERROR GETTING TOKEN:', error)
+  async uploadFormData(route: string, body: any) {
+    return RNFetchBlob.fetch(
+      'POST',
+      this.apiEndpoint + route,
+      {
+        Accept: 'application/json',
+        'x-access-token': this.token || '',
+        'Content-Type': 'multipart/form-data'
+      },
+      body
+    )
+  }
+
+  async post(route: string, body: any) {
+    const request = new Request(this.apiEndpoint + route, {
+      method: 'POST',
+      body: JSON.stringify(body),
+      headers: {
+        "Content-Type": 'application/json',
+        "x-access-token": this.token || ''
+      }
+    })
+
+    console.log('SERVER POST: ', request)
+
+    const response = await fetch(request)
+
+    if (response.status !== 200 && response.status !== 201 && response.status !== 204) {
+      throw new Error(`Creation failed with status code: ${response.status}`)
+    }
+
+    if (response.status === 200) {
+      const data = await response.json()
+      console.log('RESULT:', data)
+      return data
+    } else {
+      return true
     }
   }
 
-  post(route: string, body: any) {
-    return this.fetch.post(route, body, this.token)
+  async get(route: string) {
+    const request = new Request(this.apiEndpoint + route, {
+      headers: { "x-access-token": this.token || '' }
+    })
+
+    console.log('SERVER GET: ', request)
+    const response = await fetch(request)
+    console.log('GET RESPONSE', response)
+
+    if (response.status === 401) {
+      this.token = ''
+      deleteLocalData('phone')
+      deleteLocalData('token')
+      throw new Error('Authentication failed')
+    } else if (response.status >= 400) {
+      throw new Error('Bad request')
+    } else if (response.status === 204) {
+      return []
+    }
+
+    const data = await response.json()
+    return data
   }
 
-  get(route: string) {
-    return this.fetch.get(route, this.token)
+  async put(route: string, body: any) {
+    const request = new Request(this.apiEndpoint + route, {
+      method: 'PUT',
+      body: JSON.stringify(body),
+      headers: {
+        "Content-Type": 'application/json',
+        "x-access-token": this.token || ''
+      }
+    })
+
+    console.log('SERVER PUT: ', request)
+
+    const result = await fetch(request)
+      .then(response => {
+        if (response.status === 401) {
+          this.token = ''
+          deleteLocalData('phone')
+          deleteLocalData('token')
+          throw new Error('Authentication failed')
+        } else if (response.status >= 400) {
+          throw new Error('Bad request')
+        } else if (response.status === 204) {
+          return []
+        }
+        return response.json()
+      })
+
+    console.log('RESULT:', result)
+    return result
   }
 
-  put(route: string, body: any) {
-    return this.fetch.put(route, body, this.token)
-  }
+  async delete(route: string) {
+    const request = new Request(this.apiEndpoint + route, {
+      method: 'DELETE'
+    })
 
-  delete(route: string) {
-    return this.fetch.delete(route, this.token)
+    request.headers['x-access-token'] = this.token || ''
+
+    console.log('SERVER DELETE: ', request)
+
+    const result = await fetch(request)
+      .then(response => {
+        if (response.status === 401) {
+          this.token = ''
+          deleteLocalData('phone')
+          deleteLocalData('token')
+          throw new Error('Authentication failed')
+        } else if (response.status >= 400) {
+          throw new Error('Bad request')
+        } else if (response.status === 204) {
+          return []
+        }
+        return response.json()
+      })
+
+    console.log('RESULT:', result)
+    return result
   }
 }
 
-export  class UnauthenticatedServerInterface {
-  fetch: any
-
-  constructor() {
-    this.fetch = new Fetch()
-  }
-
-  post(route: string, body: any) {
-    return this.fetch.post(route, body)
-  }
-
-  get(route: string) {
-    return this.fetch.get(route)
-  }
-
-  put(route: string, body: any) {
-    return this.fetch.put(route, body)
-  }
-
-  delete(route: string) {
-    return this.fetch.delete(route)
-  }
-}
+export const serverInterface = new ServerInterface()

@@ -3,7 +3,7 @@ import repositories from 'repositories'
 import generateRandomString from 'utils/random-string'
 import VerifiedDocuments from 'types/VerifiedDocuments'
 import { hexToBuffer, generateHash, serverSign} from 'utils/buffer-util'
-import { storeLocalData, retrieveLocalData } from 'utils/local-storage'
+import { storeLocalData, retrieveLocalData, storeLocalDataSecure } from 'utils/local-storage'
 
 export default class VerifiedStore {
   @observable collegeBoard = {}
@@ -25,7 +25,7 @@ export default class VerifiedStore {
       console.log('GOT THE DATA IN THE STORE: ', data)
       console.log('PIN', pin, pin.length)
   
-      await storeLocalData(data, service, pin)
+      await storeLocalDataSecure(data, service, pin)
   
       this[service].data = data
       console.log('WE HAVE NOW STORED THE DATA: ', this[service])
@@ -49,7 +49,7 @@ export default class VerifiedStore {
     console.log('GOT THE DATA IN THE STORE: ', verifiedDocuments)
     console.log('PIN', pin, pin.length)
   
-    await storeLocalData(verifiedDocuments, 'verifiedDocuments', pin)
+    await storeLocalDataSecure(verifiedDocuments, 'verifiedDocuments', pin)
     
     this.verifiedDocuments = verifiedDocuments
     console.log('WE HAVE NOW STORED THE DATA: ', this.verifiedDocuments)

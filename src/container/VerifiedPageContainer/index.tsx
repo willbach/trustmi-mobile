@@ -8,7 +8,6 @@ export interface Props {
 }
 export interface State {}
 
-@inject('verifiedStore')
 @inject('userStore')
 @observer
 export default class VerifiedPageContainer extends React.Component<Props, State> {

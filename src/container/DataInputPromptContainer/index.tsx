@@ -15,12 +15,10 @@ const startAtDrawer = StackActions.reset({
 export interface Props {
 	navigation: any
 	userStore: any
-	verifiedStore: any
 }
 export interface State {}
 
 @inject('userStore')
-@inject('verifiedStore')
 @observer
 export default class DataInputPromptContainer extends React.Component<Props, State> {
 	promptQuestions: string[]

@@ -7,9 +7,10 @@ import City from "types/City"
 const goBack = jest.fn()
 const changeLocation = jest.fn()
 const location = new City({})
-const availableLocations = []
+const locations = []
+const searchLocations = jest.fn()
 
 it("renders correctly", () => {
-	const tree = renderer.create(<UpdateLocation goBack={goBack} changeLocation={changeLocation} location={location} currentLocation={location} availableLocations={availableLocations}/>).toJSON()
+	const tree = renderer.create(<UpdateLocation searchLocations={searchLocations} goBack={goBack} changeLocation={changeLocation} location={location} currentLocation={location} locations={locations}/>).toJSON()
 	expect(tree).toMatchSnapshot()
 })

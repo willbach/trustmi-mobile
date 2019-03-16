@@ -52,15 +52,15 @@ class CreateChat extends React.Component<Props, State> {
           <AddDataLink onPress={this.addData} text="Connect more data to unlock additional groups" style={{marginLeft: 20}}/>
 
           <View>
-            <Text style={general.subHeader}>Your Groups</Text>{/* create new group */}
+            <Text style={general.h2}>Your Groups</Text>{/* create new group */}
             <Text style={styles.createGroup} onPress={() => this.props.navigation.navigate('CreateGroup')}>+ create new group</Text>
           </View>
 
-          <Text style={[general.subHeader, {marginBottom: 5}]}>Recommended Groups</Text>
+          <Text style={[general.h2, {marginBottom: 5}]}>Recommended Groups</Text>
           <AddDataLink onPress={this.addData} text="Help us tailor your recommendations" style={{marginTop: -5}} />
           <View style={general.smallBottomMargin}/>
 
-          <Text style={general.subHeader}>Your Calendar</Text>
+          <Text style={general.h2}>Your Calendar</Text>
         </Content>
       </Container>
     )

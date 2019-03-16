@@ -1,8 +1,6 @@
 import * as React from 'react'
 import { Container, Header, Title, Content, Text, Button, Icon, Left, Body, Right, Form, Item, Input, Picker, View } from 'native-base'
-import ProfilePic from 'ui/custom-components/ProfilePic'
-import SelectLocation from 'ui/custom-components/SelectLocation'
-import Interests from 'ui/custom-components/Interests'
+import { ProfilePic, SelectLocation, Interests } from 'ui/custom-components'
 
 import City from 'types/City'
 
@@ -109,13 +107,13 @@ class CreateGroup extends React.Component<Props> {
             {about.length < DESCRIPTION_MIN_LENGTH ? <Text style={styles.hintText}>{`Must be at least ${DESCRIPTION_MIN_LENGTH} characters`}</Text> : null}
 
             <View style={[general.lightGrayDivider, general.mediumTopMargin]} />
-            <Text style={styles.subHeader} onPress={this.goToUpdateLocation}>Location</Text>
+            <Text style={styles.h2} onPress={this.goToUpdateLocation}>Location</Text>
             <View style={general.smallHMargin}>
               <SelectLocation location={location} onPress={this.goToUpdateLocation}/>
             </View>
             <View style={general.lightGrayDivider} />
 
-            <Text style={styles.subHeader} onPress={this.goToUpdateInterests}>Interests</Text>
+            <Text style={styles.h2} onPress={this.goToUpdateInterests}>Interests</Text>
             <Item style={styles.inputUnderline}>
               {interests.slice().length > 0 ? <Interests onPress={this.goToUpdateInterests} interests={interests} />
               : <Text style={styles.lightText} onPress={this.goToUpdateInterests}>Select a few interests</Text>}

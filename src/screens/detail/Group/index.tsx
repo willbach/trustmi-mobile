@@ -79,12 +79,12 @@ export default class GroupDetail extends React.Component<Props, State> {
             <OrganizersDisplay organizers={organizers} screen="group" onPress={() => navigation.navigate('Members', { members: organizers, groupId: id, groupName: name })} />
           </View>
 
-          <Text style={general.subHeader}>About This Group</Text>
+          <Text style={general.h2}>About This Group</Text>
           {about.split('\\n').map((text: string, ind: number) => <Text key={ind} style={styles.about}>{text}</Text>)}
 
 
           <View>
-            <Text style={general.subHeader}>Upcoming Events</Text>
+            <Text style={general.h2}>Upcoming Events</Text>
             {group.isOrganizer(userId) && <Text style={styles.createEvent} onPress={() => this.props.navigation.navigate('CreateEvent', { group })}>+ create new event</Text>}
           </View>
           <ScrollView style={general.flexRow} horizontal={true} showsHorizontalScrollIndicator={false}>
@@ -94,7 +94,7 @@ export default class GroupDetail extends React.Component<Props, State> {
 
           <GroupSelector startDiscussion={startDiscussion} userId={userId} navigation={navigation} group={group} />
 
-          <Text style={general.subHeader}>Related Topics</Text>
+          <Text style={general.h2}>Related Topics</Text>
           <Interests interests={interests}/>
           {/* videos */}
           {/* photos */}

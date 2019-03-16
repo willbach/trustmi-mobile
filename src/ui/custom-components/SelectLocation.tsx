@@ -24,7 +24,7 @@ export default class SelectLocation extends React.Component<Props> {
     return (<TouchableHighlight style={styles.component} onPress={onPress} underlayColor={commonColor.touchableUnderlay}>
       <View style={general.flexRowCenter}>
         <Icon style={styles.icon} name={"ios-pin"}/>
-        <Text style={styles.text}>{`${city}, ${state}`}</Text>
+        <Text style={styles.text}>{city && state && `${city}, ${state}`}</Text>
       </View>
     </TouchableHighlight>)
   }

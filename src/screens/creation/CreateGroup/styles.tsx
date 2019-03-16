@@ -66,7 +66,7 @@ const styles: any = StyleSheet.create({
 		marginLeft: 10,
 		fontWeight: 'bold'
 	},
-	subHeader: {
+	h2: {
 		color: commonColor.brandPrimary,
 		fontSize: 20,
 		marginTop: 20,

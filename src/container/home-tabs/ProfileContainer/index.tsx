@@ -7,7 +7,6 @@ import commonColor from 'theme/variables/commonColor'
 
 export interface Props {
 	navigation: any,
-	profileStore: any,
 	groupStore: any,
 	userStore: any,
 	verifiedStore: any,
@@ -15,7 +14,6 @@ export interface Props {
 export interface State {}
 
 @inject("userStore")
-@inject("profileStore")
 @inject("groupStore")
 @inject("verifiedStore")
 @observer
@@ -29,17 +27,12 @@ export default class ProfileContainer extends React.Component<Props, State> {
 
 	async loadUserData() {
 		try {
-			const { address, privateKeyHex, pin } = this.props.userStore
-			const { city, state, country, dateOfBirth } = this.props.profileStore.profileData
+			const { props: { userStore, userStore: { city, state, country, dateOfBirth, interests }, groupStore } } = this
 			
-			const [ shouldPrompt ] = await Promise.all([
-				this.props.profileStore.shouldPrompt(pin),
-				this.props.profileStore.loadData(pin),
-				this.props.groupStore.connectToServer(address, privateKeyHex)
-			])
+			const shouldPrompt = await userStore.shouldPrompt()
 			
-			await this.props.groupStore.loadData({ city, state, country })
-			this.props.groupStore.sortEventsByInterest(this.props.profileStore.interests)
+			// await this.props.groupStore.loadData({ city, state, country })
+			// this.props.groupStore.sortEventsByInterest(interests)
 
 			if (shouldPrompt) {
 				const promptQuestions = await this.props.verifiedStore.getPromptQuestions({ dateOfBirth })
@@ -50,9 +43,28 @@ export default class ProfileContainer extends React.Component<Props, State> {
 		}
 	}
 
-	render() {
-		const { navigation, profileStore: { profileData, interests, getAge } } = this.props
+	async updateUser(data) {
+		try {
+			await this.props.userStore.updateUser(data)
+			this.props.userStore.refresh()
+		} catch (error) {
+			console.log('ERROR HERE')
+		}
+	}
 
-		return <Profile navigation={navigation} profileData={profileData} interests={interests} getAge={getAge} />
+	editProfile() {
+		this.props.navigation.navigate('EditProfile')
+	}
+
+	render() {
+		const { navigation, userStore: { id, first, last, city, state, linkedinUrl, title, companyName, userPurpose, userType, userIntro,
+			skills, certifications, positions, getFinancials, tests, schools } } = this.props
+
+		const financials = getFinancials()
+
+		return <Profile navigation={navigation} editProfile={this.editProfile.bind(this)} id={id} first={first} last={last} city={city}
+			state={state} linkedinUrl={linkedinUrl} title={title} companyName={companyName} userPurpose={userPurpose} userType={userType}
+			userIntro={userIntro} financials={financials} skills={skills} certifications={certifications} positions={positions} tests={tests}
+			schools={schools} updateUser={this.updateUser.bind(this)} />
 	}
 }
