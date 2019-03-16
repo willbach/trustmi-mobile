@@ -33,6 +33,7 @@ local.properties
 lib/
 lib
 android/gradle.properties
+android/app/google-services.json
 
 # node.js
 #
